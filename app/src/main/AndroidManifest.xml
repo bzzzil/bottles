@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".BottleAddActivity"
+            android:label="@string/title_activity_bottle_add" >
+        </activity>
+        <provider
+            android:authorities="io.bzzzil.bottles.contentprovider"
+            android:name=".database.BottlesContentProvider">
+        </provider>
     </application>
 
 </manifest>

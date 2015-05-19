@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">bottles</string>
-    <string name="main_name">My bottles</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">My Bottles</string>
+    <string name="menu_action_add_bottle">Add Bottle</string>
+    <string name="title_activity_bottle_add">New Bottle</string>
+    <string name="column_title">Title</string>
+    <string name="button_add_bottle">Add</string>
 </resources>
