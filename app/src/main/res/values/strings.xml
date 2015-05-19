@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">bottles</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="main_name">My bottles</string>
     <string name="action_settings">Settings</string>
 </resources>
