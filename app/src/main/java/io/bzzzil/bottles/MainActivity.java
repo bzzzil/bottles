@@ -64,9 +64,8 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] projection = { BottlesTable.COLUMN_ID, BottlesTable.COLUMN_TITLE };
-        CursorLoader cursorLoader = new CursorLoader(this,
+        return  new CursorLoader(this,
                 BottlesContentProvider.CONTENT_URI, projection, null, null, null);
-        return  cursorLoader;
     }
 
     @Override
