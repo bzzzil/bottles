@@ -1,15 +1,13 @@
 package io.bzzzil.bottles;
 
-import android.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 
@@ -22,7 +20,7 @@ public class MainActivity extends ActionBarActivity {
 
         ListView bottlesList = (ListView)findViewById(R.id.listViewBottles);
         String[] items = { "Alef", "Bet", "Gimel", "Alef", "Bet", "Gimel","Alef", "Bet", "Gimel","Alef", "Bet", "Gimel","Alef", "Bet", "Gimel","Alef", "Bet", "Gimel","Alef", "Bet", "Gimel","Alef", "Bet", "Gimel","Alef", "Bet", "Gimel","Alef", "Bet", "Gimel"};
-        ArrayAdapter<String> bottlesListStaticAdapter = new ArrayAdapter<>( this, R.layout.main_bottleslist_item, items );
+        ArrayAdapter<String> bottlesListStaticAdapter = new ArrayAdapter<>( this, R.layout.main_bottles_list_item, items );
         bottlesList.setAdapter( bottlesListStaticAdapter );
 
         bottlesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
