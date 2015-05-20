@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">My Bottles</string>
-    <string name="menu_action_add_bottle">Add Bottle</string>
+    <string name="menu_action_add_bottle">Add</string>
+    <string name="menu_action_delete_bottle">Delete</string>
+    <string name="menu_action_edit_bottle">Edit</string>
     <string name="title_activity_bottle_add">New Bottle</string>
     <string name="column_title">Title</string>
     <string name="button_add_bottle">Add</string>
+    <string name="title_activity_bottle_details">Bottle Details</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>
