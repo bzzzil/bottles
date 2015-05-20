@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -72,6 +73,9 @@ public class BottleDetailsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         switch (menuId) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
             case R.id.action_edit_bottle:
                 Intent intent = new Intent(getApplicationContext(), BottleAddActivity.class);
                 intent.putExtra("id", id);
