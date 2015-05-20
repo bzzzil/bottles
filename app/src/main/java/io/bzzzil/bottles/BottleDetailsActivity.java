@@ -1,6 +1,7 @@
 package io.bzzzil.bottles;
 
-import android.app.Fragment;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import io.bzzzil.bottles.database.BottlesContentProvider;
 import io.bzzzil.bottles.database.BottlesTable;
@@ -18,30 +20,35 @@ import io.bzzzil.bottles.database.BottlesTable;
 public class BottleDetailsActivity extends AppCompatActivity {
     private static final String TAG = "BottleDetailsActivity";
 
+    private Uri bottleUri;
+    private long id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottle_details);
 
         Intent callingIntent = getIntent();
-        if (callingIntent.hasExtra("id") == false) {
+        if (!callingIntent.hasExtra("id")) {
             Log.e(TAG, "No id provided! Closing");
             finish();
         }
 
-        long id = callingIntent.getLongExtra("id", 0);
+        id = callingIntent.getLongExtra("id", 0);
         Log.d(TAG, "Bottle id: " + id);
+        bottleUri = Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + id);
 
         // Fill data
         String[] projection = { BottlesTable.COLUMN_TITLE };
-        Uri uri = Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + id);
-        Log.d(TAG, "Get details from uri: "+uri);
-        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        Log.d(TAG, "Get details from uri: " + bottleUri);
+        Cursor cursor = getContentResolver().query(bottleUri, projection, null, null, null);
 
         if (cursor != null) {
             cursor.moveToFirst();
+
+            // Populate items
             String title = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE));
             ((TextView)findViewById(R.id.bottle_details_title)).setText(title);
+
             setTitle(title);
         }
     }
@@ -62,8 +69,30 @@ public class BottleDetailsActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_edit_bottle:
+                return true;
+            case R.id.action_delete_bottle:
+                new AlertDialog.Builder(this)
+                        .setTitle("Delete bottle")
+                        .setMessage("Are you sure you want to remove this bottle from collection?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                getContentResolver().delete(bottleUri, null, null);
+                                Toast.makeText(BottleDetailsActivity.this, "Bottle was deleted", Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
