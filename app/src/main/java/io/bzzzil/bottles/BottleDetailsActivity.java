@@ -21,7 +21,9 @@ public class BottleDetailsActivity extends AppCompatActivity {
     private static final String TAG = "BottleDetailsActivity";
 
     private Uri bottleUri;
+
     private long id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,11 +68,15 @@ public class BottleDetailsActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        int menuId = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        switch (id) {
+        switch (menuId) {
             case R.id.action_edit_bottle:
+                Intent intent = new Intent(getApplicationContext(), BottleAddActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+                finish();
                 return true;
             case R.id.action_delete_bottle:
                 new AlertDialog.Builder(this)
