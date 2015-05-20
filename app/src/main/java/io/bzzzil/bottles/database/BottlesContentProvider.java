@@ -147,7 +147,12 @@ public class BottlesContentProvider extends ContentProvider {
     private void checkColumns(String[] projection) {
         String[] available = {
                 BottlesTable.COLUMN_ID,
-                BottlesTable.COLUMN_TITLE
+                BottlesTable.COLUMN_TYPE,
+                BottlesTable.COLUMN_COUNTRY,
+                BottlesTable.COLUMN_MANUFACTURER,
+                BottlesTable.COLUMN_TITLE,
+                BottlesTable.COLUMN_VOLUME,
+                BottlesTable.COLUMN_DEGREE
         };
 
         if (projection != null) {

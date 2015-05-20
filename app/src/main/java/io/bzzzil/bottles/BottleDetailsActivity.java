@@ -41,14 +41,22 @@ public class BottleDetailsActivity extends AppCompatActivity {
         bottleUri = Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + id);
 
         // Fill data
-        String[] projection = { BottlesTable.COLUMN_TITLE };
         Log.d(TAG, "Get details from uri: " + bottleUri);
-        Cursor cursor = getContentResolver().query(bottleUri, projection, null, null, null);
+        Cursor cursor = getContentResolver().query(bottleUri, null, null, null, null);
 
         if (cursor != null) {
             cursor.moveToFirst();
 
             // Populate items
+            String type = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TYPE));
+            ((TextView)findViewById(R.id.bottle_details_type)).setText(type);
+
+            String country = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_COUNTRY));
+            ((TextView)findViewById(R.id.bottle_details_country)).setText(country);
+
+            String manufacturer = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_MANUFACTURER));
+            ((TextView)findViewById(R.id.bottle_details_manufacturer)).setText(manufacturer);
+
             String title = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE));
             ((TextView)findViewById(R.id.bottle_details_title)).setText(title);
 

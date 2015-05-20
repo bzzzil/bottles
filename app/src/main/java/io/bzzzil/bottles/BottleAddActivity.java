@@ -38,16 +38,30 @@ public class BottleAddActivity extends AppCompatActivity {
             bottleUri = Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + id);
 
             // Get data
-            String[] projection = { BottlesTable.COLUMN_TITLE };
             Log.d(TAG, "Get details from uri: " + bottleUri);
-            Cursor cursor = getContentResolver().query(bottleUri, projection, null, null, null);
+            Cursor cursor = getContentResolver().query(bottleUri, null, null, null, null);
 
             if (cursor != null) {
                 cursor.moveToFirst();
 
                 // Populate items
+                String type = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TYPE));
+                ((EditText)findViewById(R.id.editType)).setText(type);
+
+                String country = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_COUNTRY));
+                ((EditText)findViewById(R.id.editCountry)).setText(country);
+
+                String manufacturer = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_MANUFACTURER));
+                ((EditText)findViewById(R.id.editManufacturer)).setText(manufacturer);
+
                 String title = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE));
                 ((EditText)findViewById(R.id.editTitle)).setText(title);
+
+                String volume = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_VOLUME));
+                ((EditText)findViewById(R.id.editVolume)).setText(volume);
+
+                String degree = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_DEGREE));
+                ((EditText)findViewById(R.id.editDegree)).setText(degree);
 
                 setTitle("Edit details");
             }
@@ -73,10 +87,13 @@ public class BottleAddActivity extends AppCompatActivity {
       */
     private void addOrUpdateBottle()
     {
-        EditText title = (EditText)findViewById(R.id.editTitle);
-
         ContentValues values = new ContentValues();
-        values.put(BottlesTable.COLUMN_TITLE, title.getText().toString());
+        values.put(BottlesTable.COLUMN_TYPE, ((EditText)findViewById(R.id.editType)).getText().toString());
+        values.put(BottlesTable.COLUMN_COUNTRY, ((EditText)findViewById(R.id.editCountry)).getText().toString());
+        values.put(BottlesTable.COLUMN_MANUFACTURER, ((EditText)findViewById(R.id.editManufacturer)).getText().toString());
+        values.put(BottlesTable.COLUMN_TITLE, ((EditText)findViewById(R.id.editTitle)).getText().toString());
+        values.put(BottlesTable.COLUMN_VOLUME, ((EditText)findViewById(R.id.editVolume)).getText().toString());
+        values.put(BottlesTable.COLUMN_DEGREE, ((EditText)findViewById(R.id.editDegree)).getText().toString());
 
         if (id != 0) {
             // Update existing item

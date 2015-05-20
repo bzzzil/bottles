@@ -4,7 +4,12 @@
     <string name="menu_action_delete_bottle">Delete</string>
     <string name="menu_action_edit_bottle">Edit</string>
     <string name="title_activity_bottle_add">New Bottle</string>
+    <string name="column_type">Type</string>
+    <string name="column_country">Country</string>
+    <string name="column_manufacturer">Manufacturer</string>
     <string name="column_title">Title</string>
+    <string name="column_volume">Volume</string>
+    <string name="column_degree">Degree</string>
     <string name="button_add_bottle">Add</string>
     <string name="title_activity_bottle_details">Bottle Details</string>
     <string name="hello_world">Hello world!</string>
