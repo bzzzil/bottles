@@ -3,6 +3,7 @@
     <string name="menu_action_add_bottle">Add</string>
     <string name="menu_action_import_bottles">Import bottles</string>
     <string name="menu_action_delete_bottle">Delete</string>
+    <string name="menu_action_delete_all">Delete All</string>
     <string name="menu_action_edit_bottle">Edit</string>
     <string name="title_activity_bottle_add">New Bottle</string>
     <string name="column_type">Type</string>

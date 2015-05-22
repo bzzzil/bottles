@@ -1,8 +1,10 @@
 package io.bzzzil.bottles;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -35,7 +37,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottles_list);
 
-        String[] from = new String[] { BottlesTable.COLUMN_TITLE, BottlesTable.COLUMN_ID };
+        String[] from = new String[] { BottlesTable.COLUMN_TITLE, BottlesTable.COLUMN_TYPE };
         int[] to = new int[] { R.id.bottle_title, R.id.bottle_detais };
 
         ListView bottlesList = (ListView)findViewById(R.id.listViewBottles);
@@ -72,6 +74,26 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
             case R.id.action_add_bottle:
                 startActivity(new Intent(this, BottleAddActivity.class));
                 return true;
+            case R.id.action_delete_all:
+                new AlertDialog.Builder(this)
+                        .setTitle("Delete all bottles")
+                        .setMessage("Are you sure you want to remove ALL bottles from collection? \n\nTHIS CAN NOT BE UNDONE!")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                getContentResolver().delete(BottlesContentProvider.CONTENT_URI, null, null);
+                                Toast.makeText(BottlesListActivity.this, "Bottles were deleted", Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return true;
             case R.id.action_import_bottles:
                 Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
                 chooseFile.setType("*/*");
@@ -102,9 +124,9 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String[] projection = { BottlesTable.COLUMN_ID, BottlesTable.COLUMN_TITLE };
+        //String[] projection = { BottlesTable.COLUMN_ID, BottlesTable.COLUMN_TITLE };
         return  new CursorLoader(this,
-                BottlesContentProvider.CONTENT_URI, projection, null, null, null);
+                BottlesContentProvider.CONTENT_URI, null, null, null, null);
     }
 
     @Override
@@ -130,6 +152,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
         };
 
         int currentColumn = 0;
+        int imported = 0;
         ContentValues values = new ContentValues();
         while (scanner.hasNext())
         {
@@ -138,11 +161,12 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
 
             if (next.startsWith("\r\n")) {
                 // End of record
-                Log.d(TAG, "Scanner insertin to db:" + values);
+                Log.d(TAG, "Scanner inserting to db:" + values);
                 getContentResolver().insert(BottlesContentProvider.CONTENT_URI, values);
                 values.clear();
                 currentColumn = 0;
                 next = next.trim();
+                imported++;
             }
 
             if (currentColumn < names.length) {
@@ -153,6 +177,6 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
         }
         Log.d(TAG, "Scanner complete");
         scanner.close();
-        Toast.makeText(BottlesListActivity.this, "Import complete", Toast.LENGTH_LONG).show();
+        Toast.makeText(BottlesListActivity.this, "Imported " + imported + " new bottles", Toast.LENGTH_LONG).show();
     }
 }
