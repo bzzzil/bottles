@@ -142,7 +142,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                 getContentResolver().insert(BottlesContentProvider.CONTENT_URI, values);
                 values.clear();
                 currentColumn = 0;
-                next.trim();
+                next = next.trim();
             }
 
             if (currentColumn < names.length) {

@@ -97,7 +97,7 @@ public class BottlesContentProvider extends ContentProvider {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         int uriType = sURIMatcher.match(uri);
         SQLiteDatabase sqlite = db.getWritableDatabase();
-        int rowsDeleted = 0;
+        int rowsDeleted;
         switch (uriType) {
             case BOTTLES:
                 rowsDeleted = sqlite.delete(BottlesTable.TABLE_BOTTLES, selection, selectionArgs);
@@ -122,7 +122,7 @@ public class BottlesContentProvider extends ContentProvider {
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         int uriType = sURIMatcher.match(uri);
         SQLiteDatabase sqlite = db.getWritableDatabase();
-        int rowsUpdated = 0;
+        int rowsUpdated;
         switch (uriType) {
             case BOTTLES:
                 rowsUpdated = sqlite.update(BottlesTable.TABLE_BOTTLES, values, selection, selectionArgs);

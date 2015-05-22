@@ -7,23 +7,33 @@
     tools:context="io.bzzzil.bottles.BottleDetailsActivityFragment"
     android:id="@+id/bottle_id">
 
-    <TextView android:text="type" android:layout_width="fill_parent"
+    <TextView android:text="@string/column_type" android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/bottle_details_type" />
 
-    <TextView android:text="country" android:layout_width="fill_parent"
+    <TextView android:text="@string/column_country" android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/bottle_details_type"
         android:id="@+id/bottle_details_country" />
 
-    <TextView android:text="manufacturer" android:layout_width="fill_parent"
+    <TextView android:text="@string/column_manufacturer" android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/bottle_details_country"
         android:id="@+id/bottle_details_manufacturer" />
 
-    <TextView android:text="title" android:layout_width="fill_parent"
+    <TextView android:text="@string/column_title" android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/bottle_details_manufacturer"
         android:id="@+id/bottle_details_title" />
+
+    <TextView android:text="@string/column_volume" android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bottle_details_title"
+        android:id="@+id/bottle_details_volume" />
+
+    <TextView android:text="@string/column_degree" android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bottle_details_volume"
+        android:id="@+id/bottle_details_degree" />
 
 </RelativeLayout>

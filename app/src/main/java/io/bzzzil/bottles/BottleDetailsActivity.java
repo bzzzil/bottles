@@ -60,6 +60,12 @@ public class BottleDetailsActivity extends AppCompatActivity {
             String title = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE));
             ((TextView)findViewById(R.id.bottle_details_title)).setText(title);
 
+            String volume = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_VOLUME));
+            ((TextView)findViewById(R.id.bottle_details_volume)).setText(volume);
+
+            String degree = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_DEGREE));
+            ((TextView)findViewById(R.id.bottle_details_degree)).setText(degree);
+
             setTitle(title);
 
             cursor.close();
