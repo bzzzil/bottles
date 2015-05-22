@@ -10,11 +10,15 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
@@ -30,6 +34,9 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
 
     private SimpleCursorAdapter adapter;
 
+    private ListView bottlesList;
+    private EditText searchBox;
+
     private static final int ACTIVITY_CHOOSE_FILE = 1;
 
     @Override
@@ -37,11 +44,28 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottles_list);
 
+        searchBox = (EditText)findViewById(R.id.editSearch);
+        searchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                adapter.getFilter().filter(s.toString());
+                adapter.notifyDataSetChanged();
+            }
+        });
+
         String[] from = new String[] { BottlesTable.COLUMN_TITLE, BottlesTable.COLUMN_TYPE };
         int[] to = new int[] { R.id.bottle_title, R.id.bottle_detais };
 
-        ListView bottlesList = (ListView)findViewById(R.id.listViewBottles);
-        getLoaderManager().initLoader(0 , null, this);
+        bottlesList = (ListView)findViewById(R.id.listViewBottles);
+        getLoaderManager().initLoader(0, null, this);
         adapter = new SimpleCursorAdapter(this, R.layout.bottle_row, null, from, to, 0);
         bottlesList.setAdapter(adapter);
         bottlesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -50,6 +74,25 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                 Intent intent = new Intent(getApplicationContext(), BottleDetailsActivity.class);
                 intent.putExtra("id", id);
                 startActivity(intent);
+            }
+        });
+        adapter.setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence constraint) {
+                // Fill data
+                String selection = null;
+                if (constraint.length() > 0) {
+                    String text = searchBox.getText().toString();
+                    //text = text.replace("\\","\\\\");
+                    text = text.replace("\'","\'\'");
+                    Log.d(TAG, text);
+                    selection = "type LIKE '%" + text + "%' OR " +
+                            "country LIKE '%" + text + "%' OR " +
+                            "manufacturer LIKE '%" + text + "%' OR " +
+                            "title LIKE '%" + text + "%'";
+                }
+                // TODO: crashing on screen rotate
+                return getContentResolver().query(BottlesContentProvider.CONTENT_URI, null, selection, null, null);
             }
         });
     }
