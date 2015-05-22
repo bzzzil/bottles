@@ -126,6 +126,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                             public void onClick(DialogInterface dialog, int which) {
                                 getContentResolver().delete(BottlesContentProvider.CONTENT_URI, null, null);
                                 Toast.makeText(BottlesListActivity.this, "Bottles were deleted", Toast.LENGTH_LONG).show();
+                                adapter.notifyDataSetChanged();
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -221,5 +222,6 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
         Log.d(TAG, "Scanner complete");
         scanner.close();
         Toast.makeText(BottlesListActivity.this, "Imported " + imported + " new bottles", Toast.LENGTH_LONG).show();
+        adapter.notifyDataSetChanged();
     }
 }
