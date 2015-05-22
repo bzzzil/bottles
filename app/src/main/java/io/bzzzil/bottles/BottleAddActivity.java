@@ -64,6 +64,8 @@ public class BottleAddActivity extends AppCompatActivity {
                 ((EditText)findViewById(R.id.editDegree)).setText(degree);
 
                 setTitle("Edit details");
+
+                cursor.close();
             }
 
             addButton.setText("Save");

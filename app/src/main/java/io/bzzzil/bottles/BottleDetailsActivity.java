@@ -61,6 +61,8 @@ public class BottleDetailsActivity extends AppCompatActivity {
             ((TextView)findViewById(R.id.bottle_details_title)).setText(title);
 
             setTitle(title);
+
+            cursor.close();
         }
     }
 

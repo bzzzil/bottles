@@ -7,12 +7,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Title"
+        android:lines="1"
         android:textSize="@dimen/bottles_list_item_title"
         android:id="@+id/bottle_title" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:lines="1"
         android:text="Details"
         android:textSize="@dimen/bottles_list_item_details"
         android:id="@+id/bottle_detais" />

@@ -4,4 +4,7 @@
     <item android:id="@+id/action_add_bottle" android:title="@string/menu_action_add_bottle"
         android:icon="@android:drawable/ic_menu_add" app:showAsAction="ifRoom"
         android:orderInCategory="100" />
+    <item android:id="@+id/action_import_bottles" android:title="@string/menu_action_import_bottles"
+        app:showAsAction="never"
+        android:orderInCategory="200" />
 </menu>
