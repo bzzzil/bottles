@@ -32,7 +32,7 @@ import io.bzzzil.bottles.database.BottlesTable;
 public class BottlesListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String TAG = "BottlesListActivity";
 
-    private SimpleCursorAdapter adapter;
+    private BottlesListCustomAdapter adapter;
 
     private ListView bottlesList;
     private EditText searchBox;
@@ -66,7 +66,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
 
         bottlesList = (ListView)findViewById(R.id.listViewBottles);
         getLoaderManager().initLoader(0, null, this);
-        adapter = new SimpleCursorAdapter(this, R.layout.bottle_row, null, from, to, 0);
+        adapter = new BottlesListCustomAdapter(this, R.layout.bottle_row, null, from, to, 0);
         bottlesList.setAdapter(adapter);
         bottlesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -85,7 +85,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                 if (constraint.length() > 0) {
                     String text = searchBox.getText().toString();
                     selection = "type LIKE ? OR country LIKE ? OR manufacturer LIKE ? OR title LIKE ?";
-                    selectionArgs = new String[] {
+                    selectionArgs = new String[]{
                             "%" + text + "%",
                             "%" + text + "%",
                             "%" + text + "%",
@@ -169,7 +169,6 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        //String[] projection = { BottlesTable.COLUMN_ID, BottlesTable.COLUMN_TITLE };
         return  new CursorLoader(this,
                 BottlesContentProvider.CONTENT_URI, null, null, null, null);
     }
