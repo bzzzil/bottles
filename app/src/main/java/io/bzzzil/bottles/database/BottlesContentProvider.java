@@ -18,14 +18,29 @@ public class BottlesContentProvider extends ContentProvider {
 
     // Used for UriMatcher
     private static final int BOTTLES = 10;
-    private static final int BOTTLE_ID = 20;
+    private static final int TYPES = 20;
+    private static final int COUNTRIES = 30;
+    private static final int MANUFACTURERS = 40;
+    private static final int BOTTLE_ID = 50;
 
 
     private static final String AUTHORITY = "io.bzzzil.bottles.contentprovider";
 
     private static final String BASE_PATH = "bottles";
 
+    private static final String TYPES_PATH = BASE_PATH + "/types";
+
+    private static final String COUNTRIES_PATH = BASE_PATH + "/countries";
+
+    private static final String MANUFACTURERS_PATH = BASE_PATH + "/manufacturers";
+
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
+
+    public static final Uri TYPES_URI = Uri.parse( "content://" + AUTHORITY + "/" + TYPES_PATH );
+
+    public static final Uri COUNTRIES_URI = Uri.parse( "content://" + AUTHORITY + "/" + COUNTRIES_PATH );
+
+    public static final Uri MANUFACTURERS_URI = Uri.parse( "content://" + AUTHORITY + "/" + MANUFACTURERS_PATH );
 
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/bottles";
 
@@ -34,6 +49,9 @@ public class BottlesContentProvider extends ContentProvider {
     private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
         sURIMatcher.addURI(AUTHORITY, BASE_PATH, BOTTLES);
+        sURIMatcher.addURI(AUTHORITY, TYPES_PATH, TYPES);
+        sURIMatcher.addURI(AUTHORITY, COUNTRIES_PATH, COUNTRIES);
+        sURIMatcher.addURI(AUTHORITY, MANUFACTURERS_PATH, MANUFACTURERS);
         sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", BOTTLE_ID);
     }
 
@@ -53,9 +71,21 @@ public class BottlesContentProvider extends ContentProvider {
 
         queryBuilder.setTables(BottlesTable.TABLE_BOTTLES);
 
+        SQLiteDatabase sqlite = db.getWritableDatabase();
+        Cursor cursor = null;
+
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
             case BOTTLES:
+                break;
+            case TYPES:
+                cursor = queryBuilder.query(sqlite, projection, selection, selectionArgs, BottlesTable.COLUMN_TYPE, null, sortOrder);
+                break;
+            case COUNTRIES:
+                cursor = queryBuilder.query(sqlite, projection, selection, selectionArgs, BottlesTable.COLUMN_COUNTRY, null, sortOrder);
+                break;
+            case MANUFACTURERS:
+                cursor = queryBuilder.query(sqlite, projection, selection, selectionArgs, BottlesTable.COLUMN_MANUFACTURER, null, sortOrder);
                 break;
             case BOTTLE_ID:
                 queryBuilder.appendWhere(BottlesTable.COLUMN_ID + "=" + uri.getLastPathSegment());
@@ -64,8 +94,9 @@ public class BottlesContentProvider extends ContentProvider {
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
 
-        SQLiteDatabase sqlite = db.getWritableDatabase();
-        Cursor cursor = queryBuilder.query(sqlite, projection, selection, selectionArgs, null, null, sortOrder);
+        if (cursor == null) {
+            cursor = queryBuilder.query(sqlite, projection, selection, selectionArgs, null, null, sortOrder);
+        }
 
         // Ensure that potential listeners will be notified
         cursor.setNotificationUri(getContext().getContentResolver(), uri);

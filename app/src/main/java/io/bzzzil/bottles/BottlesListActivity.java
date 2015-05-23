@@ -81,18 +81,19 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
             public Cursor runQuery(CharSequence constraint) {
                 // Fill data
                 String selection = null;
+                String[] selectionArgs = null;
                 if (constraint.length() > 0) {
                     String text = searchBox.getText().toString();
-                    //text = text.replace("\\","\\\\");
-                    text = text.replace("\'","\'\'");
-                    Log.d(TAG, text);
-                    selection = "type LIKE '%" + text + "%' OR " +
-                            "country LIKE '%" + text + "%' OR " +
-                            "manufacturer LIKE '%" + text + "%' OR " +
-                            "title LIKE '%" + text + "%'";
+                    selection = "type LIKE ? OR country LIKE ? OR manufacturer LIKE ? OR title LIKE ?";
+                    selectionArgs = new String[] {
+                            "%" + text + "%",
+                            "%" + text + "%",
+                            "%" + text + "%",
+                            "%" + text + "%"
+                    };
                 }
                 // TODO: crashing on screen rotate
-                return getContentResolver().query(BottlesContentProvider.CONTENT_URI, null, selection, null, null);
+                return getContentResolver().query(BottlesContentProvider.CONTENT_URI, null, selection, selectionArgs, null);
             }
         });
     }

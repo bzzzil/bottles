@@ -1,5 +1,6 @@
 package io.bzzzil.bottles;
 
+import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,8 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FilterQueryProvider;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import io.bzzzil.bottles.database.BottlesContentProvider;
@@ -31,6 +35,9 @@ public class BottleAddActivity extends AppCompatActivity {
 
         Button addButton = (Button)findViewById(R.id.button_add_bottle);
 
+        /**
+         * Read info about bottle
+         */
         Intent callingIntent = getIntent();
         if (callingIntent.hasExtra("id")) {
             id = callingIntent.getLongExtra("id", 0);
@@ -82,6 +89,83 @@ public class BottleAddActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * "Types" dropdown population
+         */
+        AutoCompleteTextView editType = (AutoCompleteTextView)findViewById(R.id.editType);
+        SimpleCursorAdapter typesAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_dropdown_item_1line, null,
+                new String[] { BottlesTable.COLUMN_TYPE },
+                new int[] { android.R.id.text1}, 0);
+        typesAdapter.setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence constraint) {
+                String select = BottlesTable.COLUMN_TYPE + " LIKE ? ";
+                String[] selectArgs = { "%" + constraint + "%" };
+                String[] projection = {
+                        BottlesTable.COLUMN_ID, BottlesTable.COLUMN_TYPE
+                };
+                return getContentResolver().query(BottlesContentProvider.TYPES_URI, projection, select, selectArgs, null);
+            }
+        });
+        typesAdapter.setCursorToStringConverter(new SimpleCursorAdapter.CursorToStringConverter() {
+            @Override
+            public CharSequence convertToString(Cursor cursor) {
+                return cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TYPE));
+            }
+        });
+        editType.setAdapter(typesAdapter);
+
+        /**
+         * "Countires" dropdown population
+         */
+        AutoCompleteTextView editCountry = (AutoCompleteTextView)findViewById(R.id.editCountry);
+        SimpleCursorAdapter countriesAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_dropdown_item_1line, null,
+                new String[] { BottlesTable.COLUMN_COUNTRY },
+                new int[] { android.R.id.text1}, 0);
+        countriesAdapter.setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence constraint) {
+                String select = BottlesTable.COLUMN_COUNTRY + " LIKE ? ";
+                String[] selectArgs = { "%" + constraint + "%" };
+                String[] projection = {
+                        BottlesTable.COLUMN_ID, BottlesTable.COLUMN_COUNTRY
+                };
+                return getContentResolver().query(BottlesContentProvider.COUNTRIES_URI, projection, select, selectArgs, null);
+            }
+        });
+        countriesAdapter.setCursorToStringConverter(new SimpleCursorAdapter.CursorToStringConverter() {
+            @Override
+            public CharSequence convertToString(Cursor cursor) {
+                return cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_COUNTRY));
+            }
+        });
+        editCountry.setAdapter(countriesAdapter);
+
+        /**
+         * "Manufacturers" dropdown population
+         */
+        AutoCompleteTextView editManufacturer = (AutoCompleteTextView)findViewById(R.id.editManufacturer);
+        SimpleCursorAdapter manufacturersAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_dropdown_item_1line, null,
+                new String[] { BottlesTable.COLUMN_MANUFACTURER },
+                new int[] { android.R.id.text1}, 0);
+        manufacturersAdapter.setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence constraint) {
+                String select = BottlesTable.COLUMN_MANUFACTURER + " LIKE ? ";
+                String[] selectArgs = { "%" + constraint + "%" };
+                String[] projection = {
+                        BottlesTable.COLUMN_ID, BottlesTable.COLUMN_MANUFACTURER
+                };
+                return getContentResolver().query(BottlesContentProvider.MANUFACTURERS_URI, projection, select, selectArgs, null);
+            }
+        });
+        manufacturersAdapter.setCursorToStringConverter(new SimpleCursorAdapter.CursorToStringConverter() {
+            @Override
+            public CharSequence convertToString(Cursor cursor) {
+                return cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_MANUFACTURER));
+            }
+        });
+        editManufacturer.setAdapter(manufacturersAdapter);
     }
 
     /**
@@ -90,12 +174,12 @@ public class BottleAddActivity extends AppCompatActivity {
     private void addOrUpdateBottle()
     {
         ContentValues values = new ContentValues();
-        values.put(BottlesTable.COLUMN_TYPE, ((EditText)findViewById(R.id.editType)).getText().toString());
-        values.put(BottlesTable.COLUMN_COUNTRY, ((EditText)findViewById(R.id.editCountry)).getText().toString());
-        values.put(BottlesTable.COLUMN_MANUFACTURER, ((EditText)findViewById(R.id.editManufacturer)).getText().toString());
+        values.put(BottlesTable.COLUMN_TYPE, ((EditText) findViewById(R.id.editType)).getText().toString());
+        values.put(BottlesTable.COLUMN_COUNTRY, ((EditText) findViewById(R.id.editCountry)).getText().toString());
+        values.put(BottlesTable.COLUMN_MANUFACTURER, ((EditText) findViewById(R.id.editManufacturer)).getText().toString());
         values.put(BottlesTable.COLUMN_TITLE, ((EditText)findViewById(R.id.editTitle)).getText().toString());
         values.put(BottlesTable.COLUMN_VOLUME, ((EditText)findViewById(R.id.editVolume)).getText().toString());
-        values.put(BottlesTable.COLUMN_DEGREE, ((EditText)findViewById(R.id.editDegree)).getText().toString());
+        values.put(BottlesTable.COLUMN_DEGREE, ((EditText) findViewById(R.id.editDegree)).getText().toString());
 
         if (id != 0) {
             // Update existing item
