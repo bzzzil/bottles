@@ -30,5 +30,7 @@ public class StatisticsActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.statistics_total_bottles_value)).setText(totalBottles);
         ((TextView)findViewById(R.id.statistics_total_liters_value)).setText(totalLitres);
         ((TextView)findViewById(R.id.statistics_average_degree_value)).setText(averageDegree);
+
+        cursor.close();
     }
 }
