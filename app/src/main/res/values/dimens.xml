@@ -4,4 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="bottles_list_item_title">10pt</dimen>
     <dimen name="bottles_list_item_details">6pt</dimen>
+    <dimen name="statistics_item_name">10pt</dimen>
+    <dimen name="statistics_item_value">36pt</dimen>
 </resources>

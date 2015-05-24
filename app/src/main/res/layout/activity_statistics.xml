@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="io.bzzzil.bottles.StatisticsActivity">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView android:text="@string/statistics_total_bottles" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/statistics_total_bottles"
+                android:gravity="center"
+                android:textSize="@dimen/statistics_item_name"/>
+
+            <TextView android:text="123" android:layout_width="match_parent"
+                android:textAlignment="center" android:layout_height="wrap_content"
+                android:id="@+id/statistics_total_bottles_value"
+                android:layout_below="@+id/statistics_total_bottles"
+                android:gravity="center"
+                android:textColor="@color/material_blue_grey_800"
+                android:textSize="@dimen/statistics_item_value"/>
+
+            <TextView android:text="@string/statistics_total_liters" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/statistics_total_liters"
+                android:layout_below="@+id/statistics_total_bottles_value"
+                android:gravity="center"
+                android:textSize="@dimen/statistics_item_name"/>
+
+            <TextView android:text="123" android:layout_width="match_parent"
+                android:textAlignment="center" android:layout_height="wrap_content"
+                android:id="@+id/statistics_total_liters_value"
+                android:layout_below="@+id/statistics_total_liters"
+                android:gravity="center"
+                android:textColor="@color/material_blue_grey_800"
+                android:textSize="@dimen/statistics_item_value"/>
+
+            <TextView android:text="@string/statistics_average_degree" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/statistics_average_degree"
+                android:layout_below="@+id/statistics_total_liters_value"
+                android:gravity="center"
+                android:textSize="@dimen/statistics_item_name"/>
+
+            <TextView android:text="123" android:layout_width="match_parent"
+                android:textAlignment="center" android:layout_height="wrap_content"
+                android:id="@+id/statistics_average_degree_value"
+                android:layout_below="@+id/statistics_average_degree"
+                android:gravity="center"
+                android:textColor="@color/material_blue_grey_800"
+                android:textSize="@dimen/statistics_item_value"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

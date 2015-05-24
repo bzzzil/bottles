@@ -169,6 +169,9 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
 
         //noinspection SimplifiableIfStatement
         switch (id) {
+            case R.id.action_statistics:
+                startActivity(new Intent(this, StatisticsActivity.class));
+                return true;
             case R.id.action_add_bottle:
                 startActivity(new Intent(this, BottleAddActivity.class));
                 return true;

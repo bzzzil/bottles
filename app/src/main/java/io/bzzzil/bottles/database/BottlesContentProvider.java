@@ -21,7 +21,8 @@ public class BottlesContentProvider extends ContentProvider {
     private static final int TYPES = 20;
     private static final int COUNTRIES = 30;
     private static final int MANUFACTURERS = 40;
-    private static final int BOTTLE_ID = 50;
+    private static final int STATISTICS = 50;
+    private static final int BOTTLE_ID = 60;
 
 
     private static final String AUTHORITY = "io.bzzzil.bottles.contentprovider";
@@ -34,6 +35,8 @@ public class BottlesContentProvider extends ContentProvider {
 
     private static final String MANUFACTURERS_PATH = BASE_PATH + "/manufacturers";
 
+    private static final String STATISTICS_PATH = BASE_PATH + "/statistics";
+
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
 
     public static final Uri TYPES_URI = Uri.parse( "content://" + AUTHORITY + "/" + TYPES_PATH );
@@ -41,6 +44,8 @@ public class BottlesContentProvider extends ContentProvider {
     public static final Uri COUNTRIES_URI = Uri.parse( "content://" + AUTHORITY + "/" + COUNTRIES_PATH );
 
     public static final Uri MANUFACTURERS_URI = Uri.parse( "content://" + AUTHORITY + "/" + MANUFACTURERS_PATH );
+
+    public static final Uri STATISTICS_URI = Uri.parse( "content://" + AUTHORITY + "/" + STATISTICS_PATH );
 
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/bottles";
 
@@ -52,6 +57,7 @@ public class BottlesContentProvider extends ContentProvider {
         sURIMatcher.addURI(AUTHORITY, TYPES_PATH, TYPES);
         sURIMatcher.addURI(AUTHORITY, COUNTRIES_PATH, COUNTRIES);
         sURIMatcher.addURI(AUTHORITY, MANUFACTURERS_PATH, MANUFACTURERS);
+        sURIMatcher.addURI(AUTHORITY, STATISTICS_PATH, STATISTICS);
         sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", BOTTLE_ID);
     }
 
@@ -86,6 +92,9 @@ public class BottlesContentProvider extends ContentProvider {
                 break;
             case MANUFACTURERS:
                 cursor = queryBuilder.query(sqlite, projection, selection, selectionArgs, BottlesTable.COLUMN_MANUFACTURER, null, sortOrder);
+                break;
+            case STATISTICS:
+                cursor = sqlite.rawQuery("SELECT COUNT(*) AS total, SUM(volume)/1000 AS litres, AVG(degree) AS degree FROM " + BottlesTable.TABLE_BOTTLES, null);
                 break;
             case BOTTLE_ID:
                 queryBuilder.appendWhere(BottlesTable.COLUMN_ID + "=" + uri.getLastPathSegment());

@@ -1,6 +1,5 @@
 package io.bzzzil.bottles;
 
-import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
