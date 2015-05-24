@@ -8,19 +8,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import java.io.InputStream;
@@ -76,6 +78,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                 startActivity(intent);
             }
         });
+        registerForContextMenu(bottlesList);
         adapter.setFilterQueryProvider(new FilterQueryProvider() {
             @Override
             public Cursor runQuery(CharSequence constraint) {
@@ -98,6 +101,57 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
         });
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        switch (v.getId()) {
+            case R.id.listViewBottles:
+                MenuInflater inflater = getMenuInflater();
+                inflater.inflate(R.menu.menu_bottle_details, menu);
+                break;
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        Log.d(TAG, "Context menu for item " + info.id);
+        final Uri bottleUri = Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + info.id);
+
+        Cursor cursor = getContentResolver().query(bottleUri, null, null, null, null);
+        cursor.moveToFirst();
+
+        switch (item.getItemId()) {
+            case R.id.action_edit_bottle:
+                Intent intent = new Intent(getApplicationContext(), BottleAddActivity.class);
+                intent.putExtra("id", info.id);
+                startActivity(intent);
+                return true;
+            case R.id.action_delete_bottle:
+                String title = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE));
+                new AlertDialog.Builder(this)
+                        .setTitle("Delete bottle")
+                        .setMessage("Are you sure you want to remove " + title + " from collection ? ")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                getContentResolver().delete(Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + info.id), null, null);
+                                Toast.makeText(BottlesListActivity.this, "Bottle was deleted", Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -145,8 +199,9 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                 Intent intent = Intent.createChooser(chooseFile, "Choose a file for import");
                 startActivityForResult(intent, ACTIVITY_CHOOSE_FILE);
                 return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
