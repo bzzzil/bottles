@@ -26,6 +26,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import io.bzzzil.bottles.database.BottlesContentProvider;
 import io.bzzzil.bottles.database.BottlesTable;
@@ -82,21 +85,29 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
         adapter.setFilterQueryProvider(new FilterQueryProvider() {
             @Override
             public Cursor runQuery(CharSequence constraint) {
-                // Fill data
-                String selection = null;
-                String[] selectionArgs = null;
-                if (constraint.length() > 0) {
-                    String text = searchBox.getText().toString();
-                    selection = "type LIKE ? OR country LIKE ? OR manufacturer LIKE ? OR title LIKE ?";
-                    selectionArgs = new String[]{
-                            "%" + text + "%",
-                            "%" + text + "%",
-                            "%" + text + "%",
-                            "%" + text + "%"
-                    };
+                // Create query from search string
+                String[] searchWords = constraint.toString().split("\\s+");
+
+                StringBuilder selection = new StringBuilder();
+                List<String> selectionArgs = new ArrayList<>();
+
+                for (String word : searchWords) {
+                    word = word.trim();
+                    if (word.length() > 0) {
+                        if (selection.length() > 0) {
+                            selection.append(" AND ");
+                        }
+                        selection.append("(type LIKE ? OR country LIKE ? OR manufacturer LIKE ? OR title LIKE ?)");
+                        selectionArgs.add("%" + word + "%");
+                        selectionArgs.add("%" + word + "%");
+                        selectionArgs.add("%" + word + "%");
+                        selectionArgs.add("%" + word + "%");
+                    }
                 }
                 // TODO: crashing on screen rotate
-                return getContentResolver().query(BottlesContentProvider.CONTENT_URI, null, selection, selectionArgs, null);
+                String[] selectionArgsArray = new String[selectionArgs.size()];
+                selectionArgs.toArray(selectionArgsArray);
+                return getContentResolver().query(BottlesContentProvider.CONTENT_URI, null, selection.toString(), selectionArgsArray, null);
             }
         });
     }

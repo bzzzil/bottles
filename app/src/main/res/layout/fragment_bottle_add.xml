@@ -34,6 +34,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
+                android:nextFocusForward="@+id/editCountry"
                 android:inputType="text" />
 
             <TextView
@@ -52,6 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/editCountry"
+                android:nextFocusForward="@+id/editManufacturer"
                 android:layout_below="@+id/textView_column_country"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
@@ -75,6 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/editManufacturer"
+                android:nextFocusForward="@+id/editTitle"
                 android:layout_below="@+id/textView_column_manufacturer"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
@@ -98,6 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/editTitle"
+                android:nextFocusForward="@+id/editVolume"
                 android:layout_below="@+id/textView_column_title"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
@@ -121,6 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/editVolume"
+                android:nextFocusForward="@+id/editDegree"
                 android:layout_below="@+id/textView_column_volume"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
