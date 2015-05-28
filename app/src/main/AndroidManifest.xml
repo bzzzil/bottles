@@ -12,7 +12,8 @@
             android:name=".BottlesListActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
