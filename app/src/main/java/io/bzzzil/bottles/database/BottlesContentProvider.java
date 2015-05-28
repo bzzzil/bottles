@@ -9,12 +9,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.util.Arrays;
 import java.util.HashSet;
 
 public class BottlesContentProvider extends ContentProvider {
     private BottlesSQLiteHelper db;
+
+    private static final String TAG = "BottlesContentProvider";
 
     // Used for UriMatcher
     private static final int BOTTLES = 10;
@@ -85,18 +88,23 @@ public class BottlesContentProvider extends ContentProvider {
             case BOTTLES:
                 break;
             case TYPES:
+                Log.d(TAG, "Fetch bottle types from url " + uri);
                 cursor = queryBuilder.query(sqlite, projection, selection, selectionArgs, BottlesTable.COLUMN_TYPE, null, sortOrder);
                 break;
             case COUNTRIES:
+                Log.d(TAG, "Fetch bottle countries from url " + uri);
                 cursor = queryBuilder.query(sqlite, projection, selection, selectionArgs, BottlesTable.COLUMN_COUNTRY, null, sortOrder);
                 break;
             case MANUFACTURERS:
+                Log.d(TAG, "Fetch bottle manufacturers from url " + uri);
                 cursor = queryBuilder.query(sqlite, projection, selection, selectionArgs, BottlesTable.COLUMN_MANUFACTURER, null, sortOrder);
                 break;
             case STATISTICS:
+                Log.d(TAG, "Fetch bottle statistics from url " + uri);
                 cursor = sqlite.rawQuery("SELECT COUNT(*) AS total, SUM(volume)/1000 AS litres, AVG(degree) AS degree FROM " + BottlesTable.TABLE_BOTTLES, null);
                 break;
             case BOTTLE_ID:
+                Log.d(TAG, "Fetch bottle details from url " + uri);
                 queryBuilder.appendWhere(BottlesTable.COLUMN_ID + "=" + uri.getLastPathSegment());
                 break;
             default:
@@ -124,6 +132,7 @@ public class BottlesContentProvider extends ContentProvider {
         long id;
         switch (uriType) {
             case BOTTLES:
+                Log.d(TAG, "Insert bottle from url " + uri);
                 id = sqlite.insert(BottlesTable.TABLE_BOTTLES, null, values);
                 break;
             default:
@@ -140,9 +149,11 @@ public class BottlesContentProvider extends ContentProvider {
         int rowsDeleted;
         switch (uriType) {
             case BOTTLES:
+                Log.d(TAG, "Delete bottles from url " + uri);
                 rowsDeleted = sqlite.delete(BottlesTable.TABLE_BOTTLES, selection, selectionArgs);
                 break;
             case BOTTLE_ID:
+                Log.d(TAG, "Delete bottle from url " + uri);
                 String id = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
                     rowsDeleted = sqlite.delete(BottlesTable.TABLE_BOTTLES, BottlesTable.COLUMN_ID + "=" + id, null);
@@ -165,9 +176,11 @@ public class BottlesContentProvider extends ContentProvider {
         int rowsUpdated;
         switch (uriType) {
             case BOTTLES:
+                Log.d(TAG, "Update bottles from url " + uri);
                 rowsUpdated = sqlite.update(BottlesTable.TABLE_BOTTLES, values, selection, selectionArgs);
                 break;
             case BOTTLE_ID:
+                Log.d(TAG, "Update bottle from url " + uri);
                 String id = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
                     rowsUpdated = sqlite.update(BottlesTable.TABLE_BOTTLES, values,

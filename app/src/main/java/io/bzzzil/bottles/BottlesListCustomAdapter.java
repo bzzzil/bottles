@@ -13,7 +13,6 @@ import io.bzzzil.bottles.database.BottlesTable;
 public class BottlesListCustomAdapter extends SimpleCursorAdapter {
 
     private Context context;
-    private Context appContext;
     private int layout;
     private Cursor cursor;
     private final LayoutInflater inflater;

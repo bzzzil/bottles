@@ -7,6 +7,7 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,7 +28,6 @@ import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import io.bzzzil.bottles.database.BottlesContentProvider;
@@ -36,6 +36,12 @@ import io.bzzzil.bottles.database.BottlesTable;
 
 public class BottlesListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String TAG = "BottlesListActivity";
+
+    /**
+     * Name for shared preferences
+     */
+    public static String PREFS = "bottles";
+    public static String PREFS_SEARCH = "search";
 
     private BottlesListCustomAdapter adapter;
 
@@ -86,7 +92,8 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
             @Override
             public Cursor runQuery(CharSequence constraint) {
                 // Create query from search string
-                String[] searchWords = constraint.toString().split("\\s+");
+                Log.d(TAG, "Run filter query \"" + searchBox.getText() + "\"");
+                String[] searchWords = searchBox.getText().toString().split("\\s+");
 
                 StringBuilder selection = new StringBuilder();
                 List<String> selectionArgs = new ArrayList<>();
@@ -110,6 +117,13 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                 return getContentResolver().query(BottlesContentProvider.CONTENT_URI, null, selection.toString(), selectionArgsArray, null);
             }
         });
+
+        // Restore shared preferences
+        SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
+        String searchValue = prefs.getString(PREFS_SEARCH, null);
+        if (searchValue != null) {
+            searchBox.setText(searchValue);
+        }
     }
 
     @Override
@@ -124,14 +138,23 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
     }
 
     @Override
+    protected void onDestroy() {
+        SharedPreferences.Editor editor = getSharedPreferences(PREFS, MODE_PRIVATE).edit();
+        editor.putString(PREFS_SEARCH, searchBox.getText().toString());
+        editor.commit();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        refreshBottlesList();
+        super.onResume();
+    }
+
+    @Override
     public boolean onContextItemSelected(MenuItem item) {
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         Log.d(TAG, "Context menu for item " + info.id);
-        final Uri bottleUri = Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + info.id);
-
-        Cursor cursor = getContentResolver().query(bottleUri, null, null, null, null);
-        cursor.moveToFirst();
-
         switch (item.getItemId()) {
             case R.id.action_edit_bottle:
                 Intent intent = new Intent(getApplicationContext(), BottleAddActivity.class);
@@ -139,6 +162,9 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                 startActivity(intent);
                 return true;
             case R.id.action_delete_bottle:
+                final Uri bottleUri = Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + info.id);
+                Cursor cursor = getContentResolver().query(bottleUri, null, null, null, null);
+                cursor.moveToFirst();
                 String title = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE));
                 new AlertDialog.Builder(this)
                         .setTitle("Delete bottle")
@@ -147,6 +173,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 getContentResolver().delete(Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + info.id), null, null);
+                                refreshBottlesList();
                                 Toast.makeText(BottlesListActivity.this, "Bottle was deleted", Toast.LENGTH_LONG).show();
                             }
                         })
@@ -158,6 +185,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
+                cursor.close();
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -195,7 +223,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                             public void onClick(DialogInterface dialog, int which) {
                                 getContentResolver().delete(BottlesContentProvider.CONTENT_URI, null, null);
                                 Toast.makeText(BottlesListActivity.this, "Bottles were deleted", Toast.LENGTH_LONG).show();
-                                adapter.notifyDataSetChanged();
+                                refreshBottlesList();
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -291,6 +319,12 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
         Log.d(TAG, "Scanner complete");
         scanner.close();
         Toast.makeText(BottlesListActivity.this, "Imported " + imported + " new bottles", Toast.LENGTH_LONG).show();
+        refreshBottlesList();
+    }
+
+    private void refreshBottlesList()
+    {
+        adapter.getFilter().filter("");
         adapter.notifyDataSetChanged();
     }
 }
