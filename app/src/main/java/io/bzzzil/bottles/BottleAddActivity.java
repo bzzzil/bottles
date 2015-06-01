@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import io.bzzzil.bottles.database.BottlesContentProvider;
 import io.bzzzil.bottles.database.BottlesTable;
+import io.bzzzil.bottles.database.CountriesTable;
 
 
 public class BottleAddActivity extends AppCompatActivity {
@@ -118,24 +119,22 @@ public class BottleAddActivity extends AppCompatActivity {
          * "Countires" dropdown population
          */
         AutoCompleteTextView editCountry = (AutoCompleteTextView)findViewById(R.id.editCountry);
-        SimpleCursorAdapter countriesAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_dropdown_item_1line, null,
-                new String[] { BottlesTable.COLUMN_COUNTRY },
-                new int[] { android.R.id.text1}, 0);
+        SimpleCursorAdapter countriesAdapter = new SimpleCursorAdapter(this, R.layout.country_row, null,
+                new String[] { CountriesTable.COLUMN_NAME, CountriesTable.COLUMN_FLAG_RESOURCE_ID },
+                new int[] { R.id.country_name, R.id.country_flag }, 0);
         countriesAdapter.setFilterQueryProvider(new FilterQueryProvider() {
             @Override
             public Cursor runQuery(CharSequence constraint) {
-                String select = BottlesTable.COLUMN_COUNTRY + " LIKE ? ";
+                String select = CountriesTable.COLUMN_NAME + " LIKE ? ";
                 String[] selectArgs = { "%" + constraint + "%" };
-                String[] projection = {
-                        BottlesTable.COLUMN_ID, BottlesTable.COLUMN_COUNTRY
-                };
+                String[] projection = { CountriesTable.COLUMN_ID, CountriesTable.COLUMN_NAME, CountriesTable.COLUMN_FLAG_RESOURCE_ID };
                 return getContentResolver().query(BottlesContentProvider.COUNTRIES_URI, projection, select, selectArgs, null);
             }
         });
         countriesAdapter.setCursorToStringConverter(new SimpleCursorAdapter.CursorToStringConverter() {
             @Override
             public CharSequence convertToString(Cursor cursor) {
-                return cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_COUNTRY));
+                return cursor.getString(cursor.getColumnIndexOrThrow(CountriesTable.COLUMN_NAME));
             }
         });
         editCountry.setAdapter(countriesAdapter);

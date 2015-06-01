@@ -75,9 +75,6 @@ public class BottlesContentProvider extends ContentProvider {
         // Using SQLite query builder instead of query() method
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
-        // Check if requested column exist
-        checkColumns(projection);
-
         queryBuilder.setTables(BottlesTable.TABLE_BOTTLES);
 
         SQLiteDatabase sqlite = db.getWritableDatabase();
@@ -93,7 +90,8 @@ public class BottlesContentProvider extends ContentProvider {
                 break;
             case COUNTRIES:
                 Log.d(TAG, "Fetch bottle countries from url " + uri);
-                cursor = queryBuilder.query(sqlite, projection, selection, selectionArgs, BottlesTable.COLUMN_COUNTRY, null, sortOrder);
+                queryBuilder.setTables(CountriesTable.TABLE_COUNTRIES);
+                cursor = queryBuilder.query(sqlite, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case MANUFACTURERS:
                 Log.d(TAG, "Fetch bottle manufacturers from url " + uri);
@@ -195,26 +193,5 @@ public class BottlesContentProvider extends ContentProvider {
         }
         getContext().getContentResolver().notifyChange(uri, null);
         return rowsUpdated;
-    }
-
-    private void checkColumns(String[] projection) {
-        String[] available = {
-                BottlesTable.COLUMN_ID,
-                BottlesTable.COLUMN_TYPE,
-                BottlesTable.COLUMN_COUNTRY,
-                BottlesTable.COLUMN_MANUFACTURER,
-                BottlesTable.COLUMN_TITLE,
-                BottlesTable.COLUMN_VOLUME,
-                BottlesTable.COLUMN_DEGREE
-        };
-
-        if (projection != null) {
-            HashSet<String> requestedColumns = new HashSet<>(Arrays.asList(projection));
-            HashSet<String> availableColumns = new HashSet<>(Arrays.asList(available));
-
-            if (!availableColumns.containsAll(requestedColumns)) {
-                throw new IllegalArgumentException("Unknown columns in projection");
-            }
-        }
     }
 }
