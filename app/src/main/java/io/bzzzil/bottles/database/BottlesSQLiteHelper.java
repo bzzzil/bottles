@@ -16,7 +16,7 @@ public class BottlesSQLiteHelper extends SQLiteOpenHelper {
     /**
      * Database version
      */
-    private static final int DATABASE_VERSION = 16;
+    private static final int DATABASE_VERSION = 17;
 
     public BottlesSQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -167,7 +167,7 @@ public class BottlesSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('MC', 'Monaco', " + R.drawable.monaco + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('MN', 'Mongolia', " + R.drawable.mongolia + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('MS', 'Montserrat', " + R.drawable.montserrat + ")");
-        //db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('ME', 'Montenegro', " + R.drawable.Montenegro + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('ME', 'Montenegro', " + R.drawable.no_flag + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('MA', 'Morocco', " + R.drawable.morocco + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('MZ', 'Mozambique', " + R.drawable.mozambique + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('MM', 'Myanmar (Burma)', " + R.drawable.myanmar + ")");
@@ -207,7 +207,7 @@ public class BottlesSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('ST', 'Sao Tome and Principe', " + R.drawable.sao_tome_and_principe + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('SA', 'Saudi Arabia', " + R.drawable.saudi_arabia + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('SN', 'Senegal', " + R.drawable.senegal + ")");
-        //db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('RS', 'Serbia', " + R.drawable.Serbia + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('RS', 'Serbia', " + R.drawable.no_flag + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('SC', 'Seychelles', " + R.drawable.seychelles + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('SL', 'Sierra Leone', " + R.drawable.sierra_leone + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('SG', 'Singapore', " + R.drawable.singapore + ")");
@@ -252,58 +252,34 @@ public class BottlesSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('YE', 'Yemen', " + R.drawable.yemen + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('ZM', 'Zambia', " + R.drawable.zambia + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('ZW', 'Zimbabwe', " + R.drawable.zimbabwe + ")");
-/*        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('GE', 'Abkhazia', " + R.drawable.Abkhazia + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AZ', 'Nagorno-Karabakh', " + R.drawable.Nagorno-Karabakh + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('CY', 'Northern Cyprus', " + R.drawable.Northern Cyprus + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('MD', 'Pridnestrovie (Transnistria);Pridnestrovie (Transnistria) + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('SO', 'Somaliland', " + R.drawable.Somaliland + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('GE', 'South Ossetia', " + R.drawable.South Ossetia + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AU', 'Ashmore and Cartier Islands', " + R.drawable.Ashmore and Cartier Islands + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('CC', 'Cocos (Keeling) Islands', " + R.drawable.Cocos (Keeling) Islands + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AU', 'Coral Sea Islands', " + R.drawable.Coral Sea Islands + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('HM', 'Heard Island and McDonald Islands', " + R.drawable.Heard Island and McDonald Islands + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('NC', 'New Caledonia', " + R.drawable.New Caledonia + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('YT', 'Mayotte', " + R.drawable.Mayotte + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('GP', 'Saint Barthelemy', " + R.drawable.Saint Barthelemy + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('GP', 'Saint Martin', " + R.drawable.Saint Martin + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('PM', 'Saint Pierre and Miquelon', " + R.drawable.Saint Pierre and Miquelon + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('WF', 'Wallis and Futuna', " + R.drawable.Wallis and Futuna + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('TF', 'French Southern and Antarctic Lands', " + R.drawable.French Southern and Antarctic Lands + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('PF', 'Clipperton Island', " + R.drawable.Clipperton Island + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('BV', 'Bouvet Island', " + R.drawable.Bouvet Island + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('TK', 'Tokelau', " + R.drawable.Tokelau + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('GG', 'Guernsey', " + R.drawable.Guernsey + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('IM', 'Isle of Man', " + R.drawable.Isle of Man + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('JE', 'Jersey', " + R.drawable.Jersey + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AI', 'Anguilla', " + R.drawable.Anguilla + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('BM', 'Bermuda', " + R.drawable.Bermuda + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('IO', 'British Indian Ocean Territory', " + R.drawable.British Indian Ocean Territory + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('KY', 'Cayman Islands', " + R.drawable.Cayman Islands + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('SH', 'Saint Helena', " + R.drawable.Saint Helena + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('GS', 'South Georgia & South Sandwich Islands', " + R.drawable.South Georgia & South Sandwich Islands + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('MP', 'Northern Mariana Islands', " + R.drawable.Northern Mariana Islands + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AS', 'American Samoa', " + R.drawable.American Samoa + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('UM', 'Baker Island', " + R.drawable.Baker Island + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('UM', 'Howland Island', " + R.drawable.Howland Island + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('UM', 'Jarvis Island', " + R.drawable.Jarvis Island + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('UM', 'Johnston Atoll', " + R.drawable.Johnston Atoll + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('UM', 'Kingman Reef', " + R.drawable.Kingman Reef + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('UM', 'Midway Islands', " + R.drawable.Midway Islands + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('UM', 'Navassa Island', " + R.drawable.Navassa Island + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('UM', 'Palmyra Atoll', " + R.drawable.Palmyra Atoll + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('UM', 'Wake Island', " + R.drawable.Wake Island + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('GF', 'French Guiana', " + R.drawable.French Guiana + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('GP', 'Guadeloupe', " + R.drawable.Guadeloupe + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('RE', 'Reunion', " + R.drawable.Reunion + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AX', 'Aland', " + R.drawable.Aland + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AW', 'Aruba', " + R.drawable.Aruba + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('SJ', 'Svalbard', " + R.drawable.Svalbard + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AC', 'Ascension', " + R.drawable.Ascension + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('TA', 'Tristan da Cunha', " + R.drawable.Tristan da Cunha + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AQ', 'Australian Antarctic Territory', " + R.drawable.Australian Antarctic Territory + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AQ', 'Ross Dependency', " + R.drawable.Ross Dependency + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AQ', 'Peter I Island', " + R.drawable.Peter I Island + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AQ', 'Queen Maud Land', " + R.drawable.Queen Maud Land + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AQ', 'British Antarctic Territory', " + R.drawable.British Antarctic Territory + ")");*/
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('CC', 'Cocos (Keeling) Islands', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('HM', 'Heard Island and McDonald Islands', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('NC', 'New Caledonia', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('YT', 'Mayotte', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('PM', 'Saint Pierre and Miquelon', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('WF', 'Wallis and Futuna', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('TF', 'French Southern and Antarctic Lands', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('BV', 'Bouvet Island', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('TK', 'Tokelau', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('GG', 'Guernsey', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('IM', 'Isle of Man', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('JE', 'Jersey', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AI', 'Anguilla', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('BM', 'Bermuda', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('IO', 'British Indian Ocean Territory', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('KY', 'Cayman Islands', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('SH', 'Saint Helena', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('GS', 'South Georgia & South Sandwich Islands', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('MP', 'Northern Mariana Islands', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AS', 'American Samoa', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('UM', 'Baker Island', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('GF', 'French Guiana', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('GP', 'Guadeloupe', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('RE', 'Reunion', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AX', 'Aland', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AW', 'Aruba', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('SJ', 'Svalbard', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AC', 'Ascension', " + R.drawable.no_flag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('TA', 'Tristan da Cunha', " + R.drawable.no_flag + ")");
     }
 }
