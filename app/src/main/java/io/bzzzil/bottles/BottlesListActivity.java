@@ -122,7 +122,8 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
         SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
         String searchValue = prefs.getString(PREFS_SEARCH, null);
         if (searchValue != null) {
-            searchBox.setText(searchValue);
+            searchBox.setText("");
+            searchBox.append(searchValue);
         }
     }
 
@@ -141,7 +142,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
     protected void onDestroy() {
         SharedPreferences.Editor editor = getSharedPreferences(PREFS, MODE_PRIVATE).edit();
         editor.putString(PREFS_SEARCH, searchBox.getText().toString());
-        editor.commit();
+        editor.apply();
         super.onDestroy();
     }
 
