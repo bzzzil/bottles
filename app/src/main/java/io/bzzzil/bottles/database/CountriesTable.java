@@ -52,6 +52,8 @@ public class CountriesTable {
 
     private static void insertCountries(SQLiteDatabase db)
     {
+        //db.beginTransaction();
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('CI', '" + BottlesApplication.getContext().getString(R.string.country_cote_divoire) + "', " + R.drawable.cote_divoire + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AF', '" + BottlesApplication.getContext().getString(R.string.country_afghanistan) + "', " + R.drawable.afghanistan + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AL', '" + BottlesApplication.getContext().getString(R.string.country_albania) + "', " + R.drawable.albania + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('DZ', '" + BottlesApplication.getContext().getString(R.string.country_algeria) + "', " + R.drawable.algeria + ")");
@@ -96,7 +98,6 @@ public class CountriesTable {
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('KM', '" + BottlesApplication.getContext().getString(R.string.country_comoros) + "', " + R.drawable.comoros + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('CK', '" + BottlesApplication.getContext().getString(R.string.country_cook_islands) + "', " + R.drawable.cook_islands + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('CR', '" + BottlesApplication.getContext().getString(R.string.country_costa_rica) + "', " + R.drawable.costa_rica + ")");
-        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('CI', '" + BottlesApplication.getContext().getString(R.string.country_cote_divoire) + "', " + R.drawable.cote_divoire + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('HR', '" + BottlesApplication.getContext().getString(R.string.country_croatia) + "', " + R.drawable.croatia + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('CU', '" + BottlesApplication.getContext().getString(R.string.country_cuba) + "', " + R.drawable.cuba + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('CY', '" + BottlesApplication.getContext().getString(R.string.country_cyprus) + "', " + R.drawable.cyprus + ")");
@@ -295,5 +296,6 @@ public class CountriesTable {
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('SJ', '" + BottlesApplication.getContext().getString(R.string.country_svalbard) + "', " + R.drawable.no_flag + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AC', '" + BottlesApplication.getContext().getString(R.string.country_ascension) + "', " + R.drawable.no_flag + ")");
         db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('TA', '" + BottlesApplication.getContext().getString(R.string.country_tristan_da_cunha) + "', " + R.drawable.no_flag + ")");
+        //db.endTransaction();
     }
 }
