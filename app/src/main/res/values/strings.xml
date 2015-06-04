@@ -13,7 +13,6 @@
     <string name="column_title">Title</string>
     <string name="column_volume">Volume</string>
     <string name="column_degree">Degree</string>
-    <string name="button_add_bottle">Add</string>
     <string name="title_activity_bottle_details">Bottle Details</string>
     <string name="volume_measure_ml">ml</string>
     <string name="volume_measure_l">L</string>

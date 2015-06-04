@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">My Bottles</string>
-    <string name="button_add_bottle">Добавить</string>
     <string name="column_country">Страна</string>
     <string name="column_degree">Градус</string>
     <string name="column_manufacturer">Производитель</string>

@@ -8,10 +8,9 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
 import android.widget.SimpleCursorAdapter;
@@ -32,8 +31,6 @@ public class BottleAddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottle_add);
-
-        Button addButton = (Button)findViewById(R.id.button_add_bottle);
 
         /**
          * Read info about bottle
@@ -74,20 +71,9 @@ public class BottleAddActivity extends AppCompatActivity {
 
                 cursor.close();
             }
-
-            addButton.setText("Save");
         } else {
             bottleUri = BottlesContentProvider.CONTENT_URI;
         }
-
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addOrUpdateBottle();
-                setResult(RESULT_OK);
-                finish();
-            }
-        });
 
         /**
          * "Types" dropdown population
@@ -203,8 +189,20 @@ public class BottleAddActivity extends AppCompatActivity {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
+            case R.id.action_save_bottle:
+                addOrUpdateBottle();
+                setResult(RESULT_OK);
+                finish();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_bottle_add, menu);
+        return true;
     }
 }
