@@ -110,6 +110,7 @@ public class BottlesContentProvider extends ContentProvider {
                 break;
             case TYPES:
                 Log.d(TAG, "Fetch bottle types from url " + uri);
+                queryBuilder.setProjectionMap(sProjectionMapBottles);
                 cursor = queryBuilder.query(sqlite, projection, selection, selectionArgs, BottlesTable.COLUMN_TYPE, null, sortOrder);
                 break;
             case COUNTRIES:
@@ -119,6 +120,7 @@ public class BottlesContentProvider extends ContentProvider {
                 break;
             case MANUFACTURERS:
                 Log.d(TAG, "Fetch bottle manufacturers from url " + uri);
+                queryBuilder.setProjectionMap(sProjectionMapBottles);
                 cursor = queryBuilder.query(sqlite, projection, selection, selectionArgs, BottlesTable.COLUMN_MANUFACTURER, null, sortOrder);
                 break;
             case STATISTICS:
