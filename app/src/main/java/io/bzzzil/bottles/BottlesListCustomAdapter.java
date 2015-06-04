@@ -2,6 +2,9 @@ package io.bzzzil.bottles;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.text.SpannableStringBuilder;
+import android.text.style.DynamicDrawableSpan;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +12,10 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import io.bzzzil.bottles.database.BottlesTable;
+import io.bzzzil.bottles.database.CountriesTable;
 
 public class BottlesListCustomAdapter extends SimpleCursorAdapter {
 
-    private Context context;
     private int layout;
     private Cursor cursor;
     private final LayoutInflater inflater;
@@ -20,7 +23,6 @@ public class BottlesListCustomAdapter extends SimpleCursorAdapter {
     public BottlesListCustomAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
         super(context, layout, c, from, to, flags);
         this.layout = layout;
-        this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.cursor = c;
     }
@@ -44,13 +46,19 @@ public class BottlesListCustomAdapter extends SimpleCursorAdapter {
         int volume = cursor.getInt(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_VOLUME));
         int degree = cursor.getInt(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_DEGREE));
 
-        StringBuilder details = new StringBuilder();
+        SpannableStringBuilder details = new SpannableStringBuilder();
         details.append(type);
 
         if (!country.isEmpty()) {
             if (details.length() > 0) {
                 details.append(", ");
             }
+            int flag_resource = cursor.getInt(cursor.getColumnIndexOrThrow(CountriesTable.COLUMN_FLAG_RESOURCE_ID));
+            if ( flag_resource != 0 && flag_resource != R.drawable.no_flag ) {
+                // Flag resource exists and is not "no flag"
+                details.append(" ", new ImageSpan(context, flag_resource, DynamicDrawableSpan.ALIGN_BASELINE), 0);
+            }
+            details.append(" ");
             details.append(country);
         }
 
@@ -58,7 +66,7 @@ public class BottlesListCustomAdapter extends SimpleCursorAdapter {
             if (details.length() > 0) {
                 details.append(", ");
             }
-            details.append(volume);
+            details.append("" + volume);
             details.append(" ");
             details.append(context.getString(R.string.volume_measure_ml));
         }
@@ -67,7 +75,7 @@ public class BottlesListCustomAdapter extends SimpleCursorAdapter {
             if (details.length() > 0) {
                 details.append(", ");
             }
-            details.append(degree);
+            details.append("" + degree);
             details.append(context.getString(R.string.degree_measure_percent));
         }
 

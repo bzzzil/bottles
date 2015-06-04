@@ -11,8 +11,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.HashMap;
 
 public class BottlesContentProvider extends ContentProvider {
     private BottlesSQLiteHelper db;
@@ -64,6 +63,26 @@ public class BottlesContentProvider extends ContentProvider {
         sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", BOTTLE_ID);
     }
 
+    private static final HashMap<String, String> sProjectionMapBottles = new HashMap<>();
+    static {
+        sProjectionMapBottles.put(BottlesTable.COLUMN_ID, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_ID);
+        sProjectionMapBottles.put(BottlesTable.COLUMN_TYPE, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_TYPE);
+        sProjectionMapBottles.put(BottlesTable.COLUMN_COUNTRY, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_COUNTRY);
+        sProjectionMapBottles.put(BottlesTable.COLUMN_MANUFACTURER, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_MANUFACTURER);
+        sProjectionMapBottles.put(BottlesTable.COLUMN_TITLE, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_TITLE);
+        sProjectionMapBottles.put(BottlesTable.COLUMN_VOLUME, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_VOLUME);
+        sProjectionMapBottles.put(BottlesTable.COLUMN_DEGREE, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_DEGREE);
+
+        sProjectionMapBottles.put(CountriesTable.COLUMN_FLAG_RESOURCE_ID, CountriesTable.TABLE_COUNTRIES + "." + CountriesTable.COLUMN_FLAG_RESOURCE_ID);
+    }
+
+    private static final HashMap<String, String> sProjectionMapCountries = new HashMap<>();
+    static {
+        sProjectionMapCountries.put(CountriesTable.COLUMN_ID, CountriesTable.TABLE_COUNTRIES+ "." + CountriesTable.COLUMN_ID);
+        sProjectionMapCountries.put(CountriesTable.COLUMN_NAME, CountriesTable.TABLE_COUNTRIES + "." + CountriesTable.COLUMN_NAME);
+        sProjectionMapCountries.put(CountriesTable.COLUMN_FLAG_RESOURCE_ID, CountriesTable.TABLE_COUNTRIES + "." + CountriesTable.COLUMN_FLAG_RESOURCE_ID);
+    }
+
     @Override
     public boolean onCreate() {
         db = new BottlesSQLiteHelper(getContext());
@@ -75,7 +94,10 @@ public class BottlesContentProvider extends ContentProvider {
         // Using SQLite query builder instead of query() method
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
-        queryBuilder.setTables(BottlesTable.TABLE_BOTTLES);
+        queryBuilder.setTables(BottlesTable.TABLE_BOTTLES +
+                " LEFT OUTER JOIN "  + CountriesTable.TABLE_COUNTRIES + " ON " +
+                BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_COUNTRY + " = " +
+                CountriesTable.TABLE_COUNTRIES + "." + CountriesTable.COLUMN_NAME);
 
         SQLiteDatabase sqlite = db.getWritableDatabase();
         Cursor cursor = null;
@@ -83,6 +105,8 @@ public class BottlesContentProvider extends ContentProvider {
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
             case BOTTLES:
+                Log.d(TAG, "Fetch bottles list from url " + uri);
+                queryBuilder.setProjectionMap(sProjectionMapBottles);
                 break;
             case TYPES:
                 Log.d(TAG, "Fetch bottle types from url " + uri);
@@ -90,8 +114,8 @@ public class BottlesContentProvider extends ContentProvider {
                 break;
             case COUNTRIES:
                 Log.d(TAG, "Fetch bottle countries from url " + uri);
-                queryBuilder.setTables(CountriesTable.TABLE_COUNTRIES);
-                cursor = queryBuilder.query(sqlite, projection, selection, selectionArgs, null, null, sortOrder);
+                queryBuilder.setProjectionMap(sProjectionMapBottles);
+                cursor = queryBuilder.query(sqlite, projection, selection, selectionArgs, BottlesTable.COLUMN_COUNTRY, null, sortOrder);
                 break;
             case MANUFACTURERS:
                 Log.d(TAG, "Fetch bottle manufacturers from url " + uri);
@@ -103,7 +127,8 @@ public class BottlesContentProvider extends ContentProvider {
                 break;
             case BOTTLE_ID:
                 Log.d(TAG, "Fetch bottle details from url " + uri);
-                queryBuilder.appendWhere(BottlesTable.COLUMN_ID + "=" + uri.getLastPathSegment());
+                queryBuilder.appendWhere(BottlesTable.FULL_ID + "=" + uri.getLastPathSegment());
+                queryBuilder.setProjectionMap(sProjectionMapBottles);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -154,9 +179,9 @@ public class BottlesContentProvider extends ContentProvider {
                 Log.d(TAG, "Delete bottle from url " + uri);
                 String id = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
-                    rowsDeleted = sqlite.delete(BottlesTable.TABLE_BOTTLES, BottlesTable.COLUMN_ID + "=" + id, null);
+                    rowsDeleted = sqlite.delete(BottlesTable.TABLE_BOTTLES, BottlesTable.FULL_ID + "=" + id, null);
                 } else {
-                    rowsDeleted = sqlite.delete(BottlesTable.TABLE_BOTTLES, BottlesTable.COLUMN_ID + "=" + id
+                    rowsDeleted = sqlite.delete(BottlesTable.TABLE_BOTTLES, BottlesTable.FULL_ID + "=" + id
                             + " and " + selection, selectionArgs);
                 }
                 break;
@@ -182,10 +207,10 @@ public class BottlesContentProvider extends ContentProvider {
                 String id = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
                     rowsUpdated = sqlite.update(BottlesTable.TABLE_BOTTLES, values,
-                            BottlesTable.COLUMN_ID + "=" + id, null);
+                            BottlesTable.FULL_ID + "=" + id, null);
                 } else {
                     rowsUpdated = sqlite.update(BottlesTable.TABLE_BOTTLES, values,
-                            BottlesTable.COLUMN_ID + "=" + id + " and " + selection, selectionArgs);
+                            BottlesTable.FULL_ID + "=" + id + " and " + selection, selectionArgs);
                 }
                 break;
             default:

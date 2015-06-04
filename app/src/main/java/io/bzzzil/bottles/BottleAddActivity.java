@@ -120,21 +120,21 @@ public class BottleAddActivity extends AppCompatActivity {
          */
         AutoCompleteTextView editCountry = (AutoCompleteTextView)findViewById(R.id.editCountry);
         SimpleCursorAdapter countriesAdapter = new SimpleCursorAdapter(this, R.layout.country_row, null,
-                new String[] { CountriesTable.COLUMN_NAME, CountriesTable.COLUMN_FLAG_RESOURCE_ID },
+                new String[] { BottlesTable.COLUMN_COUNTRY, CountriesTable.COLUMN_FLAG_RESOURCE_ID },
                 new int[] { R.id.country_name, R.id.country_flag }, 0);
         countriesAdapter.setFilterQueryProvider(new FilterQueryProvider() {
             @Override
             public Cursor runQuery(CharSequence constraint) {
-                String select = CountriesTable.COLUMN_NAME + " LIKE ? ";
-                String[] selectArgs = { "%" + constraint + "%" };
-                String[] projection = { CountriesTable.COLUMN_ID, CountriesTable.COLUMN_NAME, CountriesTable.COLUMN_FLAG_RESOURCE_ID };
+                String select = BottlesTable.COLUMN_COUNTRY + " LIKE ? ";
+                String[] selectArgs = { constraint + "%" };
+                String[] projection = { BottlesTable.COLUMN_ID, BottlesTable.COLUMN_COUNTRY, CountriesTable.COLUMN_FLAG_RESOURCE_ID };
                 return getContentResolver().query(BottlesContentProvider.COUNTRIES_URI, projection, select, selectArgs, null);
             }
         });
         countriesAdapter.setCursorToStringConverter(new SimpleCursorAdapter.CursorToStringConverter() {
             @Override
             public CharSequence convertToString(Cursor cursor) {
-                return cursor.getString(cursor.getColumnIndexOrThrow(CountriesTable.COLUMN_NAME));
+                return cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_COUNTRY));
             }
         });
         editCountry.setAdapter(countriesAdapter);

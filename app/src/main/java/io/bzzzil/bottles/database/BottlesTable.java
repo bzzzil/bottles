@@ -16,6 +16,11 @@ public class BottlesTable {
     public static final String COLUMN_ID = "_id";
 
     /**
+     * Bottles: column "id" full specification
+     */
+    public static final String FULL_ID = TABLE_BOTTLES + "._id";
+
+    /**
      * Bottles: column "type"
      */
     public static final String COLUMN_TYPE = "type";
@@ -26,7 +31,7 @@ public class BottlesTable {
     public static final String COLUMN_COUNTRY = "country";
 
     /**
-     * Bottles: column "manufaturer"
+     * Bottles: column "manufacturer"
      */
     public static final String COLUMN_MANUFACTURER = "manufacturer";
 
@@ -58,7 +63,7 @@ public class BottlesTable {
     }
 
     public static void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(BottlesSQLiteHelper.class.getName(),
+        Log.w(BottlesTable.class.getName(),
                 "Upgrading database from version " + oldVersion + " to " + newVersion
                         + ". ALL DATA WILL BE DESTROYED");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOTTLES);
