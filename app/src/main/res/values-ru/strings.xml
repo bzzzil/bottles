@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Bottles</string>
+    <string name="app_name">Мои бутылочки</string>
     <string name="column_country">Страна</string>
     <string name="column_degree">Градус</string>
     <string name="column_manufacturer">Производитель</string>
@@ -18,8 +18,16 @@
     <string name="statistics_total_bottles">Всего бутылочек</string>
     <string name="statistics_total_liters">Всего литров</string>
     <string name="title_activity_bottle_add">Новая бутылочка</string>
+    <string name="title_activity_bottle_edit">Изменение бутылочки</string>
     <string name="title_activity_bottle_details">О бутылочке</string>
     <string name="title_activity_statistics">Статистика</string>
     <string name="volume_measure_l">л</string>
     <string name="volume_measure_ml">мл</string>
+    <string name="alert_delete">Вы действительно хотите удалить %1$s из коллекции?</string>
+    <string name="alert_delete_all">Вы действительно хотите удалить ВСЕ бутылочки из коллекции? \n\nЭТО ДЕЙСТВИЕ НЕЛЬЗЯ ОТМЕНИТЬ!</string>
+    <string name="toast_all_bottles_deleted">Все бутылочки удалены.\nСкорбим…</string>
+    <string name="toast_bottle_deleted">Бутылочка удалена!</string>
+    <string name="toast_bottle_inserted">Бутылочка добавлена!</string>
+    <string name="toast_bottle_updated">Бутылочка успешно изменена</string>
+    <string name="toast_import_complete">Импортировано %1$d новых бутылочек</string>
 </resources>

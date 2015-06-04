@@ -99,14 +99,21 @@ public class BottleDetailsActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_delete_bottle:
+                // Get bottle info
+                Cursor cursor = getContentResolver().query(bottleUri, null, null, null, null);
+                cursor.moveToFirst();
+                String text = getString(R.string.alert_delete);
+                text = String.format(text, cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE)));
+
+                // Alert
                 new AlertDialog.Builder(this)
-                        .setTitle("Delete bottle")
-                        .setMessage("Are you sure you want to remove this bottle from collection?")
+                        .setTitle(getString(R.string.menu_action_delete_bottle))
+                        .setMessage(text)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 getContentResolver().delete(bottleUri, null, null);
-                                Toast.makeText(BottleDetailsActivity.this, "Bottle was deleted", Toast.LENGTH_LONG).show();
+                                Toast.makeText(BottleDetailsActivity.this, getString(R.string.toast_bottle_deleted), Toast.LENGTH_LONG).show();
                                 finish();
                             }
                         })

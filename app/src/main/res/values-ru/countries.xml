@@ -47,8 +47,8 @@
 	<string name="country_cote_divoire">Cote D\'\'Ivore</string>
 	<string name="country_croatia">Croatia</string>
 	<string name="country_cuba">Куба</string>
-	<string name="country_cyprus">Cyprus</string>
-	<string name="country_czech_republic">Czech Republic</string>
+	<string name="country_cyprus">Кипр</string>
+	<string name="country_czech_republic">Чехия</string>
 	<string name="country_denmark">Дания</string>
 	<string name="country_djibouti">Djibouti</string>
 	<string name="country_dominica">Dominica</string>
@@ -196,7 +196,7 @@
 	<string name="country_trinidad_and_tobago">Trinidad and Tobago</string>
 	<string name="country_tunisia">Tunisia</string>
 	<string name="country_turkey">Турция</string>
-	<string name="country_turkmenistan">Turkmenistan</string>
+	<string name="country_turkmenistan">Туркменистан</string>
 	<string name="country_turks_and_caicos_islands">Turks and Caicos Islands</string>
 	<string name="country_tuvalu">Tuvalu</string>
 	<string name="country_uganda">Uganda</string>

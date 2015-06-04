@@ -167,15 +167,17 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                 Cursor cursor = getContentResolver().query(bottleUri, null, null, null, null);
                 cursor.moveToFirst();
                 String title = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE));
+                String text = getString(R.string.alert_delete);
+                text = String.format(text, title);
                 new AlertDialog.Builder(this)
-                        .setTitle("Delete bottle")
-                        .setMessage("Are you sure you want to remove " + title + " from collection ? ")
+                        .setTitle(getString(R.string.menu_action_delete_bottle))
+                        .setMessage(text)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 getContentResolver().delete(Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + info.id), null, null);
                                 refreshBottlesList();
-                                Toast.makeText(BottlesListActivity.this, "Bottle was deleted", Toast.LENGTH_LONG).show();
+                                Toast.makeText(BottlesListActivity.this, getString(R.string.toast_bottle_deleted), Toast.LENGTH_LONG).show();
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -217,13 +219,13 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                 return true;
             case R.id.action_delete_all:
                 new AlertDialog.Builder(this)
-                        .setTitle("Delete all bottles")
-                        .setMessage("Are you sure you want to remove ALL bottles from collection? \n\nTHIS CAN NOT BE UNDONE!")
+                        .setTitle(getString(R.string.menu_action_delete_all))
+                        .setMessage(getString(R.string.alert_delete_all))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 getContentResolver().delete(BottlesContentProvider.CONTENT_URI, null, null);
-                                Toast.makeText(BottlesListActivity.this, "Bottles were deleted", Toast.LENGTH_LONG).show();
+                                Toast.makeText(BottlesListActivity.this, getString(R.string.toast_all_bottles_deleted), Toast.LENGTH_LONG).show();
                                 refreshBottlesList();
                             }
                         })
@@ -319,7 +321,9 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
         }
         Log.d(TAG, "Scanner complete");
         scanner.close();
-        Toast.makeText(BottlesListActivity.this, "Imported " + imported + " new bottles", Toast.LENGTH_LONG).show();
+        String toast = getString(R.string.toast_import_complete);
+        toast = String.format(toast, imported);
+        Toast.makeText(BottlesListActivity.this, toast, Toast.LENGTH_LONG).show();
         refreshBottlesList();
     }
 

@@ -67,7 +67,7 @@ public class BottleAddActivity extends AppCompatActivity {
                 String degree = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_DEGREE));
                 ((EditText)findViewById(R.id.editDegree)).setText(degree);
 
-                setTitle("Edit details");
+                setTitle(getString(R.string.title_activity_bottle_edit));
 
                 cursor.close();
             }
@@ -168,12 +168,12 @@ public class BottleAddActivity extends AppCompatActivity {
         if (id != 0) {
             // Update existing item
             getContentResolver().update(bottleUri, values, null, null);
-            Toast.makeText(BottleAddActivity.this, "Item was updated", Toast.LENGTH_LONG).show();
+            Toast.makeText(BottleAddActivity.this, getString(R.string.toast_bottle_updated), Toast.LENGTH_LONG).show();
         }
         else {
             // Insert new item
             getContentResolver().insert(bottleUri, values);
-            Toast.makeText(BottleAddActivity.this, "New item was inserted", Toast.LENGTH_LONG).show();
+            Toast.makeText(BottleAddActivity.this, getString(R.string.toast_bottle_inserted), Toast.LENGTH_LONG).show();
         }
     }
 
