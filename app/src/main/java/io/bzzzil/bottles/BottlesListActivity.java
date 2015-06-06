@@ -327,9 +327,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                         values.put(BottlesTable.COLUMN_PRICE, price[0]);
                         Log.d(TAG, "Scanner: price currency:" + price[1]);
                         values.put(BottlesTable.COLUMN_PRICE_CURRENCY, price[1]);
-                    }
-                    else
-                    {
+                    } else {
                         Log.w(TAG, "Scanner did not parsed price " + next);
                         values.put(BottlesTable.COLUMN_PRICE, next);
                         values.put(BottlesTable.COLUMN_PRICE_CURRENCY, "");

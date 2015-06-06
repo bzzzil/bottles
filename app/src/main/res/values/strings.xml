@@ -35,4 +35,7 @@
     <string name="alert_delete">Are you sure you want to remove %1$s from collection?</string>
     <string name="alert_delete_all">Are you sure you want to remove ALL bottles from collection? \n\nTHIS CAN NOT BE UNDONE!</string>
     <string name="title_activity_bottle_edit">Edit Details</string>
+    <string name="details_in_collection_since">In collection since</string>
+    <string name="details_source">Source</string>
+    <string name="details_bought_for">Bought for</string>
 </resources>

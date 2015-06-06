@@ -8,6 +8,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableStringBuilder;
+import android.text.style.DynamicDrawableSpan;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 
 import io.bzzzil.bottles.database.BottlesContentProvider;
 import io.bzzzil.bottles.database.BottlesTable;
+import io.bzzzil.bottles.database.CountriesTable;
 
 
 public class BottleDetailsActivity extends AppCompatActivity {
@@ -49,24 +53,123 @@ public class BottleDetailsActivity extends AppCompatActivity {
 
             // Populate items
             String type = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TYPE));
-            ((TextView)findViewById(R.id.bottle_details_type)).setText(type);
-
             String country = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_COUNTRY));
-            ((TextView)findViewById(R.id.bottle_details_country)).setText(country);
-
             String manufacturer = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_MANUFACTURER));
-            ((TextView)findViewById(R.id.bottle_details_manufacturer)).setText(manufacturer);
-
             String title = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE));
-            ((TextView)findViewById(R.id.bottle_details_title)).setText(title);
+            int volume = cursor.getInt(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_VOLUME));
+            double degree = cursor.getDouble(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_DEGREE));
+            String package_ = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_PACKAGE));
 
-            String volume = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_VOLUME));
-            ((TextView)findViewById(R.id.bottle_details_volume)).setText(volume);
+            String incomeDate = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_INCOME_DATE));
+            String incomeSource = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_INCOME_SOURCE));
+            double price = cursor.getDouble(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_PRICE));
+            String priceCurrency = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_PRICE_CURRENCY));
+            String comments = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_COMMENTS));
 
-            String degree = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_DEGREE));
-            ((TextView)findViewById(R.id.bottle_details_degree)).setText(degree);
+            // Line 1 (type + title)
+            SpannableStringBuilder details1 = new SpannableStringBuilder();
+            if (!type.isEmpty()) {
+                details1.append(type);
+            }
 
+            if (details1.length() > 0) {
+                details1.append(" ");
+            }
+            details1.append(title);
+
+            // Line 2 (volume + degree + package)
+            SpannableStringBuilder details2 = new SpannableStringBuilder();
+            if (volume != 0) {
+                details2.append("" + volume);
+                details2.append(" ");
+                details2.append(getString(R.string.volume_measure_ml));
+            }
+
+            if (degree != 0) {
+                if (details2.length() > 0) {
+                    details2.append(", ");
+                }
+                details2.append("" + degree);
+                details2.append(getString(R.string.degree_measure_percent));
+            }
+
+            if (!package_.isEmpty()) {
+                if (details2.length() > 0) {
+                    details2.append(", ");
+                }
+                details2.append(package_);
+            }
+
+            // Line 3 (country + manufacturer)
+            SpannableStringBuilder details3 = new SpannableStringBuilder();
+
+            if (!manufacturer.isEmpty()) {
+                details3.append(manufacturer);
+            }
+
+            if (!country.isEmpty()) {
+                if (details3.length() > 0) {
+                    details3.append(", ");
+                }
+                int flag_resource = cursor.getInt(cursor.getColumnIndexOrThrow(CountriesTable.COLUMN_FLAG_RESOURCE_ID));
+                if ( flag_resource != 0 && flag_resource != R.drawable.no_flag ) {
+                    // Flag resource exists and is not "no flag"
+                    details3.append(" ", new ImageSpan(this, flag_resource, DynamicDrawableSpan.ALIGN_BASELINE), 0);
+                }
+                details3.append(" ");
+                details3.append(country);
+            }
+
+            // Line 4 (income date, income source, price)
+            SpannableStringBuilder details4 = new SpannableStringBuilder();
+
+            if (!incomeDate.isEmpty()) {
+                details4.append(getString(R.string.details_in_collection_since));
+                details4.append(" ");
+                details4.append(incomeDate);
+                details4.append(". ");
+            }
+
+            if (!incomeSource.isEmpty()) {
+                details4.append(getString(R.string.details_source));
+                details4.append(": ");
+                details4.append(incomeSource);
+                details4.append(". ");
+            }
+
+            if (price != 0) {
+                details4.append(getString(R.string.details_bought_for));
+                details4.append(" " + price);
+
+                if (!priceCurrency.isEmpty()) {
+                    details4.append(" " + priceCurrency);
+                }
+                details4.append(".");
+            }
+
+            // Line 5 (comments)
+            SpannableStringBuilder details5 = new SpannableStringBuilder();
+            if (!comments.isEmpty()) {
+                details5.append(getString(R.string.column_comments));
+                details5.append(": ");
+                details5.append(comments);
+            }
+
+            // All together
+            SpannableStringBuilder details = new SpannableStringBuilder();
+            details.append(details1);
+            details.append("\n\n");
+            details.append(details2);
+            details.append("\n\n");
+            details.append(details3);
+            details.append("\n\n");
+            details.append(details4);
+            details.append("\n\n");
+            details.append(details5);
+
+            // Draw info
             setTitle(title);
+            ((TextView)findViewById(R.id.bottle_details)).setText(details);
 
             cursor.close();
         }

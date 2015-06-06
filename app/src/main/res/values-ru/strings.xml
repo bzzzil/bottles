@@ -36,4 +36,7 @@
     <string name="column_package">Тара</string>
     <string name="column_price">Цена</string>
     <string name="column_price_currency">Валюта цены</string>
+    <string name="details_in_collection_since">В коллекции с</string>
+    <string name="details_source">Источник</string>
+    <string name="details_bought_for">Куплено за</string>
 </resources>
