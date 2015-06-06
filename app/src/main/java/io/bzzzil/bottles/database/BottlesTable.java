@@ -50,6 +50,44 @@ public class BottlesTable {
      */
     public static final String COLUMN_DEGREE = "degree";
 
+    /**
+     * Bottles: column "package"
+     */
+    public static final String COLUMN_PACKAGE = "package";
+
+    /**
+     * Bottles: column "income_date"
+     */
+    public static final String COLUMN_INCOME_DATE = "income_date";
+
+    /**
+     * Bottles: column "income_source"
+     */
+    public static final String COLUMN_INCOME_SOURCE = "income_source";
+
+    /**
+     * Bottles: column "price"
+     */
+    public static final String COLUMN_PRICE = "price";
+
+    /**
+     * Bottles: column "price_currency"
+     */
+    public static final String COLUMN_PRICE_CURRENCY = "price_currency";
+
+    /**
+     * Bottles: column "comments"
+     */
+    public static final String COLUMN_COMMENTS = "comments";
+
+    /**
+     * Bottles: service column "search_words"
+     *
+     * This column represents simplified and normalized words to use by search features
+     * (all important fields, lowercase, removed diacritics, etc)
+     */
+    public static final String COLUMN_INT_SEARCHWORDS = "_searchwords";
+
     public static void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_BOTTLES + " ("
                 + COLUMN_ID + " integer primary key autoincrement, "
@@ -58,7 +96,14 @@ public class BottlesTable {
                 + COLUMN_MANUFACTURER + " text not null, "
                 + COLUMN_TITLE + " text not null, "
                 + COLUMN_VOLUME + " integer not null, "
-                + COLUMN_DEGREE + " real not null "
+                + COLUMN_DEGREE + " real not null, "
+                + COLUMN_PACKAGE + " text not null, "
+                + COLUMN_INCOME_DATE + " integer not null, "
+                + COLUMN_INCOME_SOURCE + " integer not null, "
+                + COLUMN_PRICE + " real, "
+                + COLUMN_PRICE_CURRENCY + " text not null, "
+                + COLUMN_COMMENTS + " text not null, "
+                + COLUMN_INT_SEARCHWORDS + " text not null "
                 + ")");
     }
 

@@ -13,6 +13,12 @@
     <string name="column_title">Title</string>
     <string name="column_volume">Volume</string>
     <string name="column_degree">Degree</string>
+    <string name="column_package">Package</string>
+    <string name="column_income_date">Income date</string>
+    <string name="column_income_source">Income source</string>
+    <string name="column_price">Price</string>
+    <string name="column_price_currency">Price currency</string>
+    <string name="column_comments">Comments</string>
     <string name="title_activity_bottle_details">Bottle Details</string>
     <string name="volume_measure_ml">ml</string>
     <string name="volume_measure_l">L</string>

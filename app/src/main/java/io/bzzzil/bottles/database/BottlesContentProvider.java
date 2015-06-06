@@ -72,6 +72,13 @@ public class BottlesContentProvider extends ContentProvider {
         sProjectionMapBottles.put(BottlesTable.COLUMN_TITLE, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_TITLE);
         sProjectionMapBottles.put(BottlesTable.COLUMN_VOLUME, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_VOLUME);
         sProjectionMapBottles.put(BottlesTable.COLUMN_DEGREE, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_DEGREE);
+        sProjectionMapBottles.put(BottlesTable.COLUMN_PACKAGE, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_PACKAGE);
+        sProjectionMapBottles.put(BottlesTable.COLUMN_INCOME_DATE, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_INCOME_DATE);
+        sProjectionMapBottles.put(BottlesTable.COLUMN_INCOME_SOURCE, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_INCOME_SOURCE);
+        sProjectionMapBottles.put(BottlesTable.COLUMN_PRICE, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_PRICE);
+        sProjectionMapBottles.put(BottlesTable.COLUMN_PRICE_CURRENCY, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_PRICE_CURRENCY);
+        sProjectionMapBottles.put(BottlesTable.COLUMN_COMMENTS, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_COMMENTS);
+        sProjectionMapBottles.put(BottlesTable.COLUMN_INT_SEARCHWORDS, BottlesTable.TABLE_BOTTLES + "." + BottlesTable.COLUMN_INT_SEARCHWORDS);
 
         sProjectionMapBottles.put(CountriesTable.COLUMN_FLAG_RESOURCE_ID, CountriesTable.TABLE_COUNTRIES + "." + CountriesTable.COLUMN_FLAG_RESOURCE_ID);
     }
@@ -158,7 +165,16 @@ public class BottlesContentProvider extends ContentProvider {
         switch (uriType) {
             case BOTTLES:
                 Log.d(TAG, "Insert bottle from url " + uri);
+
+                // TODO
+                values.put(BottlesTable.COLUMN_INT_SEARCHWORDS, "");
+
                 id = sqlite.insert(BottlesTable.TABLE_BOTTLES, null, values);
+                if (id == -1) {
+                    // Something weird happens :(
+                    Log.e(TAG, "Insertion failure!");
+                    return null;
+                }
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);

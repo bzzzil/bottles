@@ -287,12 +287,17 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
         java.util.Scanner scanner = new java.util.Scanner(stream).useDelimiter("\t");
 
         String[] names = new String[] {
-            BottlesTable.COLUMN_TYPE,
-            BottlesTable.COLUMN_COUNTRY,
-            BottlesTable.COLUMN_MANUFACTURER,
-            BottlesTable.COLUMN_TITLE,
-            BottlesTable.COLUMN_VOLUME,
-            BottlesTable.COLUMN_DEGREE
+                BottlesTable.COLUMN_TYPE,
+                BottlesTable.COLUMN_COUNTRY,
+                BottlesTable.COLUMN_MANUFACTURER,
+                BottlesTable.COLUMN_TITLE,
+                BottlesTable.COLUMN_VOLUME,
+                BottlesTable.COLUMN_DEGREE,
+                BottlesTable.COLUMN_PACKAGE,
+                BottlesTable.COLUMN_INCOME_DATE,
+                BottlesTable.COLUMN_INCOME_SOURCE,
+                BottlesTable.COLUMN_PRICE,
+                BottlesTable.COLUMN_COMMENTS,
         };
 
         int currentColumn = 0;
@@ -314,7 +319,26 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
             }
 
             if (currentColumn < names.length) {
-                values.put(names[currentColumn], next);
+                if ( names[currentColumn].equals(BottlesTable.COLUMN_PRICE) ) {
+                    // Parse and prepare price
+                    String[] price = next.split("\\s+");
+                    if (price.length == 2) {
+                        Log.d(TAG, "Scanner: price:" + price[0]);
+                        values.put(BottlesTable.COLUMN_PRICE, price[0]);
+                        Log.d(TAG, "Scanner: price currency:" + price[1]);
+                        values.put(BottlesTable.COLUMN_PRICE_CURRENCY, price[1]);
+                    }
+                    else
+                    {
+                        Log.w(TAG, "Scanner did not parsed price " + next);
+                        values.put(BottlesTable.COLUMN_PRICE, next);
+                        values.put(BottlesTable.COLUMN_PRICE_CURRENCY, "");
+                    }
+                }
+                else {
+                    // Other columns
+                    values.put(names[currentColumn], next);
+                }
             }
 
             currentColumn++;

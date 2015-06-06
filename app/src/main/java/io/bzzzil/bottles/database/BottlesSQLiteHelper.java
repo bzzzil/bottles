@@ -14,7 +14,7 @@ public class BottlesSQLiteHelper extends SQLiteOpenHelper {
     /**
      * Database version
      */
-    private static final int DATABASE_VERSION = 18;
+    private static final int DATABASE_VERSION = 19;
 
     public BottlesSQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

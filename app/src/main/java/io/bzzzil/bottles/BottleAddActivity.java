@@ -49,23 +49,18 @@ public class BottleAddActivity extends AppCompatActivity {
                 cursor.moveToFirst();
 
                 // Populate items
-                String type = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TYPE));
-                ((EditText)findViewById(R.id.editType)).setText(type);
-
-                String country = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_COUNTRY));
-                ((EditText)findViewById(R.id.editCountry)).setText(country);
-
-                String manufacturer = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_MANUFACTURER));
-                ((EditText)findViewById(R.id.editManufacturer)).setText(manufacturer);
-
-                String title = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE));
-                ((EditText)findViewById(R.id.editTitle)).setText(title);
-
-                String volume = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_VOLUME));
-                ((EditText)findViewById(R.id.editVolume)).setText(volume);
-
-                String degree = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_DEGREE));
-                ((EditText)findViewById(R.id.editDegree)).setText(degree);
+                ((EditText)findViewById(R.id.editType)).setText(cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TYPE)));
+                ((EditText)findViewById(R.id.editCountry)).setText(cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_COUNTRY)));
+                ((EditText)findViewById(R.id.editManufacturer)).setText(cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_MANUFACTURER)));
+                ((EditText)findViewById(R.id.editTitle)).setText(cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE)));
+                ((EditText)findViewById(R.id.editVolume)).setText(cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_VOLUME)));
+                ((EditText)findViewById(R.id.editDegree)).setText(cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_DEGREE)));
+                ((EditText)findViewById(R.id.editPackage)).setText(cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_PACKAGE)));
+                ((EditText)findViewById(R.id.editIncomeDate)).setText(cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_INCOME_DATE)));
+                ((EditText)findViewById(R.id.editIncomeSource)).setText(cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_INCOME_SOURCE)));
+                ((EditText)findViewById(R.id.editPrice)).setText(cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_PRICE)));
+                ((EditText)findViewById(R.id.editPriceCurrency)).setText(cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_PRICE_CURRENCY)));
+                ((EditText)findViewById(R.id.editComments)).setText(cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_COMMENTS)));
 
                 setTitle(getString(R.string.title_activity_bottle_edit));
 
@@ -102,7 +97,7 @@ public class BottleAddActivity extends AppCompatActivity {
         editType.setAdapter(typesAdapter);
 
         /**
-         * "Countires" dropdown population
+         * "Countries" dropdown population
          */
         AutoCompleteTextView editCountry = (AutoCompleteTextView)findViewById(R.id.editCountry);
         SimpleCursorAdapter countriesAdapter = new SimpleCursorAdapter(this, R.layout.country_row, null,
@@ -164,16 +159,24 @@ public class BottleAddActivity extends AppCompatActivity {
         values.put(BottlesTable.COLUMN_TITLE, ((EditText)findViewById(R.id.editTitle)).getText().toString());
         values.put(BottlesTable.COLUMN_VOLUME, ((EditText)findViewById(R.id.editVolume)).getText().toString());
         values.put(BottlesTable.COLUMN_DEGREE, ((EditText) findViewById(R.id.editDegree)).getText().toString());
+        values.put(BottlesTable.COLUMN_PACKAGE, ((EditText) findViewById(R.id.editPackage)).getText().toString());
+        values.put(BottlesTable.COLUMN_INCOME_DATE, ((EditText) findViewById(R.id.editIncomeDate)).getText().toString());
+        values.put(BottlesTable.COLUMN_INCOME_SOURCE, ((EditText) findViewById(R.id.editIncomeSource)).getText().toString());
+        values.put(BottlesTable.COLUMN_PRICE, ((EditText) findViewById(R.id.editPrice)).getText().toString());
+        values.put(BottlesTable.COLUMN_PRICE_CURRENCY, ((EditText) findViewById(R.id.editPriceCurrency)).getText().toString());
+        values.put(BottlesTable.COLUMN_COMMENTS, ((EditText) findViewById(R.id.editComments)).getText().toString());
 
         if (id != 0) {
             // Update existing item
-            getContentResolver().update(bottleUri, values, null, null);
-            Toast.makeText(BottleAddActivity.this, getString(R.string.toast_bottle_updated), Toast.LENGTH_LONG).show();
+            if (getContentResolver().update(bottleUri, values, null, null) > 0) {
+                Toast.makeText(BottleAddActivity.this, getString(R.string.toast_bottle_updated), Toast.LENGTH_LONG).show();
+            }
         }
         else {
             // Insert new item
-            getContentResolver().insert(bottleUri, values);
-            Toast.makeText(BottleAddActivity.this, getString(R.string.toast_bottle_inserted), Toast.LENGTH_LONG).show();
+            if (getContentResolver().insert(bottleUri, values) != null) {
+                Toast.makeText(BottleAddActivity.this, getString(R.string.toast_bottle_inserted), Toast.LENGTH_LONG).show();
+            }
         }
     }
 

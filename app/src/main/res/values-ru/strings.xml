@@ -30,4 +30,10 @@
     <string name="toast_bottle_inserted">Бутылочка добавлена!</string>
     <string name="toast_bottle_updated">Бутылочка успешно изменена</string>
     <string name="toast_import_complete">Импортировано %1$d новых бутылочек</string>
+    <string name="column_comments">Комментарии</string>
+    <string name="column_income_date">Дата появления</string>
+    <string name="column_income_source">Источник</string>
+    <string name="column_package">Тара</string>
+    <string name="column_price">Цена</string>
+    <string name="column_price_currency">Валюта цены</string>
 </resources>

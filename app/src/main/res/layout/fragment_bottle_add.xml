@@ -155,14 +155,158 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/editDegree"
                 android:layout_below="@+id/textView_column_degree"
-                android:imeOptions="actionDone"
+                android:imeOptions="actionNext"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:inputType="numberDecimal" />
 
-            </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/column_package"
+                android:id="@+id/textView_column_package"
+                android:labelFor="@+id/editPackage"
+                android:layout_below="@+id/editDegree"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editPackage"
+                android:layout_below="@+id/textView_column_package"
+                android:imeOptions="actionNext"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:inputType="text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/column_income_date"
+                android:id="@+id/textView_column_income_date"
+                android:labelFor="@+id/editIncomeDate"
+                android:layout_below="@+id/editPackage"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editIncomeDate"
+                android:layout_below="@+id/textView_column_income_date"
+                android:imeOptions="actionNext"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:inputType="date" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/column_income_source"
+                android:id="@+id/textView_column_income_source"
+                android:labelFor="@+id/editIncomeSource"
+                android:layout_below="@+id/editIncomeDate"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editIncomeSource"
+                android:layout_below="@+id/textView_column_income_source"
+                android:imeOptions="actionNext"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:inputType="text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/column_price"
+                android:id="@+id/textView_column_price"
+                android:labelFor="@+id/editPrice"
+                android:layout_below="@+id/editIncomeSource"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editPrice"
+                android:layout_below="@+id/textView_column_price"
+                android:imeOptions="actionNext"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/column_price_currency"
+                android:id="@+id/textView_column_price_currency"
+                android:labelFor="@+id/editPriceCurrency"
+                android:layout_below="@+id/editPrice"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editPriceCurrency"
+                android:layout_below="@+id/textView_column_price_currency"
+                android:imeOptions="actionNext"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:inputType="text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/column_comments"
+                android:id="@+id/textView_column_comments"
+                android:labelFor="@+id/editComments"
+                android:layout_below="@+id/editPriceCurrency"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editComments"
+                android:layout_below="@+id/textView_column_comments"
+                android:imeOptions="actionDone"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:inputType="text" />
+
+        </RelativeLayout>
 
     </ScrollView>
 
