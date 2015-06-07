@@ -104,10 +104,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                         if (selection.length() > 0) {
                             selection.append(" AND ");
                         }
-                        selection.append("(type LIKE ? OR country LIKE ? OR manufacturer LIKE ? OR title LIKE ?)");
-                        selectionArgs.add("%" + word + "%");
-                        selectionArgs.add("%" + word + "%");
-                        selectionArgs.add("%" + word + "%");
+                        selection.append( BottlesTable.COLUMN_INT_SEARCHWORDS + " LIKE ? " );
                         selectionArgs.add("%" + word + "%");
                     }
                 }

@@ -13,6 +13,8 @@ import android.util.Log;
 
 import java.util.HashMap;
 
+import io.bzzzil.helper.StringSimplifier;
+
 public class BottlesContentProvider extends ContentProvider {
     private BottlesSQLiteHelper db;
 
@@ -166,9 +168,7 @@ public class BottlesContentProvider extends ContentProvider {
             case BOTTLES:
                 Log.d(TAG, "Insert bottle from url " + uri);
 
-                // TODO
-                values.put(BottlesTable.COLUMN_INT_SEARCHWORDS, "");
-
+                values = addSearchWords(values);
                 id = sqlite.insert(BottlesTable.TABLE_BOTTLES, null, values);
                 if (id == -1) {
                     // Something weird happens :(
@@ -223,6 +223,7 @@ public class BottlesContentProvider extends ContentProvider {
             case BOTTLE_ID:
                 Log.d(TAG, "Update bottle from url " + uri);
                 String id = uri.getLastPathSegment();
+                values = addSearchWords(values);
                 if (TextUtils.isEmpty(selection)) {
                     rowsUpdated = sqlite.update(BottlesTable.TABLE_BOTTLES, values,
                             BottlesTable.FULL_ID + "=" + id, null);
@@ -236,5 +237,27 @@ public class BottlesContentProvider extends ContentProvider {
         }
         getContext().getContentResolver().notifyChange(uri, null);
         return rowsUpdated;
+    }
+
+    private ContentValues addSearchWords(ContentValues values) {
+        StringBuilder searchWords = new StringBuilder();
+        String[] searchableColumns = {
+                BottlesTable.COLUMN_TYPE,
+                BottlesTable.COLUMN_COUNTRY,
+                BottlesTable.COLUMN_MANUFACTURER,
+                BottlesTable.COLUMN_TITLE,
+                BottlesTable.COLUMN_COMMENTS
+        };
+
+        for (String i : searchableColumns) {
+            String columnValue = values.getAsString(i);
+            columnValue = StringSimplifier.simplifiedString(columnValue);
+            searchWords.append(columnValue);
+            searchWords.append(" ");
+        }
+
+        values.put(BottlesTable.COLUMN_INT_SEARCHWORDS, searchWords.toString().trim());
+
+        return values;
     }
 }
