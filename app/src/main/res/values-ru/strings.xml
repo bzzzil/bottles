@@ -16,7 +16,7 @@
     <string name="menu_action_statistics">Статистика</string>
     <string name="statistics_average_degree">Средний градус</string>
     <string name="statistics_total_bottles">Всего бутылочек</string>
-    <string name="statistics_total_liters">Всего литров</string>
+    <string name="statistics_total_liters">Общий объём</string>
     <string name="title_activity_bottle_add">Новая бутылочка</string>
     <string name="title_activity_bottle_edit">Изменение бутылочки</string>
     <string name="title_activity_bottle_details">О бутылочке</string>

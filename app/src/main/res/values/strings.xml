@@ -25,7 +25,7 @@
     <string name="degree_measure_percent">°</string>
     <string name="title_activity_statistics">Statistics</string>
     <string name="statistics_total_bottles">Total Bottles</string>
-    <string name="statistics_total_liters">Total Litres</string>
+    <string name="statistics_total_liters">Total Volume</string>
     <string name="statistics_average_degree">Average Degree</string>
     <string name="toast_bottle_inserted">Bottle was inserted</string>
     <string name="toast_bottle_updated">Bottle was updated</string>

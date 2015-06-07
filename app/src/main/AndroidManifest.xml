@@ -7,13 +7,15 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:logo="@mipmap/ic_launcher"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppThemeOtherPages"
         android:name=".BottlesApplication">
+
         <activity
             android:name=".BottlesListActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
+            android:theme="@style/AppThemeList"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,11 +23,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".BottleAddActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_bottle_add"
-            android:logo="@mipmap/ic_launcher"
+            android:parentActivityName=".BottlesListActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BottlesListActivity" />
+        </activity>
+
+        <activity
+            android:name=".BottleDetailsActivity"
+            android:configChanges="orientation"
+            android:label="@string/title_activity_bottle_details"
+            android:parentActivityName=".BottlesListActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BottlesListActivity" />
+        </activity>
+
+        <activity
+            android:name=".StatisticsActivity"
+            android:label="@string/title_activity_statistics"
             android:parentActivityName=".BottlesListActivity"
             android:screenOrientation="portrait" >
             <meta-data
@@ -38,27 +61,6 @@
             android:authorities="io.bzzzil.bottles.contentprovider" >
         </provider>
 
-        <activity
-            android:name=".BottleDetailsActivity"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_bottle_details"
-            android:logo="@mipmap/ic_launcher"
-            android:parentActivityName=".BottlesListActivity"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BottlesListActivity" />
-        </activity>
-        <activity
-            android:name=".StatisticsActivity"
-            android:label="@string/title_activity_statistics"
-            android:logo="@mipmap/ic_launcher"
-            android:parentActivityName=".BottlesListActivity"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BottlesListActivity" />
-        </activity>
     </application>
 
 </manifest>
