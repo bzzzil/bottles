@@ -104,8 +104,18 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                         if (selection.length() > 0) {
                             selection.append(" AND ");
                         }
-                        selection.append( BottlesTable.COLUMN_INT_SEARCHWORDS + " LIKE ? " );
-                        selectionArgs.add("%" + word + "%");
+
+                        selection.append("(");
+                        for (String searchColumn: BottlesContentProvider.getSearchableColumns()) {
+                            if (selection.charAt(selection.length()-1) != '(')
+                            {
+                                selection.append( " OR " );
+                            }
+                            selection.append( searchColumn );
+                            selection.append( " LIKE ? " );
+                            selectionArgs.add("%" + word + "%");
+                        }
+                        selection.append(")");
                     }
                 }
                 // TODO: crashing on screen rotate

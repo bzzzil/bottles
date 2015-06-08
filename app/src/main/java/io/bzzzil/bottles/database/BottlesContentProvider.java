@@ -92,6 +92,16 @@ public class BottlesContentProvider extends ContentProvider {
         sProjectionMapCountries.put(CountriesTable.COLUMN_FLAG_RESOURCE_ID, CountriesTable.TABLE_COUNTRIES + "." + CountriesTable.COLUMN_FLAG_RESOURCE_ID);
     }
 
+    private static String[] searchableColumns = {
+            BottlesTable.COLUMN_TYPE,
+            BottlesTable.COLUMN_COUNTRY,
+            BottlesTable.COLUMN_MANUFACTURER,
+            BottlesTable.COLUMN_TITLE,
+            BottlesTable.COLUMN_COMMENTS,
+            BottlesTable.COLUMN_INT_SEARCHWORDS
+    };
+
+
     @Override
     public boolean onCreate() {
         db = new BottlesSQLiteHelper(getContext());
@@ -239,17 +249,18 @@ public class BottlesContentProvider extends ContentProvider {
         return rowsUpdated;
     }
 
+    public static String[] getSearchableColumns() {
+        return searchableColumns;
+    }
+
     private ContentValues addSearchWords(ContentValues values) {
         StringBuilder searchWords = new StringBuilder();
-        String[] searchableColumns = {
-                BottlesTable.COLUMN_TYPE,
-                BottlesTable.COLUMN_COUNTRY,
-                BottlesTable.COLUMN_MANUFACTURER,
-                BottlesTable.COLUMN_TITLE,
-                BottlesTable.COLUMN_COMMENTS
-        };
 
-        for (String i : searchableColumns) {
+        for (String i : getSearchableColumns()) {
+            if (i.equals(BottlesTable.COLUMN_INT_SEARCHWORDS)) {
+                // Do not take into account column we are filling right now
+                continue;
+            }
             String columnValue = values.getAsString(i);
             columnValue = StringSimplifier.simplifiedString(columnValue);
             searchWords.append(columnValue);
