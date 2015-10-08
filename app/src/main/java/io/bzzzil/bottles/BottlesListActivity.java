@@ -291,7 +291,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
     }
 
     private void importFromStream(InputStream stream) {
-        java.util.Scanner scanner = new java.util.Scanner(stream).useDelimiter("\t");
+        java.util.Scanner scanner = new java.util.Scanner(stream).useDelimiter(";|\\r|\\r\\n|\\n");
 
         String[] names = new String[] {
                 BottlesTable.COLUMN_TYPE,
@@ -315,7 +315,8 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
             String next = scanner.next();
             Log.d(TAG, "Scanner:" + next);
 
-            if (next.startsWith("\r\n")) {
+
+            if (currentColumn == names.length) {
                 // End of record
                 Log.d(TAG, "Scanner inserting to db:" + values);
                 getContentResolver().insert(BottlesContentProvider.CONTENT_URI, values);
@@ -339,8 +340,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                         values.put(BottlesTable.COLUMN_PRICE, next);
                         values.put(BottlesTable.COLUMN_PRICE_CURRENCY, "");
                     }
-                }
-                else {
+                } else {
                     // Other columns
                     values.put(names[currentColumn], next);
                 }
@@ -348,6 +348,14 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
 
             currentColumn++;
         }
+
+        if (currentColumn == names.length) {
+            // End of record
+            Log.d(TAG, "Scanner inserting to db:" + values);
+            getContentResolver().insert(BottlesContentProvider.CONTENT_URI, values);
+            imported++;
+        }
+
         Log.d(TAG, "Scanner complete");
         scanner.close();
         String toast = getString(R.string.toast_import_complete);

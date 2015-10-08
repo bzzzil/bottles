@@ -172,7 +172,7 @@
 	<string name="country_serbia">Сербия</string>
 	<string name="country_seychelles">Seychelles</string>
 	<string name="country_sierra_leone">Sierra Leone</string>
-	<string name="country_singapore">Singapore</string>
+	<string name="country_singapore">Сингапур</string>
 	<string name="country_slovakia">Словакия</string>
 	<string name="country_slovenia">Словения</string>
 	<string name="country_solomon_islands">Solomon Islands</string>
@@ -184,10 +184,10 @@
 	<string name="country_suriname">Suriname</string>
 	<string name="country_swaziland">Swaziland</string>
 	<string name="country_sweden">Швеция</string>
-	<string name="country_switzerland">Switzerland</string>
+	<string name="country_switzerland">Швейцария</string>
 	<string name="country_syria">Syria</string>
 	<string name="country_taiwan">Тайвань</string>
-	<string name="country_tajikistan">Tajikistan</string>
+	<string name="country_tajikistan">Таджикистан</string>
 	<string name="country_tanzania">Tanzania</string>
 	<string name="country_thailand">Thailand</string>
 	<string name="country_timor_leste">Timor-Leste (East Timor)</string>
@@ -212,8 +212,8 @@
 	<string name="country_venezuela">Venezuela</string>
 	<string name="country_vietnam">Вьетнам</string>
 	<string name="country_yemen">Yemen</string>
-	<string name="country_zambia">Zambia</string>
-	<string name="country_zimbabwe">Zimbabwe</string>
+	<string name="country_zambia">Замбия</string>
+	<string name="country_zimbabwe">Зимбабве</string>
 	<string name="country_cocos_keeling_islands">Cocos (Keeling) Islands</string>
 	<string name="country_heard_island_and_mcdonald_islands">Heard Island and McDonald Islands</string>
 	<string name="country_new_caledonia">New Caledonia</string>
