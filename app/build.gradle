@@ -14,6 +14,20 @@ def getGitRsa = { ->
     }
 }
 
+def getGitLocalChanges = { ->
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'status', '--porcelain'
+            standardOutput = stdout
+        }
+        return stdout.toString().trim()
+    }
+    catch (ignored) {
+        return null;
+    }
+}
+
 android {
     compileSdkVersion 22
     buildToolsVersion "20.0.0"
@@ -30,9 +44,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue "string", "git_rsa", getGitRsa()
+            resValue "string", "git_local_changes", getGitLocalChanges()
         }
         debug {
             resValue "string", "git_rsa", getGitRsa()
+            resValue "string", "git_local_changes", getGitLocalChanges()
         }
     }
 }
