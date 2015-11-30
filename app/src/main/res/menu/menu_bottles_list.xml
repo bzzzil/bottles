@@ -13,4 +13,7 @@
     <item android:id="@+id/action_statistics" android:title="@string/menu_action_statistics"
         app:showAsAction="never"
         android:orderInCategory="400" />
+    <item android:id="@+id/action_about" android:title="@string/menu_action_about"
+        app:showAsAction="never"
+        android:orderInCategory="500" />
 </menu>

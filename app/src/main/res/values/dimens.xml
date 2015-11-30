@@ -6,4 +6,5 @@
     <dimen name="bottles_list_item_details">6pt</dimen>
     <dimen name="statistics_item_name">10pt</dimen>
     <dimen name="statistics_item_value">36pt</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
