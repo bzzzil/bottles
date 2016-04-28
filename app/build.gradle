@@ -30,7 +30,7 @@ def getGitLocalChanges = { ->
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "20.0.0"
+    buildToolsVersion "23.0.0"
 
     defaultConfig {
         applicationId "io.bzzzil.bottles"
