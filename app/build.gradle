@@ -10,7 +10,7 @@ def getGitRsa = { ->
         return stdout.toString().trim()
     }
     catch (ignored) {
-        return null;
+        return "N/A";
     }
 }
 
@@ -24,8 +24,14 @@ def getGitLocalChanges = { ->
         return stdout.toString().trim()
     }
     catch (ignored) {
-        return null;
+        return "N/A";
     }
+}
+
+def getCurrentDate = { ->
+    def date = new Date()
+    def formattedDate = date.format('dd/MM/yyyy HH:mm')
+    return formattedDate.toString()
 }
 
 android {
@@ -43,12 +49,14 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            resValue "string", "git_rsa", getGitRsa()
-            resValue "string", "git_local_changes", getGitLocalChanges()
+            resValue "string", "build_git_rsa", getGitRsa()
+            resValue "string", "build_git_local_changes", getGitLocalChanges()
+            resValue "string", "build_timestamp", getCurrentDate()
         }
         debug {
-            resValue "string", "git_rsa", getGitRsa()
-            resValue "string", "git_local_changes", getGitLocalChanges()
+            resValue "string", "build_git_rsa", getGitRsa()
+            resValue "string", "build_git_local_changes", getGitLocalChanges()
+            resValue "string", "build_timestamp", getCurrentDate()
         }
     }
 }
