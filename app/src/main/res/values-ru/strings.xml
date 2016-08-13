@@ -40,4 +40,5 @@
     <string name="details_in_collection_since">В коллекции с</string>
     <string name="details_source">Источник</string>
     <string name="details_bought_for">Куплено за</string>
+    <string name="title_activity_about">О программе</string>
 </resources>
