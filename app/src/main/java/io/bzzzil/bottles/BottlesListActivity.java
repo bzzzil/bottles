@@ -33,6 +33,7 @@ import java.util.List;
 import io.bzzzil.bottles.database.BottlesContentProvider;
 import io.bzzzil.bottles.database.BottlesTable;
 import io.bzzzil.bottles.imports.CsvImport;
+import io.bzzzil.bottles.imports.ImportAsyncTask;
 
 
 public class BottlesListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -267,19 +268,8 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
             case ACTIVITY_CHOOSE_FILE:
                 if (resultCode == RESULT_OK) {
                     Log.d(TAG, "Import file selected: " + data.getData());
-                    try {
-                        InputStream stream = getContentResolver().openInputStream(data.getData());
-
-                        CsvImport importer = new CsvImport();
-                        int importedCount = importer.doImport(getContentResolver(), stream);
-                        String toast = getString(R.string.toast_import_complete);
-                        toast = String.format(toast, importedCount);
-                        Toast.makeText(BottlesListActivity.this, toast, Toast.LENGTH_LONG).show();
-                        refreshBottlesList();
-
-                    } catch (Exception e) {
-                        Toast.makeText(BottlesListActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
+                    ImportAsyncTask importTask = new ImportAsyncTask(this);
+                    importTask.execute(data.getData());
                 }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -301,7 +291,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
         adapter.swapCursor(null);
     }
 
-    private void refreshBottlesList()
+    public void refreshBottlesList()
     {
         adapter.getFilter().filter("");
         adapter.notifyDataSetChanged();

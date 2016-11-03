@@ -40,4 +40,5 @@
     <string name="details_source">Source</string>
     <string name="details_bought_for">Bought for</string>
     <string name="title_activity_about">About</string>
+    <string name="dialog_text_importing">Importing…</string>
 </resources>
