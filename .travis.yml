@@ -30,3 +30,4 @@ addons:
 
 script:
   - if [ -f /home/travis/build/bzzzil/bottles/app/build/outputs/lint-results-debug.html ]; then lynx -dump /home/travis/build/bzzzil/bottles/app/build/outputs/lint-results-debug.html; fi
+  - ./gradlew build connectedCheck
