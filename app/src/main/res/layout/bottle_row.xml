@@ -6,7 +6,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Title"
+        android:text="@string/country_mali"
         android:lines="1"
         android:textSize="@dimen/bottles_list_item_title"
         android:id="@+id/bottle_title" />
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="1"
-        android:text="Details"
+        android:text="@string/country_antigua_and_barbuda"
         android:textSize="@dimen/bottles_list_item_details"
         android:id="@+id/bottle_detais" />
 </LinearLayout>

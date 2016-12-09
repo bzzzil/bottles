@@ -10,8 +10,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <RelativeLayout android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <RelativeLayout android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -20,9 +20,7 @@
                 android:id="@+id/textView_column_type"
                 android:labelFor="@+id/editType"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
             <AutoCompleteTextView
@@ -32,9 +30,7 @@
                 android:nextFocusForward="@+id/editCountry"
                 android:imeOptions="actionNext"
                 android:layout_below="@+id/textView_column_type"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:inputType="text" />
 
@@ -45,9 +41,7 @@
                 android:id="@+id/textView_column_country"
                 android:labelFor="@+id/editCountry"
                 android:layout_below="@+id/editType"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
             <AutoCompleteTextView
@@ -57,9 +51,7 @@
                 android:nextFocusForward="@+id/editManufacturer"
                 android:imeOptions="actionNext"
                 android:layout_below="@+id/textView_column_country"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:inputType="text" />
 
@@ -70,9 +62,7 @@
                 android:id="@+id/textView_column_manufacturer"
                 android:labelFor="@+id/editManufacturer"
                 android:layout_below="@+id/editCountry"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
             <AutoCompleteTextView
@@ -82,9 +72,7 @@
                 android:nextFocusForward="@+id/editTitle"
                 android:imeOptions="actionNext"
                 android:layout_below="@+id/textView_column_manufacturer"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:inputType="text" />
 
@@ -95,9 +83,7 @@
                 android:id="@+id/textView_column_title"
                 android:labelFor="@+id/editTitle"
                 android:layout_below="@+id/editManufacturer"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
             <EditText
@@ -107,9 +93,7 @@
                 android:nextFocusForward="@+id/editVolume"
                 android:imeOptions="actionNext"
                 android:layout_below="@+id/textView_column_title"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:inputType="text" />
 
@@ -120,9 +104,7 @@
                 android:id="@+id/textView_column_volume"
                 android:labelFor="@+id/editVolume"
                 android:layout_below="@+id/editTitle"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
             <EditText
@@ -132,9 +114,7 @@
                 android:nextFocusForward="@+id/editDegree"
                 android:imeOptions="actionNext"
                 android:layout_below="@+id/textView_column_volume"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:inputType="numberSigned" />
 
@@ -145,9 +125,7 @@
                 android:id="@+id/textView_column_degree"
                 android:labelFor="@+id/editDegree"
                 android:layout_below="@+id/editVolume"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
             <EditText
@@ -156,9 +134,7 @@
                 android:id="@+id/editDegree"
                 android:layout_below="@+id/textView_column_degree"
                 android:imeOptions="actionNext"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:inputType="numberDecimal" />
 
@@ -169,9 +145,7 @@
                 android:id="@+id/textView_column_package"
                 android:labelFor="@+id/editPackage"
                 android:layout_below="@+id/editDegree"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
             <EditText
@@ -180,9 +154,7 @@
                 android:id="@+id/editPackage"
                 android:layout_below="@+id/textView_column_package"
                 android:imeOptions="actionNext"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:inputType="text" />
 
@@ -193,9 +165,7 @@
                 android:id="@+id/textView_column_income_date"
                 android:labelFor="@+id/editIncomeDate"
                 android:layout_below="@+id/editPackage"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
             <EditText
@@ -204,9 +174,7 @@
                 android:id="@+id/editIncomeDate"
                 android:layout_below="@+id/textView_column_income_date"
                 android:imeOptions="actionNext"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:inputType="date" />
 
@@ -217,9 +185,7 @@
                 android:id="@+id/textView_column_income_source"
                 android:labelFor="@+id/editIncomeSource"
                 android:layout_below="@+id/editIncomeDate"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
             <EditText
@@ -228,9 +194,7 @@
                 android:id="@+id/editIncomeSource"
                 android:layout_below="@+id/textView_column_income_source"
                 android:imeOptions="actionNext"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:inputType="text" />
 
@@ -241,9 +205,7 @@
                 android:id="@+id/textView_column_price"
                 android:labelFor="@+id/editPrice"
                 android:layout_below="@+id/editIncomeSource"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
             <EditText
@@ -252,9 +214,7 @@
                 android:id="@+id/editPrice"
                 android:layout_below="@+id/textView_column_price"
                 android:imeOptions="actionNext"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:inputType="number" />
 
@@ -265,9 +225,7 @@
                 android:id="@+id/textView_column_price_currency"
                 android:labelFor="@+id/editPriceCurrency"
                 android:layout_below="@+id/editPrice"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
             <EditText
@@ -276,9 +234,7 @@
                 android:id="@+id/editPriceCurrency"
                 android:layout_below="@+id/textView_column_price_currency"
                 android:imeOptions="actionNext"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:inputType="text" />
 
@@ -289,9 +245,7 @@
                 android:id="@+id/textView_column_comments"
                 android:labelFor="@+id/editComments"
                 android:layout_below="@+id/editPriceCurrency"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
             <EditText
@@ -300,9 +254,7 @@
                 android:id="@+id/editComments"
                 android:layout_below="@+id/textView_column_comments"
                 android:imeOptions="actionDone"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:inputType="text" />
 

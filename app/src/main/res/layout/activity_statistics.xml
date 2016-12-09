@@ -19,7 +19,7 @@
                 android:gravity="center"
                 android:textSize="@dimen/statistics_item_name"/>
 
-            <TextView android:text="123" android:layout_width="match_parent"
+            <TextView android:text="@string/country_mali" android:layout_width="match_parent"
                 android:textAlignment="center" android:layout_height="wrap_content"
                 android:id="@+id/statistics_total_bottles_value"
                 android:layout_below="@+id/statistics_total_bottles"
@@ -34,7 +34,7 @@
                 android:gravity="center"
                 android:textSize="@dimen/statistics_item_name"/>
 
-            <TextView android:text="123" android:layout_width="match_parent"
+            <TextView android:text="@string/country_mali" android:layout_width="match_parent"
                 android:textAlignment="center" android:layout_height="wrap_content"
                 android:id="@+id/statistics_total_liters_value"
                 android:layout_below="@+id/statistics_total_liters"
@@ -49,7 +49,7 @@
                 android:gravity="center"
                 android:textSize="@dimen/statistics_item_name"/>
 
-            <TextView android:text="123" android:layout_width="match_parent"
+            <TextView android:text="@string/country_mali" android:layout_width="match_parent"
                 android:textAlignment="center" android:layout_height="wrap_content"
                 android:id="@+id/statistics_average_degree_value"
                 android:layout_below="@+id/statistics_average_degree"
