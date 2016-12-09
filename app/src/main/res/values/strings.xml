@@ -9,6 +9,7 @@
     <string name="menu_action_about">About</string>
     <string name="title_activity_bottle_add">New Bottle</string>
     <string name="column_type">Type</string>
+    <string name="search">Search</string>
     <string name="column_country">Country</string>
     <string name="column_manufacturer">Manufacturer</string>
     <string name="column_title">Title</string>

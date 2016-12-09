@@ -42,4 +42,5 @@
     <string name="details_bought_for">Куплено за</string>
     <string name="title_activity_about">О программе</string>
     <string name="dialog_text_importing">Импортируется…</string>
+    <string name="search">Поиск</string>
 </resources>
