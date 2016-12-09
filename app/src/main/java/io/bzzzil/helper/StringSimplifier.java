@@ -2,6 +2,7 @@ package io.bzzzil.helper;
 
 import java.text.Normalizer;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 /**
@@ -76,7 +77,7 @@ public class StringSimplifier {
             // It would return an empty string if Oracle could store it.
             return orig;
         }
-        return str.toLowerCase();
+        return str.toLowerCase(Locale.US);
     }
 
     private static String stripNonDiacritics(String orig) {

@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 import io.bzzzil.bottles.database.BottlesContentProvider;
 
 public class StatisticsActivity extends AppCompatActivity {
@@ -24,8 +26,8 @@ public class StatisticsActivity extends AppCompatActivity {
         cursor.moveToFirst();
 
         String totalBottles = "" + cursor.getInt(cursor.getColumnIndexOrThrow("total"));
-        String totalLitres = String.format("%.1f %s", cursor.getFloat(cursor.getColumnIndexOrThrow("litres")), getText(R.string.volume_measure_l));
-        String averageDegree = String.format("%.1f%s", cursor.getFloat(cursor.getColumnIndexOrThrow("degree")), getText(R.string.degree_measure_percent));
+        String totalLitres = String.format(Locale.getDefault(), "%.1f %s", cursor.getFloat(cursor.getColumnIndexOrThrow("litres")), getText(R.string.volume_measure_l));
+        String averageDegree = String.format(Locale.getDefault(),  "%.1f%s", cursor.getFloat(cursor.getColumnIndexOrThrow("degree")), getText(R.string.degree_measure_percent));
 
         ((TextView)findViewById(R.id.statistics_total_bottles_value)).setText(totalBottles);
         ((TextView)findViewById(R.id.statistics_total_liters_value)).setText(totalLitres);
