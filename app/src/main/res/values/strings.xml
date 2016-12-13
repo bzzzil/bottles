@@ -31,7 +31,6 @@
     <string name="statistics_average_degree">Average Degree</string>
     <string name="toast_bottle_inserted">Bottle was inserted</string>
     <string name="toast_bottle_updated">Bottle was updated</string>
-    <string name="toast_import_complete">Imported %1$d new bottles</string>
     <string name="toast_bottle_deleted">Bottle was deleted</string>
     <string name="toast_all_bottles_deleted">All bottles were deleted</string>
     <string name="alert_delete">Are you sure you want to remove %1$s from collection?</string>

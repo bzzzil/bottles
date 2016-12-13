@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="toast_import_complete">
+        <item quantity="zero">No bottles were imported</item>
+        <item quantity="one">One bottle was imported</item>
+        <item quantity="other">%1$d new bottles were imported</item>
+    </plurals>
+</resources>

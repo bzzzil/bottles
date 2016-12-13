@@ -48,7 +48,7 @@ public class ImportAsyncTask extends AsyncTask {
 
             CsvImport importer = new CsvImport();
             int importedCount = importer.doImport(this.activity.getContentResolver(), stream);
-            message = String.format(this.activity.getString(R.string.toast_import_complete), importedCount);
+            message = this.activity.getResources().getQuantityString(R.plurals.toast_import_complete, importedCount, importedCount);
         } catch (Exception e) {
             message = e.getMessage();
         }
