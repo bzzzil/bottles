@@ -89,7 +89,7 @@ public class BottlesTable {
      */
     public static final String COLUMN_INT_SEARCHWORDS = "_searchwords";
 
-    public static void onCreate(SQLiteDatabase db, Context context) {
+    public static void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_BOTTLES + " ("
                 + COLUMN_ID + " integer primary key autoincrement, "
                 + COLUMN_TYPE + " text not null, "
@@ -113,6 +113,6 @@ public class BottlesTable {
                 "Upgrading database from version " + oldVersion + " to " + newVersion
                         + ". ALL DATA WILL BE DESTROYED");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOTTLES);
-        onCreate(db, context);
+        onCreate(db);
     }
 }

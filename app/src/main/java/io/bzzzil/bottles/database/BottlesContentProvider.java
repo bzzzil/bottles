@@ -92,7 +92,7 @@ public class BottlesContentProvider extends ContentProvider {
         sProjectionMapCountries.put(CountriesTable.COLUMN_FLAG_RESOURCE_ID, CountriesTable.TABLE_COUNTRIES + "." + CountriesTable.COLUMN_FLAG_RESOURCE_ID);
     }
 
-    private static String[] searchableColumns = {
+    private static final String[] searchableColumns = {
             BottlesTable.COLUMN_TYPE,
             BottlesTable.COLUMN_COUNTRY,
             BottlesTable.COLUMN_MANUFACTURER,

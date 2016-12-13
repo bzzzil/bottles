@@ -14,17 +14,15 @@ import android.widget.TextView;
 import io.bzzzil.bottles.database.BottlesTable;
 import io.bzzzil.bottles.database.CountriesTable;
 
-public class BottlesListCustomAdapter extends SimpleCursorAdapter {
+class BottlesListCustomAdapter extends SimpleCursorAdapter {
 
-    private int layout;
-    private Cursor cursor;
+    private final int layout;
     private final LayoutInflater inflater;
 
     public BottlesListCustomAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
         super(context, layout, c, from, to, flags);
         this.layout = layout;
         this.inflater = LayoutInflater.from(context);
-        this.cursor = c;
     }
 
     @Override

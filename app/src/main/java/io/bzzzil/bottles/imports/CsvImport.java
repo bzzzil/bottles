@@ -9,7 +9,7 @@ import java.io.InputStream;
 import io.bzzzil.bottles.database.BottlesContentProvider;
 import io.bzzzil.bottles.database.BottlesTable;
 
-public class CsvImport {
+class CsvImport {
     private static final String TAG = CsvImport.class.getName();
 
     public int doImport(ContentResolver contentResolver, InputStream stream)

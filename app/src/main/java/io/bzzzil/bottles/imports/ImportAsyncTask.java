@@ -16,7 +16,7 @@ import io.bzzzil.bottles.R;
  */
 public class ImportAsyncTask extends AsyncTask<Object, Void, Object> {
 
-    private BottlesListActivity activity;
+    private final BottlesListActivity activity;
 
     private ProgressDialog dialog;
 

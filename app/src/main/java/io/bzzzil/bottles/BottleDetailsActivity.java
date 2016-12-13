@@ -80,7 +80,7 @@ public class BottleDetailsActivity extends AppCompatActivity {
             // Line 2 (volume + degree + package)
             SpannableStringBuilder details2 = new SpannableStringBuilder();
             if (volume != 0) {
-                details2.append("" + volume);
+                details2.append(String.valueOf(volume));
                 details2.append(" ");
                 details2.append(getString(R.string.volume_measure_ml));
             }
@@ -89,7 +89,7 @@ public class BottleDetailsActivity extends AppCompatActivity {
                 if (details2.length() > 0) {
                     details2.append(", ");
                 }
-                details2.append("" + degree);
+                details2.append(String.valueOf(degree));
                 details2.append(getString(R.string.degree_measure_percent));
             }
 
@@ -204,9 +204,14 @@ public class BottleDetailsActivity extends AppCompatActivity {
             case R.id.action_delete_bottle:
                 // Get bottle info
                 Cursor cursor = getContentResolver().query(bottleUri, null, null, null, null);
+                if (cursor == null)
+                {
+                    return true;
+                }
                 cursor.moveToFirst();
                 String text = getString(R.string.alert_delete);
                 text = String.format(text, cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE)));
+                cursor.close();
 
                 // Alert
                 new AlertDialog.Builder(this)

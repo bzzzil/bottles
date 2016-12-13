@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/flag_by"
         android:contentDescription="@string/column_country"
-        android:paddingTop="3dp"
+        android:paddingTop="15dp"
         android:paddingStart="0dp"
         android:paddingEnd="4dp"
         android:id="@+id/country_flag" />

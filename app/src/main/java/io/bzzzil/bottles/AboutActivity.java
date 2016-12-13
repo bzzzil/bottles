@@ -13,13 +13,15 @@ public class AboutActivity extends AppCompatActivity {
 
         StringBuilder about = new StringBuilder();
 
-        about.append("RSA: " + getString(R.string.build_git_rsa).substring(0, 6));
+        about.append("RSA: ");
+        about.append(getString(R.string.build_git_rsa).substring(0, 6));
 
         if (!getString(R.string.build_git_local_changes).isEmpty()) {
             about.append(" + LOCAL CHANGES");
         }
 
-        about.append("\r\nBuild date: " + getString(R.string.build_timestamp));
+        about.append("\r\nBuild date: ");
+        about.append(getString(R.string.build_timestamp));
 
         ((TextView)findViewById(R.id.about_text)).setText(about);
     }

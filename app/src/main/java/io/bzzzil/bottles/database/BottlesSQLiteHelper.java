@@ -4,14 +4,14 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class BottlesSQLiteHelper extends SQLiteOpenHelper {
+class BottlesSQLiteHelper extends SQLiteOpenHelper {
 
     /**
      * Database name
      */
     private static final String DATABASE_NAME = "bottles.db";
 
-    private Context appContext;
+    private final Context appContext;
 
     /**
      * Database version
@@ -26,7 +26,7 @@ public class BottlesSQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        BottlesTable.onCreate(db, appContext);
+        BottlesTable.onCreate(db);
         CountriesTable.onCreate(db, appContext);
     }
 

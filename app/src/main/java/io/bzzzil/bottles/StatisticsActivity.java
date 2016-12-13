@@ -23,6 +23,9 @@ public class StatisticsActivity extends AppCompatActivity {
 
         Log.d(TAG, "Get statistics from uri: " + statisticsUri);
         Cursor cursor = getContentResolver().query(statisticsUri, null, null, null, null);
+        if (cursor==null) {
+            return;
+        }
         cursor.moveToFirst();
 
         String totalBottles = "" + cursor.getInt(cursor.getColumnIndexOrThrow("total"));
