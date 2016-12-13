@@ -2,7 +2,6 @@ package io.bzzzil.bottles;
 
 import android.app.AlertDialog;
 import android.app.LoaderManager;
-import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,13 +25,16 @@ import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.InputStream;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import io.bzzzil.bottles.database.BottlesContentProvider;
 import io.bzzzil.bottles.database.BottlesTable;
-import io.bzzzil.bottles.imports.CsvImport;
 import io.bzzzil.bottles.imports.ImportAsyncTask;
 
 
@@ -42,22 +44,26 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
     /**
      * Name for shared preferences
      */
-    public static String PREFS = "bottles";
-    public static String PREFS_SEARCH = "search";
+    private static final String PREFS = "bottles";
+    private static final String PREFS_SEARCH = "search";
 
     private BottlesListCustomAdapter adapter;
 
-    private ListView bottlesList;
     private EditText searchBox;
 
     private static final int ACTIVITY_CHOOSE_FILE = 1;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottles_list);
 
-        searchBox = (EditText)findViewById(R.id.editSearch);
+        searchBox = (EditText) findViewById(R.id.editSearch);
         searchBox.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -74,10 +80,10 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
             }
         });
 
-        String[] from = new String[] { BottlesTable.COLUMN_TITLE, BottlesTable.COLUMN_TYPE };
-        int[] to = new int[] { R.id.bottle_title, R.id.bottle_detais };
+        String[] from = new String[]{BottlesTable.COLUMN_TITLE, BottlesTable.COLUMN_TYPE};
+        int[] to = new int[]{R.id.bottle_title, R.id.bottle_detais};
 
-        bottlesList = (ListView)findViewById(R.id.listViewBottles);
+        ListView bottlesList = (ListView) findViewById(R.id.listViewBottles);
         getLoaderManager().initLoader(0, null, this);
         adapter = new BottlesListCustomAdapter(this, R.layout.bottle_row, null, from, to, 0);
         bottlesList.setAdapter(adapter);
@@ -108,13 +114,12 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                         }
 
                         selection.append("(");
-                        for (String searchColumn: BottlesContentProvider.getSearchableColumns()) {
-                            if (selection.charAt(selection.length()-1) != '(')
-                            {
-                                selection.append( " OR " );
+                        for (String searchColumn : BottlesContentProvider.getSearchableColumns()) {
+                            if (selection.charAt(selection.length() - 1) != '(') {
+                                selection.append(" OR ");
                             }
-                            selection.append( searchColumn );
-                            selection.append( " LIKE ? " );
+                            selection.append(searchColumn);
+                            selection.append(" LIKE ? ");
                             selectionArgs.add("%" + word + "%");
                         }
                         selection.append(")");
@@ -134,6 +139,9 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
             searchBox.setText("");
             searchBox.append(searchValue);
         }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -163,7 +171,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Log.d(TAG, "Context menu for item " + info.id);
         switch (item.getItemId()) {
             case R.id.action_edit_bottle:
@@ -174,6 +182,10 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
             case R.id.action_delete_bottle:
                 final Uri bottleUri = Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + info.id);
                 Cursor cursor = getContentResolver().query(bottleUri, null, null, null, null);
+                if (cursor == null) {
+                    Log.d(TAG, "No cursor for deleting item!");
+                    return true;
+                }
                 cursor.moveToFirst();
                 String title = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE));
                 String text = getString(R.string.alert_delete);
@@ -277,7 +289,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return  new CursorLoader(this,
+        return new CursorLoader(this,
                 BottlesContentProvider.CONTENT_URI, null, null, null, null);
     }
 
@@ -291,9 +303,44 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
         adapter.swapCursor(null);
     }
 
-    public void refreshBottlesList()
-    {
+    public void refreshBottlesList() {
         adapter.getFilter().filter("");
         adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("BottlesList Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://bottles.bzzzil.io/"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }

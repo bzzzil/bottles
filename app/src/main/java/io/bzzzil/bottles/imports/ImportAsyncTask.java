@@ -14,7 +14,7 @@ import io.bzzzil.bottles.R;
 /**
  * Asyncronous task for importing data from given URI
  */
-public class ImportAsyncTask extends AsyncTask {
+public class ImportAsyncTask extends AsyncTask<Object, Void, Object> {
 
     private BottlesListActivity activity;
 
