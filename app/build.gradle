@@ -60,6 +60,13 @@ android {
             pseudoLocalesEnabled true
         }
     }
+    sourceSets {
+        main {
+            res {
+                srcDir 'src/main/res_flags'
+            }
+        }
+    }
 }
 
 dependencies {

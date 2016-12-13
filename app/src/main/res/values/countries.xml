@@ -243,4 +243,12 @@
 	<string name="country_svalbard">Svalbard</string>
 	<string name="country_ascension">Ascension</string>
 	<string name="country_tristan_da_cunha">Tristan da Cunha</string>
+	<string name="country_western_sahara">Western Sahara</string>
+    <string name="country_curacao">Curaçao</string>
+    <string name="country_saint_barthelemy">Saint Barthélemy</string>
+    <string name="country_antarctica">Antarctica</string>
+    <string name="country_south_sudan">South Sudan</string>
+    <string name="country_saint_martin">Saint Martin</string>
+    <string name="country_palestina">Palestina</string>
+    <string name="country_european_union">European Union</string>
 </resources>

@@ -1,5 +1,6 @@
 package io.bzzzil.bottles.database;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -88,7 +89,7 @@ public class BottlesTable {
      */
     public static final String COLUMN_INT_SEARCHWORDS = "_searchwords";
 
-    public static void onCreate(SQLiteDatabase db) {
+    public static void onCreate(SQLiteDatabase db, Context context) {
         db.execSQL("create table " + TABLE_BOTTLES + " ("
                 + COLUMN_ID + " integer primary key autoincrement, "
                 + COLUMN_TYPE + " text not null, "
@@ -107,11 +108,11 @@ public class BottlesTable {
                 + ")");
     }
 
-    public static void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public static void onUpgrade(SQLiteDatabase db, Context context, int oldVersion, int newVersion) {
         Log.w(BottlesTable.class.getName(),
                 "Upgrading database from version " + oldVersion + " to " + newVersion
                         + ". ALL DATA WILL BE DESTROYED");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOTTLES);
-        onCreate(db);
+        onCreate(db, context);
     }
 }

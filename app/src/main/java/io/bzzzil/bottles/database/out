@@ -1,0 +1,301 @@
+package io.bzzzil.bottles.database;
+
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import io.bzzzil.bottles.BottlesApplication;
+import io.bzzzil.bottles.R;
+
+public class CountriesTable {
+    // Database table
+    /**
+     * Bottles: table name
+     */
+    public static final String TABLE_COUNTRIES = "countries";
+
+    /**
+     * Countries: column "id"
+     */
+    public static final String COLUMN_ID = "_id";
+
+    /**
+     * Countries: column "id" full specification
+     */
+    public static final String FULL_ID = TABLE_COUNTRIES + "._id";
+
+    /**
+     * Countries: column "name"
+     */
+    public static final String COLUMN_NAME = "name";
+
+    /**
+     * Countries: column "flag_resource_id"
+     */
+    public static final String COLUMN_FLAG_RESOURCE_ID = "flag_resource_id";
+
+    public static void onCreate(SQLiteDatabase db) {
+        db.execSQL("create table " + TABLE_COUNTRIES + " ("
+                + COLUMN_ID + " varchar(2) primary key, "
+                + COLUMN_NAME + " text not null, "
+                + COLUMN_FLAG_RESOURCE_ID + " integer not null "
+                + ")");
+        insertCountries(db);
+    }
+
+    public static void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.w(CountriesTable.class.getName(),
+                "Upgrading database from version " + oldVersion + " to " + newVersion
+                        + ". ALL DATA WILL BE DESTROYED");
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COUNTRIES);
+        onCreate(db);
+    }
+
+    private static void insertCountries(SQLiteDatabase db)
+    {
+        //db.beginTransaction();
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CI', '" + BottlesApplication.getContext().getString(R.string.country_cote_divoire) + "', " + R.drawable.flag_ci + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('AF', '" + BottlesApplication.getContext().getString(R.string.country_afghanistan) + "', " + R.drawable.flag_af + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('AL', '" + BottlesApplication.getContext().getString(R.string.country_albania) + "', " + R.drawable.flag_al + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('DZ', '" + BottlesApplication.getContext().getString(R.string.country_algeria) + "', " + R.drawable.flag_dz + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('AD', '" + BottlesApplication.getContext().getString(R.string.country_andorra) + "', " + R.drawable.flag_ad + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('AO', '" + BottlesApplication.getContext().getString(R.string.country_angola) + "', " + R.drawable.flag_ao + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('AG', '" + BottlesApplication.getContext().getString(R.string.country_antigua_and_barbuda) + "', " + R.drawable.ic_flag_flat_+ ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values ('AR', '" + BottlesApplication.getContext().getString(R.string.country_argentina) + "', " + R.drawable.flag_ag + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('AM', '" + BottlesApplication.getContext().getString(R.string.country_armenia) + "', " + R.drawable.flag_am + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('AU', '" + BottlesApplication.getContext().getString(R.string.country_australia) + "', " + R.drawable.flag_au + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('AT', '" + BottlesApplication.getContext().getString(R.string.country_austria) + "', " + R.drawable.flag_at + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('AZ', '" + BottlesApplication.getContext().getString(R.string.country_azerbaijan) + "', " + R.drawable.flag_az + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BS', '" + BottlesApplication.getContext().getString(R.string.country_bahamas) + "', " + R.drawable.flag_bs + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BH', '" + BottlesApplication.getContext().getString(R.string.country_bahrain) + "', " + R.drawable.flag_bh + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BD', '" + BottlesApplication.getContext().getString(R.string.country_bangladesh) + "', " + R.drawable.flag_bd + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BB', '" + BottlesApplication.getContext().getString(R.string.country_barbados) + "', " + R.drawable.flag_bb + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BY', '" + BottlesApplication.getContext().getString(R.string.country_belarus) + "', " + R.drawable.flag_by + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BE', '" + BottlesApplication.getContext().getString(R.string.country_belgium) + "', " + R.drawable.flag_be + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BZ', '" + BottlesApplication.getContext().getString(R.string.country_belize) + "', " + R.drawable.flag_bz + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BJ', '" + BottlesApplication.getContext().getString(R.string.country_benin) + "', " + R.drawable.flag_bj + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BT', '" + BottlesApplication.getContext().getString(R.string.country_bhutan) + "', " + R.drawable.flag_bt + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BO', '" + BottlesApplication.getContext().getString(R.string.country_bolivia) + "', " + R.drawable.flag_bo + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BA', '" + BottlesApplication.getContext().getString(R.string.country_bosnia) + "', " + R.drawable.flag_ba + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BW', '" + BottlesApplication.getContext().getString(R.string.country_botswana) + "', " + R.drawable.flag_bw + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BR', '" + BottlesApplication.getContext().getString(R.string.country_brazil) + "', " + R.drawable.flag_br + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('VG', '" + BottlesApplication.getContext().getString(R.string.country_british_virgin_islands) + "', " + R.drawable.flag_vg + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BN', '" + BottlesApplication.getContext().getString(R.string.country_brunei) + "', " + R.drawable.flag_bn + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BG', '" + BottlesApplication.getContext().getString(R.string.country_bulgaria) + "', " + R.drawable.flag_bg + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BF', '" + BottlesApplication.getContext().getString(R.string.country_burkina_faso) + "', " + R.drawable.flag_bf + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BI', '" + BottlesApplication.getContext().getString(R.string.country_burundi) + "', " + R.drawable.flag_bi + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('KH', '" + BottlesApplication.getContext().getString(R.string.country_cambodia) + "', " + R.drawable.flag_kh + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CM', '" + BottlesApplication.getContext().getString(R.string.country_cameroon) + "', " + R.drawable.flag_cm + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CA', '" + BottlesApplication.getContext().getString(R.string.country_canada) + "', " + R.drawable.flag_ca + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CV', '" + BottlesApplication.getContext().getString(R.string.country_cape_verde) + "', " + R.drawable.flag_cv + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CF', '" + BottlesApplication.getContext().getString(R.string.country_central_african_republic) + "', " + R.drawable.flag_cf + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TD', '" + BottlesApplication.getContext().getString(R.string.country_chad) + "', " + R.drawable.flag_td + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CL', '" + BottlesApplication.getContext().getString(R.string.country_chile) + "', " + R.drawable.flag_cl + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CN', '" + BottlesApplication.getContext().getString(R.string.country_china) + "', " + R.drawable.flag_cn + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CX', '" + BottlesApplication.getContext().getString(R.string.country_christmas_island) + "', " + R.drawable.flag_cx + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CO', '" + BottlesApplication.getContext().getString(R.string.country_colombia) + "', " + R.drawable.flag_co + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CD', '" + BottlesApplication.getContext().getString(R.string.country_congo_democratic_republic) + "', " + R.drawable.flag_cd + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CG', '" + BottlesApplication.getContext().getString(R.string.country_congo_republic) + "', " + R.drawable.flag_cg + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('KM', '" + BottlesApplication.getContext().getString(R.string.country_comoros) + "', " + R.drawable.flag_km + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CK', '" + BottlesApplication.getContext().getString(R.string.country_cook_islands) + "', " + R.drawable.flag_ck + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CR', '" + BottlesApplication.getContext().getString(R.string.country_costa_rica) + "', " + R.drawable.flag_cr + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('HR', '" + BottlesApplication.getContext().getString(R.string.country_croatia) + "', " + R.drawable.flag_hr + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CU', '" + BottlesApplication.getContext().getString(R.string.country_cuba) + "', " + R.drawable.flag_cu + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CY', '" + BottlesApplication.getContext().getString(R.string.country_cyprus) + "', " + R.drawable.flag_cy + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CZ', '" + BottlesApplication.getContext().getString(R.string.country_czech_republic) + "', " + R.drawable.flag_cz + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('DK', '" + BottlesApplication.getContext().getString(R.string.country_denmark) + "', " + R.drawable.flag_dk + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('DJ', '" + BottlesApplication.getContext().getString(R.string.country_djibouti) + "', " + R.drawable.flag_dj + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('DM', '" + BottlesApplication.getContext().getString(R.string.country_dominica) + "', " + R.drawable.flag_dm + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('DO', '" + BottlesApplication.getContext().getString(R.string.country_dominican_republic) + "', " + R.drawable.flag_do + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('EC', '" + BottlesApplication.getContext().getString(R.string.country_ecuador) + "', " + R.drawable.flag_ec + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('EG', '" + BottlesApplication.getContext().getString(R.string.country_egypt) + "', " + R.drawable.flag_eg + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SV', '" + BottlesApplication.getContext().getString(R.string.country_el_salvador) + "', " + R.drawable.flag_sv + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GQ', '" + BottlesApplication.getContext().getString(R.string.country_equatorial_guinea) + "', " + R.drawable.flag_gq + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('ER', '" + BottlesApplication.getContext().getString(R.string.country_eritrea) + "', " + R.drawable.flag_er + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('EE', '" + BottlesApplication.getContext().getString(R.string.country_estonia) + "', " + R.drawable.flag_ee + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('ET', '" + BottlesApplication.getContext().getString(R.string.country_ethiopia) + "', " + R.drawable.flag_et + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('FK', '" + BottlesApplication.getContext().getString(R.string.country_falkland_islands) + "', " + R.drawable.flag_fk + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('FO', '" + BottlesApplication.getContext().getString(R.string.country_faroe_islands) + "', " + R.drawable.flag_fo + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('FJ', '" + BottlesApplication.getContext().getString(R.string.country_fiji) + "', " + R.drawable.flag_fj + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('FI', '" + BottlesApplication.getContext().getString(R.string.country_finland) + "', " + R.drawable.flag_fi + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('FR', '" + BottlesApplication.getContext().getString(R.string.country_france) + "', " + R.drawable.flag_fr + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('PF', '" + BottlesApplication.getContext().getString(R.string.country_french_polynesia) + "', " + R.drawable.flag_pf + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GA', '" + BottlesApplication.getContext().getString(R.string.country_gabon) + "', " + R.drawable.flag_ga + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GM', '" + BottlesApplication.getContext().getString(R.string.country_gambia) + "', " + R.drawable.flag_gm + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GE', '" + BottlesApplication.getContext().getString(R.string.country_georgia) + "', " + R.drawable.flag_ge + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('DE', '" + BottlesApplication.getContext().getString(R.string.country_germany) + "', " + R.drawable.flag_de + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GH', '" + BottlesApplication.getContext().getString(R.string.country_ghana) + "', " + R.drawable.flag_gh + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GI', '" + BottlesApplication.getContext().getString(R.string.country_gibraltar) + "', " + R.drawable.flag_gi + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GR', '" + BottlesApplication.getContext().getString(R.string.country_greece) + "', " + R.drawable.flag_gr + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GL', '" + BottlesApplication.getContext().getString(R.string.country_greenland) + "', " + R.drawable.flag_gl + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GD', '" + BottlesApplication.getContext().getString(R.string.country_grenada) + "', " + R.drawable.flag_gd + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GU', '" + BottlesApplication.getContext().getString(R.string.country_guam) + "', " + R.drawable.flag_gu + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GT', '" + BottlesApplication.getContext().getString(R.string.country_guatemala) + "', " + R.drawable.flag_gt + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GN', '" + BottlesApplication.getContext().getString(R.string.country_guinea) + "', " + R.drawable.flag_gn + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GW', '" + BottlesApplication.getContext().getString(R.string.country_guinea_bissau) + "', " + R.drawable.flag_gw + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GY', '" + BottlesApplication.getContext().getString(R.string.country_guyana) + "', " + R.drawable.flag_gy + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('HT', '" + BottlesApplication.getContext().getString(R.string.country_haiti) + "', " + R.drawable.flag_ht + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('HN', '" + BottlesApplication.getContext().getString(R.string.country_honduras) + "', " + R.drawable.flag_hn + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('HK', '" + BottlesApplication.getContext().getString(R.string.country_hong_kong) + "', " + R.drawable.flag_hk + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('HU', '" + BottlesApplication.getContext().getString(R.string.country_hungary) + "', " + R.drawable.flag_hu + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('IS', '" + BottlesApplication.getContext().getString(R.string.country_iceland) + "', " + R.drawable.flag_is + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('IN', '" + BottlesApplication.getContext().getString(R.string.country_india) + "', " + R.drawable.flag_in + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('ID', '" + BottlesApplication.getContext().getString(R.string.country_indonesia) + "', " + R.drawable.flag_id + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('IR', '" + BottlesApplication.getContext().getString(R.string.country_iran) + "', " + R.drawable.flag_ir + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('IQ', '" + BottlesApplication.getContext().getString(R.string.country_iraq) + "', " + R.drawable.flag_iq + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('IE', '" + BottlesApplication.getContext().getString(R.string.country_ireland) + "', " + R.drawable.flag_ie + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('IL', '" + BottlesApplication.getContext().getString(R.string.country_israel) + "', " + R.drawable.flag_il + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('IT', '" + BottlesApplication.getContext().getString(R.string.country_italy) + "', " + R.drawable.flag_it + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('JM', '" + BottlesApplication.getContext().getString(R.string.country_jamaica) + "', " + R.drawable.flag_jm + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('JP', '" + BottlesApplication.getContext().getString(R.string.country_japan) + "', " + R.drawable.flag_jp + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('JO', '" + BottlesApplication.getContext().getString(R.string.country_jordan) + "', " + R.drawable.flag_jo + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('KZ', '" + BottlesApplication.getContext().getString(R.string.country_kazakhstan) + "', " + R.drawable.flag_kz + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('KE', '" + BottlesApplication.getContext().getString(R.string.country_kenya) + "', " + R.drawable.flag_ke + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('KI', '" + BottlesApplication.getContext().getString(R.string.country_kiribati) + "', " + R.drawable.flag_ki + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('KP', '" + BottlesApplication.getContext().getString(R.string.country_korea_north) + "', " + R.drawable.flag_kp + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('KR', '" + BottlesApplication.getContext().getString(R.string.country_korea_south) + "', " + R.drawable.flag_kr + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('KW', '" + BottlesApplication.getContext().getString(R.string.country_kuwait) + "', " + R.drawable.flag_kw + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('KG', '" + BottlesApplication.getContext().getString(R.string.country_kyrgyzstan) + "', " + R.drawable.flag_kg + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('LA', '" + BottlesApplication.getContext().getString(R.string.country_laos) + "', " + R.drawable.flag_la + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('LV', '" + BottlesApplication.getContext().getString(R.string.country_latvia) + "', " + R.drawable.flag_lv + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('LB', '" + BottlesApplication.getContext().getString(R.string.country_lebanon) + "', " + R.drawable.flag_lb + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('LS', '" + BottlesApplication.getContext().getString(R.string.country_lesotho) + "', " + R.drawable.flag_ls + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('LR', '" + BottlesApplication.getContext().getString(R.string.country_liberia) + "', " + R.drawable.flag_lr + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('LY', '" + BottlesApplication.getContext().getString(R.string.country_libya) + "', " + R.drawable.flag_ly + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('LI', '" + BottlesApplication.getContext().getString(R.string.country_liechtenstein) + "', " + R.drawable.flag_li + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('LT', '" + BottlesApplication.getContext().getString(R.string.country_lithuania) + "', " + R.drawable.flag_lt + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('LU', '" + BottlesApplication.getContext().getString(R.string.country_luxembourg) + "', " + R.drawable.flag_lu + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MO', '" + BottlesApplication.getContext().getString(R.string.country_macau) + "', " + R.drawable.flag_mo + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MK', '" + BottlesApplication.getContext().getString(R.string.country_macedonia) + "', " + R.drawable.flag_mk + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MG', '" + BottlesApplication.getContext().getString(R.string.country_madagascar) + "', " + R.drawable.flag_mg + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MW', '" + BottlesApplication.getContext().getString(R.string.country_malawi) + "', " + R.drawable.flag_mw + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MY', '" + BottlesApplication.getContext().getString(R.string.country_malaysia) + "', " + R.drawable.flag_my + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MV', '" + BottlesApplication.getContext().getString(R.string.country_maldives) + "', " + R.drawable.flag_mv + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('ML', '" + BottlesApplication.getContext().getString(R.string.country_mali) + "', " + R.drawable.flag_ml + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MT', '" + BottlesApplication.getContext().getString(R.string.country_malta) + "', " + R.drawable.flag_mt + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MH', '" + BottlesApplication.getContext().getString(R.string.country_marshall_islands) + "', " + R.drawable.flag_mh + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MQ', '" + BottlesApplication.getContext().getString(R.string.country_martinique) + "', " + R.drawable.flag_mq + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MR', '" + BottlesApplication.getContext().getString(R.string.country_mauritania) + "', " + R.drawable.flag_mr + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MU', '" + BottlesApplication.getContext().getString(R.string.country_mauritius) + "', " + R.drawable.flag_mu + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MX', '" + BottlesApplication.getContext().getString(R.string.country_mexico) + "', " + R.drawable.flag_mx + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('FM', '" + BottlesApplication.getContext().getString(R.string.country_micronesia) + "', " + R.drawable.flag_fm + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MD', '" + BottlesApplication.getContext().getString(R.string.country_moldova) + "', " + R.drawable.flag_md + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MC', '" + BottlesApplication.getContext().getString(R.string.country_monaco) + "', " + R.drawable.flag_mc + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MN', '" + BottlesApplication.getContext().getString(R.string.country_mongolia) + "', " + R.drawable.flag_mn + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MS', '" + BottlesApplication.getContext().getString(R.string.country_montserrat) + "', " + R.drawable.flag_ms + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('ME', '" + BottlesApplication.getContext().getString(R.string.country_montenegro) + "', " + R.drawable.flag_me + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MA', '" + BottlesApplication.getContext().getString(R.string.country_morocco) + "', " + R.drawable.flag_ma + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MZ', '" + BottlesApplication.getContext().getString(R.string.country_mozambique) + "', " + R.drawable.flag_mz + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MM', '" + BottlesApplication.getContext().getString(R.string.country_myanmar) + "', " + R.drawable.flag_mm + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('NA', '" + BottlesApplication.getContext().getString(R.string.country_namibia) + "', " + R.drawable.flag_na + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('NR', '" + BottlesApplication.getContext().getString(R.string.country_nauru) + "', " + R.drawable.flag_nr + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('NP', '" + BottlesApplication.getContext().getString(R.string.country_nepal) + "', " + R.drawable.flag_np + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('NL', '" + BottlesApplication.getContext().getString(R.string.country_netherlands) + "', " + R.drawable.flag_nl + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('AN', '" + BottlesApplication.getContext().getString(R.string.country_netherlands_antilles) + "', " + R.drawable.flag_an + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('NZ', '" + BottlesApplication.getContext().getString(R.string.country_new_zealand) + "', " + R.drawable.flag_nz + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('NI', '" + BottlesApplication.getContext().getString(R.string.country_nicaragua) + "', " + R.drawable.flag_ni + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('NE', '" + BottlesApplication.getContext().getString(R.string.country_niger) + "', " + R.drawable.flag_ne + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('NG', '" + BottlesApplication.getContext().getString(R.string.country_nigeria) + "', " + R.drawable.flag_ng + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('NU', '" + BottlesApplication.getContext().getString(R.string.country_niue) + "', " + R.drawable.flag_nu + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('NF', '" + BottlesApplication.getContext().getString(R.string.country_norfolk_island) + "', " + R.drawable.flag_nf + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('NO', '" + BottlesApplication.getContext().getString(R.string.country_norway) + "', " + R.drawable.flag_no + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('OM', '" + BottlesApplication.getContext().getString(R.string.country_oman) + "', " + R.drawable.flag_om + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('PK', '" + BottlesApplication.getContext().getString(R.string.country_pakistan) + "', " + R.drawable.flag_pk + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('PW', '" + BottlesApplication.getContext().getString(R.string.country_palau) + "', " + R.drawable.flag_pw + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('PA', '" + BottlesApplication.getContext().getString(R.string.country_panama) + "', " + R.drawable.flag_pa + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('PG', '" + BottlesApplication.getContext().getString(R.string.country_papua_new_guinea) + "', " + R.drawable.flag_pg + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('PY', '" + BottlesApplication.getContext().getString(R.string.country_paraguay) + "', " + R.drawable.flag_py + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('PE', '" + BottlesApplication.getContext().getString(R.string.country_peru) + "', " + R.drawable.flag_pe + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('PH', '" + BottlesApplication.getContext().getString(R.string.country_philippines) + "', " + R.drawable.flag_ph + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('PN', '" + BottlesApplication.getContext().getString(R.string.country_pitcairn_islands) + "', " + R.drawable.flag_pn + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('PL', '" + BottlesApplication.getContext().getString(R.string.country_poland) + "', " + R.drawable.flag_pl + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('PT', '" + BottlesApplication.getContext().getString(R.string.country_portugal) + "', " + R.drawable.flag_pt + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('PR', '" + BottlesApplication.getContext().getString(R.string.country_puerto_rico) + "', " + R.drawable.flag_pr + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('QA', '" + BottlesApplication.getContext().getString(R.string.country_qatar) + "', " + R.drawable.flag_qa + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('RO', '" + BottlesApplication.getContext().getString(R.string.country_romania) + "', " + R.drawable.flag_ro + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('RU', '" + BottlesApplication.getContext().getString(R.string.country_russian_federation) + "', " + R.drawable.flag_ru + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('RW', '" + BottlesApplication.getContext().getString(R.string.country_rwanda) + "', " + R.drawable.flag_rw + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('KN', '" + BottlesApplication.getContext().getString(R.string.country_saint_kitts_and_nevis) + "', " + R.drawable.flag_kn + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('LC', '" + BottlesApplication.getContext().getString(R.string.country_saint_lucia) + "', " + R.drawable.flag_lc + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('VC', '" + BottlesApplication.getContext().getString(R.string.country_saint_vicent_and_the_grenadines) + "', " + R.drawable.flag_vc + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('WS', '" + BottlesApplication.getContext().getString(R.string.country_samoa) + "', " + R.drawable.flag_ws + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SM', '" + BottlesApplication.getContext().getString(R.string.country_san_marino) + "', " + R.drawable.flag_sm + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('ST', '" + BottlesApplication.getContext().getString(R.string.country_sao_tome_and_principe) + "', " + R.drawable.flag_st + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SA', '" + BottlesApplication.getContext().getString(R.string.country_saudi_arabia) + "', " + R.drawable.flag_sa + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SN', '" + BottlesApplication.getContext().getString(R.string.country_senegal) + "', " + R.drawable.flag_sn + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('RS', '" + BottlesApplication.getContext().getString(R.string.country_serbia) + "', " + R.drawable.flag_rs + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SC', '" + BottlesApplication.getContext().getString(R.string.country_seychelles) + "', " + R.drawable.flag_sc + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SL', '" + BottlesApplication.getContext().getString(R.string.country_sierra_leone) + "', " + R.drawable.flag_sl + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SG', '" + BottlesApplication.getContext().getString(R.string.country_singapore) + "', " + R.drawable.flag_sg + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SK', '" + BottlesApplication.getContext().getString(R.string.country_slovakia) + "', " + R.drawable.flag_sk + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SI', '" + BottlesApplication.getContext().getString(R.string.country_slovenia) + "', " + R.drawable.flag_si + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SB', '" + BottlesApplication.getContext().getString(R.string.country_solomon_islands) + "', " + R.drawable.flag_sb + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SO', '" + BottlesApplication.getContext().getString(R.string.country_somalia) + "', " + R.drawable.flag_so + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('ZA', '" + BottlesApplication.getContext().getString(R.string.country_south_africa) + "', " + R.drawable.flag_za + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('ES', '" + BottlesApplication.getContext().getString(R.string.country_spain) + "', " + R.drawable.flag_es + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('LK', '" + BottlesApplication.getContext().getString(R.string.country_sri_lanka) + "', " + R.drawable.flag_lk + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SD', '" + BottlesApplication.getContext().getString(R.string.country_sudan) + "', " + R.drawable.flag_sd + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SR', '" + BottlesApplication.getContext().getString(R.string.country_suriname) + "', " + R.drawable.flag_sr + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SZ', '" + BottlesApplication.getContext().getString(R.string.country_swaziland) + "', " + R.drawable.flag_sz + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SE', '" + BottlesApplication.getContext().getString(R.string.country_sweden) + "', " + R.drawable.flag_se + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CH', '" + BottlesApplication.getContext().getString(R.string.country_switzerland) + "', " + R.drawable.flag_ch + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SY', '" + BottlesApplication.getContext().getString(R.string.country_syria) + "', " + R.drawable.flag_sy + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TW', '" + BottlesApplication.getContext().getString(R.string.country_taiwan) + "', " + R.drawable.flag_tw + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TJ', '" + BottlesApplication.getContext().getString(R.string.country_tajikistan) + "', " + R.drawable.flag_tj + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TZ', '" + BottlesApplication.getContext().getString(R.string.country_tanzania) + "', " + R.drawable.flag_tz + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TH', '" + BottlesApplication.getContext().getString(R.string.country_thailand) + "', " + R.drawable.flag_th + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TL', '" + BottlesApplication.getContext().getString(R.string.country_timor_leste) + "', " + R.drawable.flag_tl + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TG', '" + BottlesApplication.getContext().getString(R.string.country_togo) + "', " + R.drawable.flag_tg + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TO', '" + BottlesApplication.getContext().getString(R.string.country_tonga) + "', " + R.drawable.flag_to + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TT', '" + BottlesApplication.getContext().getString(R.string.country_trinidad_and_tobago) + "', " + R.drawable.flag_tt + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TN', '" + BottlesApplication.getContext().getString(R.string.country_tunisia) + "', " + R.drawable.flag_tn + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TR', '" + BottlesApplication.getContext().getString(R.string.country_turkey) + "', " + R.drawable.flag_tr + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TM', '" + BottlesApplication.getContext().getString(R.string.country_turkmenistan) + "', " + R.drawable.flag_tm + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TC', '" + BottlesApplication.getContext().getString(R.string.country_turks_and_caicos_islands) + "', " + R.drawable.flag_tc + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TV', '" + BottlesApplication.getContext().getString(R.string.country_tuvalu) + "', " + R.drawable.flag_tv + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('UG', '" + BottlesApplication.getContext().getString(R.string.country_uganda) + "', " + R.drawable.flag_ug + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('UA', '" + BottlesApplication.getContext().getString(R.string.country_ukraine) + "', " + R.drawable.flag_ua + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('AE', '" + BottlesApplication.getContext().getString(R.string.country_united_arab_emirates) + "', " + R.drawable.flag_ae + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GB', '" + BottlesApplication.getContext().getString(R.string.country_united_kingdom) + "', " + R.drawable.flag_gb + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('US', '" + BottlesApplication.getContext().getString(R.string.country_united_states_of_america) + "', " + R.drawable.flag_us + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('UY', '" + BottlesApplication.getContext().getString(R.string.country_uruguay) + "', " + R.drawable.flag_uy + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('VI', '" + BottlesApplication.getContext().getString(R.string.country_us_virgin_islands) + "', " + R.drawable.flag_vi + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('UZ', '" + BottlesApplication.getContext().getString(R.string.country_uzbekistan) + "', " + R.drawable.flag_uz + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('VU', '" + BottlesApplication.getContext().getString(R.string.country_vanuatu) + "', " + R.drawable.flag_vu + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('VA', '" + BottlesApplication.getContext().getString(R.string.country_vatican_city) + "', " + R.drawable.flag_va + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('VE', '" + BottlesApplication.getContext().getString(R.string.country_venezuela) + "', " + R.drawable.flag_ve + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('VN', '" + BottlesApplication.getContext().getString(R.string.country_vietnam) + "', " + R.drawable.flag_vn + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('YE', '" + BottlesApplication.getContext().getString(R.string.country_yemen) + "', " + R.drawable.flag_ye + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('ZM', '" + BottlesApplication.getContext().getString(R.string.country_zambia) + "', " + R.drawable.flag_zm + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('ZW', '" + BottlesApplication.getContext().getString(R.string.country_zimbabwe) + "', " + R.drawable.flag_zw + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('CC', '" + BottlesApplication.getContext().getString(R.string.country_cocos_keeling_islands) + "', " + R.drawable.flag_cc + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('HM', '" + BottlesApplication.getContext().getString(R.string.country_heard_island_and_mcdonald_islands) + "', " + R.drawable.flag_hm + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('NC', '" + BottlesApplication.getContext().getString(R.string.country_new_caledonia) + "', " + R.drawable.flag_nc + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('YT', '" + BottlesApplication.getContext().getString(R.string.country_mayotte) + "', " + R.drawable.flag_yt + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('PM', '" + BottlesApplication.getContext().getString(R.string.country_saint_pierre_and_miquelon) + "', " + R.drawable.flag_pm + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('WF', '" + BottlesApplication.getContext().getString(R.string.country_wallis_and_futuna) + "', " + R.drawable.flag_wf + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TF', '" + BottlesApplication.getContext().getString(R.string.country_french_southern_and_antarctic_lands) + "', " + R.drawable.flag_tf + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BV', '" + BottlesApplication.getContext().getString(R.string.country_bouvet_island) + "', " + R.drawable.flag_bv + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TK', '" + BottlesApplication.getContext().getString(R.string.country_tokelau) + "', " + R.drawable.flag_tk + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GG', '" + BottlesApplication.getContext().getString(R.string.country_guernsey) + "', " + R.drawable.flag_gg + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('IM', '" + BottlesApplication.getContext().getString(R.string.country_isle_of_man) + "', " + R.drawable.flag_im + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('JE', '" + BottlesApplication.getContext().getString(R.string.country_jersey) + "', " + R.drawable.flag_je + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('AI', '" + BottlesApplication.getContext().getString(R.string.country_anguilla) + "', " + R.drawable.flag_ai + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('BM', '" + BottlesApplication.getContext().getString(R.string.country_bermuda) + "', " + R.drawable.flag_bm + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('IO', '" + BottlesApplication.getContext().getString(R.string.country_british_indian_ocean_territory) + "', " + R.drawable.flag_io + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('KY', '" + BottlesApplication.getContext().getString(R.string.country_cayman_islands) + "', " + R.drawable.flag_ky + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SH', '" + BottlesApplication.getContext().getString(R.string.country_saint_helena) + "', " + R.drawable.flag_sh + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GS', '" + BottlesApplication.getContext().getString(R.string.country_south_georgia__south_sandwich_islands) + "', " + R.drawable.flag_gs + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('MP', '" + BottlesApplication.getContext().getString(R.string.country_northern_mariana_islands) + "', " + R.drawable.flag_mp + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('AS', '" + BottlesApplication.getContext().getString(R.string.country_american_samoa) + "', " + R.drawable.flag_as + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('UM', '" + BottlesApplication.getContext().getString(R.string.country_baker_island) + "', " + R.drawable.flag_um + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GF', '" + BottlesApplication.getContext().getString(R.string.country_french_guiana) + "', " + R.drawable.flag_gf + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('GP', '" + BottlesApplication.getContext().getString(R.string.country_guadeloupe) + "', " + R.drawable.flag_gp + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('RE', '" + BottlesApplication.getContext().getString(R.string.country_reunion) + "', " + R.drawable.flag_re + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('AX', '" + BottlesApplication.getContext().getString(R.string.country_aland) + "', " + R.drawable.flag_ax + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('AW', '" + BottlesApplication.getContext().getString(R.string.country_aruba) + "', " + R.drawable.flag_aw + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('SJ', '" + BottlesApplication.getContext().getString(R.string.country_svalbard) + "', " + R.drawable.flag_sj + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('AC', '" + BottlesApplication.getContext().getString(R.string.country_ascension) + "', " + R.drawable.flag_ac + ")");
+        db.execSQL("insert into " + CountriesTable.TABLE_COUNTRIES + " values('TA', '" + BottlesApplication.getContext().getString(R.string.country_tristan_da_cunha) + "', " + R.drawable.flag_ta + ")");
+        //db.endTransaction();
+    }
+}
