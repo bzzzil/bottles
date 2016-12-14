@@ -3,7 +3,6 @@ package io.bzzzil.helper;
 import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.regex.Pattern;
 
 /**
  * Class based on http://stackoverflow.com/questions/1453171/%C5%84-%C7%B9-%C5%88-%C3%B1-%E1%B9%85-%C5%86-%E1%B9%87-%E1%B9%8B-%E1%B9%89-%CC%88-%C9%B2-%C6%9E-%E1%B6%87-%C9%B3-%C8%B5-n-or-remove-diacritical-marks-from-unicode-cha

@@ -32,7 +32,7 @@ class BottlesSQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        BottlesTable.onUpgrade(db, appContext, oldVersion, newVersion);
+        BottlesTable.onUpgrade(db, oldVersion, newVersion);
         CountriesTable.onUpgrade(db, appContext, oldVersion, newVersion);
     }
 }

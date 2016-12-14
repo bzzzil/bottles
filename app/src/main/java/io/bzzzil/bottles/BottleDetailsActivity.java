@@ -139,10 +139,12 @@ public class BottleDetailsActivity extends AppCompatActivity {
 
             if (price != 0) {
                 details4.append(getString(R.string.details_bought_for));
-                details4.append(" " + price);
+                details4.append(" ");
+                details4.append(String.valueOf(price));
 
                 if (!priceCurrency.isEmpty()) {
-                    details4.append(" " + priceCurrency);
+                    details4.append(" ");
+                    details4.append(String.valueOf(priceCurrency));
                 }
                 details4.append(".");
             }

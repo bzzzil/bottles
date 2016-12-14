@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import io.bzzzil.bottles.BottlesApplication;
 import io.bzzzil.bottles.R;
 
 public class CountriesTable {

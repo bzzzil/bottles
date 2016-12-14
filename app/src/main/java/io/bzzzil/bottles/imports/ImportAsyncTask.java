@@ -1,6 +1,5 @@
 package io.bzzzil.bottles.imports;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -18,7 +17,7 @@ public class ImportAsyncTask extends AsyncTask<Object, Void, Object> {
 
     private final BottlesListActivity activity;
 
-    private ProgressDialog dialog;
+    private final ProgressDialog dialog;
 
 
     public ImportAsyncTask(BottlesListActivity activity) {

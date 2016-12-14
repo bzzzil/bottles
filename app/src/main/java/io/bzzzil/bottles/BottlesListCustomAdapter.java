@@ -64,7 +64,7 @@ class BottlesListCustomAdapter extends SimpleCursorAdapter {
             if (details.length() > 0) {
                 details.append(", ");
             }
-            details.append("" + volume);
+            details.append(String.valueOf(volume));
             details.append(" ");
             details.append(context.getString(R.string.volume_measure_ml));
         }
@@ -73,7 +73,7 @@ class BottlesListCustomAdapter extends SimpleCursorAdapter {
             if (details.length() > 0) {
                 details.append(", ");
             }
-            details.append("" + degree);
+            details.append(String.valueOf(degree));
             details.append(context.getString(R.string.degree_measure_percent));
         }
 

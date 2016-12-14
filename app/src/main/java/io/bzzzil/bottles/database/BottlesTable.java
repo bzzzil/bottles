@@ -108,7 +108,7 @@ public class BottlesTable {
                 + ")");
     }
 
-    public static void onUpgrade(SQLiteDatabase db, Context context, int oldVersion, int newVersion) {
+    public static void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(BottlesTable.class.getName(),
                 "Upgrading database from version " + oldVersion + " to " + newVersion
                         + ". ALL DATA WILL BE DESTROYED");
