@@ -81,11 +81,11 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
         });
 
         String[] from = new String[]{BottlesTable.COLUMN_TITLE, BottlesTable.COLUMN_TYPE};
-        int[] to = new int[]{R.id.bottle_title, R.id.bottle_detais};
+        int[] to = new int[]{R.id.bottle_title, R.id.bottle_details};
 
         ListView bottlesList = (ListView) findViewById(R.id.listViewBottles);
         getLoaderManager().initLoader(0, null, this);
-        adapter = new BottlesListCustomAdapter(this, R.layout.bottle_row, null, from, to, 0);
+        adapter = new BottlesListCustomAdapter(this, R.layout.bottle_row, from, to);
         bottlesList.setAdapter(adapter);
         bottlesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -312,7 +312,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    public Action getIndexApiAction() {
+    private Action getIndexApiAction() {
         Thing object = new Thing.Builder()
                 .setName("BottlesList Page") // TODO: Define a title for the content shown.
                 // TODO: Make sure this auto-generated URL is correct.

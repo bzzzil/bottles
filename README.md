@@ -1,2 +1,2 @@
 # My Bottles
-My Bottles is an Andoroid app for mini bottles collectors.
+My Bottles is an Android app for mini bottles collectors.

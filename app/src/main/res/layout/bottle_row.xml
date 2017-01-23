@@ -17,5 +17,5 @@
         android:lines="1"
         android:text="@string/country_antigua_and_barbuda"
         android:textSize="@dimen/bottles_list_item_details"
-        android:id="@+id/bottle_detais" />
+        android:id="@+id/bottle_details" />
 </LinearLayout>

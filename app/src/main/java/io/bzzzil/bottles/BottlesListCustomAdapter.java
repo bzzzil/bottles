@@ -19,8 +19,8 @@ class BottlesListCustomAdapter extends SimpleCursorAdapter {
     private final int layout;
     private final LayoutInflater inflater;
 
-    public BottlesListCustomAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
-        super(context, layout, c, from, to, flags);
+    public BottlesListCustomAdapter(Context context, int layout, String[] from, int[] to) {
+        super(context, layout, null, from, to, 0);
         this.layout = layout;
         this.inflater = LayoutInflater.from(context);
     }
@@ -36,7 +36,7 @@ class BottlesListCustomAdapter extends SimpleCursorAdapter {
         super.bindView(view, context, cursor);
 
         TextView viewTitle = (TextView)view.findViewById(R.id.bottle_title);
-        TextView viewDetails = (TextView)view.findViewById(R.id.bottle_detais);
+        TextView viewDetails = (TextView)view.findViewById(R.id.bottle_details);
 
         String title = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE));
         String type = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TYPE));
