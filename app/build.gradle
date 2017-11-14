@@ -1,13 +1,22 @@
 apply plugin: 'com.android.application'
 
-def getGitRsa = { ->
+def getGitBranch = { ->
     try {
         def stdout = new ByteArrayOutputStream()
+        def result = ''
         exec {
-            commandLine 'git', 'rev-parse', 'HEAD'
+            commandLine 'git', 'rev-parse', '--abbrev-ref', 'HEAD'
             standardOutput = stdout
         }
-        return stdout.toString().trim()
+        result += stdout.toString().trim() + '/'
+        stdout.reset();
+        exec {
+            commandLine 'git', 'rev-parse', '--short', 'HEAD'
+            standardOutput = stdout
+        }
+        result += stdout.toString().trim()
+
+        return result
     }
     catch (ignored) {
         return "N/A"
@@ -49,12 +58,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            resValue "string", "build_git_rsa", getGitRsa()
+            resValue "string", "build_git_branch", getGitBranch()
             resValue "string", "build_git_local_changes", getGitLocalChanges()
             resValue "string", "build_timestamp", getCurrentDate()
         }
         debug {
-            resValue "string", "build_git_rsa", getGitRsa()
+            resValue "string", "build_git_branch", getGitBranch()
             resValue "string", "build_git_local_changes", getGitLocalChanges()
             resValue "string", "build_timestamp", getCurrentDate()
             pseudoLocalesEnabled true
