@@ -1,5 +1,6 @@
 language: android
 jdk: oraclejdk8
+
 android:
   components:
     - tools
@@ -21,11 +22,11 @@ android:
     # if you need to run emulator(s) during your tests
     # - sys-img-armeabi-v7a-android-22
     # - sys-img-armeabi-v7a-android-17
-addons:
-  apt:
-    packages:
-      - lynx
+
+branches:
+  only:
+    - master
+    - /^release\//
 
 script:
-  - ./gradlew build connectedCheck
-  - if [ -f /home/travis/build/bzzzil/bottles/app/build/reports/lint-results.html ]; then cat //home/travis/build/bzzzil/bottles/app/build/reports/lint-results.html; fi
+        #- ./gradlew build connectedCheck
