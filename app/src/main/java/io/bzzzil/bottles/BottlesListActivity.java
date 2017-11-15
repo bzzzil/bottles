@@ -25,22 +25,26 @@ import android.widget.EditText;
 import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.ArrayAdapter;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import io.bzzzil.bottles.database.BottlesContentProvider;
 import io.bzzzil.bottles.database.BottlesTable;
 import io.bzzzil.bottles.imports.ImportAsyncTask;
 
 
-public class BottlesListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class BottlesListActivity extends AppCompatActivity {
     private static final String TAG = "BottlesListActivity";
 
     /**
@@ -49,11 +53,13 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
     private static final String PREFS = "bottles";
     private static final String PREFS_SEARCH = "search";
 
-    private BottlesListCustomAdapter adapter;
+
+    ArrayList<String> list=new ArrayList<>();
 
     private EditText searchBox;
 
     FirebaseFirestore db  = FirebaseFirestore.getInstance();
+    public static final String DB_BOTTLES = "bottles";
 
     public static final int ACTIVITY_CHOOSE_FILE = 1;
     public static final int ACTIVITY_ADD_EDIT_BOTTLE = 2;
@@ -76,8 +82,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
 
             @Override
             public void afterTextChanged(Editable s) {
-                adapter.getFilter().filter(s.toString());
-                adapter.notifyDataSetChanged();
+
             }
         });
 
@@ -85,8 +90,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
         int[] to = new int[]{R.id.bottle_title, R.id.bottle_details};
 
         ListView bottlesList = (ListView) findViewById(R.id.listViewBottles);
-        getLoaderManager().initLoader(0, null, this);
-        adapter = new BottlesListCustomAdapter(this, R.layout.bottle_row, from, to);
+        final BottlesListCustomAdapter adapter = new BottlesListCustomAdapter(this, list);
         bottlesList.setAdapter(adapter);
         bottlesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -97,39 +101,17 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
             }
         });
         registerForContextMenu(bottlesList);
-        adapter.setFilterQueryProvider(new FilterQueryProvider() {
+        db.collection(DB_BOTTLES).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public Cursor runQuery(CharSequence constraint) {
-                // Create query from search string
-                Log.d(TAG, "Run filter query \"" + searchBox.getText() + "\"");
-                String[] searchWords = searchBox.getText().toString().split("\\s+");
-
-                StringBuilder selection = new StringBuilder();
-                List<String> selectionArgs = new ArrayList<>();
-
-                for (String word : searchWords) {
-                    word = word.trim();
-                    if (word.length() > 0) {
-                        if (selection.length() > 0) {
-                            selection.append(" AND ");
-                        }
-
-                        selection.append("(");
-                        for (String searchColumn : BottlesContentProvider.getSearchableColumns()) {
-                            if (selection.charAt(selection.length() - 1) != '(') {
-                                selection.append(" OR ");
-                            }
-                            selection.append(searchColumn);
-                            selection.append(" LIKE ? ");
-                            selectionArgs.add("%" + word + "%");
-                        }
-                        selection.append(")");
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                Log.d(TAG, "Firebird load complete!");
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        list.add(document.getString(BottlesTable.COLUMN_TITLE));
+                        Log.i(TAG, "Inserting bottle " + document.getString(BottlesTable.COLUMN_TITLE));
                     }
+                    adapter.notifyDataSetChanged();
                 }
-                // TODO: crashing on screen rotate
-                String[] selectionArgsArray = new String[selectionArgs.size()];
-                selectionArgs.toArray(selectionArgsArray);
-                return getContentResolver().query(BottlesContentProvider.CONTENT_URI, null, selection.toString(), selectionArgsArray, null);
             }
         });
 
@@ -178,14 +160,9 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                 startActivityForResult(intent, ACTIVITY_ADD_EDIT_BOTTLE);
                 return true;
             case R.id.action_delete_bottle:
-                final Uri bottleUri = Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + info.id);
-                Cursor cursor = getContentResolver().query(bottleUri, null, null, null, null);
-                if (cursor == null) {
-                    Log.d(TAG, "No cursor for deleting item!");
-                    return true;
-                }
-                cursor.moveToFirst();
-                String title = cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE));
+                // TODO: delete
+
+                String title = "";//cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE));
                 String text = getString(R.string.alert_delete);
                 text = String.format(text, title);
                 new AlertDialog.Builder(this)
@@ -194,7 +171,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                getContentResolver().delete(Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + info.id), null, null);
+                                //getContentResolver().delete(Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + info.id), null, null);
                                 refreshBottlesList();
                                 Toast.makeText(BottlesListActivity.this, getString(R.string.toast_bottle_deleted), Toast.LENGTH_LONG).show();
                             }
@@ -207,7 +184,6 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
-                cursor.close();
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -246,7 +222,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                getContentResolver().delete(BottlesContentProvider.CONTENT_URI, null, null);
+                                // TODO: delete all
                                 Toast.makeText(BottlesListActivity.this, getString(R.string.toast_all_bottles_deleted), Toast.LENGTH_LONG).show();
                                 refreshBottlesList();
                             }
@@ -286,7 +262,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
             case ACTIVITY_ADD_EDIT_BOTTLE:
                 if (resultCode == RESULT_OK && data != null) {
                     HashMap<String, String> hashMap = (HashMap<String, String>)data.getSerializableExtra("data");
-                    db.collection("bottles").add(hashMap).
+                    db.collection(DB_BOTTLES).add(hashMap).
                             addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
@@ -303,24 +279,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(this,
-                BottlesContentProvider.CONTENT_URI, null, null, null, null);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        adapter.swapCursor(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        adapter.swapCursor(null);
-    }
-
     public void refreshBottlesList() {
-        adapter.getFilter().filter("");
-        adapter.notifyDataSetChanged();
+
     }
 }

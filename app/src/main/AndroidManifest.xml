@@ -74,12 +74,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".BottlesListActivity" />
         </activity>
-
-        <provider
-            android:name=".database.BottlesContentProvider"
-            android:authorities="io.bzzzil.bottles.contentprovider"
-            android:exported="false">
-        </provider><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+    <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"
