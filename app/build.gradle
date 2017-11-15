@@ -10,7 +10,7 @@ def getGitBranch = { ->
             standardOutput = stdout
         }
         result += stdout.toString().trim() + '/'
-        stdout.reset();
+        stdout.reset()
         exec {
             commandLine 'git', 'rev-parse', '--short', 'HEAD'
             standardOutput = stdout
@@ -92,5 +92,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:25.4.0'
     implementation 'com.android.support:design:25.4.0'
+    implementation 'com.google.firebase:firebase-database:11.4.2'
     androidTestImplementation 'junit:junit:4.12'
 }
