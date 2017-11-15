@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 def getGitBranch = { ->
     try {
@@ -92,5 +93,4 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:25.4.0'
     implementation 'com.android.support:design:25.4.0'
     androidTestImplementation 'junit:junit:4.12'
-    implementation 'com.google.firebase:firebase-appindexing:11.6.0'
 }
