@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
@@ -17,9 +18,16 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+
+import java.util.HashMap;
+
 import io.bzzzil.bottles.database.BottlesContentProvider;
 import io.bzzzil.bottles.database.BottlesTable;
 import io.bzzzil.bottles.database.CountriesTable;
+import io.bzzzil.bottles.imports.ImportAsyncTask;
 
 
 public class BottleDetailsActivity extends AppCompatActivity {
@@ -200,8 +208,7 @@ public class BottleDetailsActivity extends AppCompatActivity {
             case R.id.action_edit_bottle:
                 Intent intent = new Intent(getApplicationContext(), BottleAddActivity.class);
                 intent.putExtra("id", id);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, BottlesListActivity.ACTIVITY_ADD_EDIT_BOTTLE);
                 return true;
             case R.id.action_delete_bottle:
                 // Get bottle info
@@ -239,5 +246,17 @@ public class BottleDetailsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult " + requestCode);
+        switch (requestCode) {
+            case BottlesListActivity.ACTIVITY_ADD_EDIT_BOTTLE:
+                // Pass bottle edit activity results to parent
+                setResult(resultCode, data);
+                finish();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
