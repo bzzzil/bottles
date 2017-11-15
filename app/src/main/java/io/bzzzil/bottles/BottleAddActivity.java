@@ -16,6 +16,8 @@ import android.widget.FilterQueryProvider;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
+import java.util.HashMap;
+
 import io.bzzzil.bottles.database.BottlesContentProvider;
 import io.bzzzil.bottles.database.BottlesTable;
 import io.bzzzil.bottles.database.CountriesTable;
@@ -152,7 +154,36 @@ public class BottleAddActivity extends AppCompatActivity {
       */
     private void addOrUpdateBottle()
     {
-        ContentValues values = new ContentValues();
+        {
+            ContentValues values = new ContentValues();
+            values.put(BottlesTable.COLUMN_TYPE, ((EditText) findViewById(R.id.editType)).getText().toString());
+            values.put(BottlesTable.COLUMN_COUNTRY, ((EditText) findViewById(R.id.editCountry)).getText().toString());
+            values.put(BottlesTable.COLUMN_MANUFACTURER, ((EditText) findViewById(R.id.editManufacturer)).getText().toString());
+            values.put(BottlesTable.COLUMN_TITLE, ((EditText) findViewById(R.id.editTitle)).getText().toString());
+            values.put(BottlesTable.COLUMN_VOLUME, ((EditText) findViewById(R.id.editVolume)).getText().toString());
+            values.put(BottlesTable.COLUMN_DEGREE, ((EditText) findViewById(R.id.editDegree)).getText().toString());
+            values.put(BottlesTable.COLUMN_PACKAGE, ((EditText) findViewById(R.id.editPackage)).getText().toString());
+            values.put(BottlesTable.COLUMN_INCOME_DATE, ((EditText) findViewById(R.id.editIncomeDate)).getText().toString());
+            values.put(BottlesTable.COLUMN_INCOME_SOURCE, ((EditText) findViewById(R.id.editIncomeSource)).getText().toString());
+            values.put(BottlesTable.COLUMN_PRICE, ((EditText) findViewById(R.id.editPrice)).getText().toString());
+            values.put(BottlesTable.COLUMN_PRICE_CURRENCY, ((EditText) findViewById(R.id.editPriceCurrency)).getText().toString());
+            values.put(BottlesTable.COLUMN_COMMENTS, ((EditText) findViewById(R.id.editComments)).getText().toString());
+
+            if (id != 0) {
+                // Update existing item
+                if (getContentResolver().update(bottleUri, values, null, null) > 0) {
+                    Toast.makeText(BottleAddActivity.this, getString(R.string.toast_bottle_updated), Toast.LENGTH_LONG).show();
+                }
+            } else {
+                // Insert new item
+                if (getContentResolver().insert(bottleUri, values) != null) {
+                    Toast.makeText(BottleAddActivity.this, getString(R.string.toast_bottle_inserted), Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+
+        // return intent with form values
+        HashMap<String, String> values = new HashMap<>();
         values.put(BottlesTable.COLUMN_TYPE, ((EditText) findViewById(R.id.editType)).getText().toString());
         values.put(BottlesTable.COLUMN_COUNTRY, ((EditText) findViewById(R.id.editCountry)).getText().toString());
         values.put(BottlesTable.COLUMN_MANUFACTURER, ((EditText) findViewById(R.id.editManufacturer)).getText().toString());
@@ -165,19 +196,9 @@ public class BottleAddActivity extends AppCompatActivity {
         values.put(BottlesTable.COLUMN_PRICE, ((EditText) findViewById(R.id.editPrice)).getText().toString());
         values.put(BottlesTable.COLUMN_PRICE_CURRENCY, ((EditText) findViewById(R.id.editPriceCurrency)).getText().toString());
         values.put(BottlesTable.COLUMN_COMMENTS, ((EditText) findViewById(R.id.editComments)).getText().toString());
-
-        if (id != 0) {
-            // Update existing item
-            if (getContentResolver().update(bottleUri, values, null, null) > 0) {
-                Toast.makeText(BottleAddActivity.this, getString(R.string.toast_bottle_updated), Toast.LENGTH_LONG).show();
-            }
-        }
-        else {
-            // Insert new item
-            if (getContentResolver().insert(bottleUri, values) != null) {
-                Toast.makeText(BottleAddActivity.this, getString(R.string.toast_bottle_inserted), Toast.LENGTH_LONG).show();
-            }
-        }
+        Intent intent = new Intent();
+        intent.putExtra("data", values);
+        setResult(RESULT_OK, intent);
     }
 
     @Override
@@ -194,7 +215,6 @@ public class BottleAddActivity extends AppCompatActivity {
                 return true;
             case R.id.action_save_bottle:
                 addOrUpdateBottle();
-                setResult(RESULT_OK);
                 finish();
                 return true;
         }

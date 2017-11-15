@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,7 +26,13 @@ import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import io.bzzzil.bottles.database.BottlesContentProvider;
@@ -46,7 +53,11 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
 
     private EditText searchBox;
 
-    private static final int ACTIVITY_CHOOSE_FILE = 1;
+    FirebaseFirestore db  = FirebaseFirestore.getInstance();
+
+    public static final int ACTIVITY_CHOOSE_FILE = 1;
+    public static final int ACTIVITY_ADD_EDIT_BOTTLE = 2;
+    public static final int ACTIVITY_BOTTLE_DETAILS = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +93,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), BottleDetailsActivity.class);
                 intent.putExtra("id", id);
-                startActivity(intent);
+                startActivityForResult(intent, ACTIVITY_BOTTLE_DETAILS);
             }
         });
         registerForContextMenu(bottlesList);
@@ -164,7 +175,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
             case R.id.action_edit_bottle:
                 Intent intent = new Intent(getApplicationContext(), BottleAddActivity.class);
                 intent.putExtra("id", info.id);
-                startActivity(intent);
+                startActivityForResult(intent, ACTIVITY_ADD_EDIT_BOTTLE);
                 return true;
             case R.id.action_delete_bottle:
                 final Uri bottleUri = Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + info.id);
@@ -226,7 +237,7 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
                 startActivity(new Intent(this, AboutActivity.class));
                 return true;
             case R.id.action_add_bottle:
-                startActivity(new Intent(this, BottleAddActivity.class));
+                startActivityForResult(new Intent(this, BottleAddActivity.class), ACTIVITY_ADD_EDIT_BOTTLE);
                 return true;
             case R.id.action_delete_all:
                 new AlertDialog.Builder(this)
@@ -262,13 +273,31 @@ public class BottlesListActivity extends AppCompatActivity implements LoaderMana
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "onActivityResult");
+        Log.d(TAG, "onActivityResult " + requestCode);
         switch (requestCode) {
             case ACTIVITY_CHOOSE_FILE:
                 if (resultCode == RESULT_OK) {
                     Log.d(TAG, "Import file selected: " + data.getData());
                     ImportAsyncTask importTask = new ImportAsyncTask(this);
                     importTask.execute(data.getData());
+                }
+            case ACTIVITY_BOTTLE_DETAILS:
+                // Here we expect same results as for add/edit bottle. Fallthru
+            case ACTIVITY_ADD_EDIT_BOTTLE:
+                if (resultCode == RESULT_OK && data != null) {
+                    HashMap<String, String> hashMap = (HashMap<String, String>)data.getSerializableExtra("data");
+                    db.collection("bottles").add(hashMap).
+                            addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Log.d(TAG, "Saved to firebird!");
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "Save to firebird failed: " + e);
+                                }
+                            });
                 }
         }
         super.onActivityResult(requestCode, resultCode, data);
