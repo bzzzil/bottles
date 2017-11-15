@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
-import io.bzzzil.bottles.database.BottlesContentProvider;
 import io.bzzzil.bottles.database.BottlesTable;
 import io.bzzzil.bottles.database.CountriesTable;
 
@@ -26,7 +25,6 @@ import io.bzzzil.bottles.database.CountriesTable;
 public class BottleAddActivity extends AppCompatActivity {
     private static final String TAG = "BottleAddActivity";
 
-    private Uri bottleUri;
     private long id;
 
     @Override
@@ -41,11 +39,10 @@ public class BottleAddActivity extends AppCompatActivity {
         if (callingIntent.hasExtra("id")) {
             id = callingIntent.getLongExtra("id", 0);
             Log.d(TAG, "Bottle id: " + id);
-            bottleUri = Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + id);
 
+            // TODO: get data
             // Get data
-            Log.d(TAG, "Get details from uri: " + bottleUri);
-            Cursor cursor = getContentResolver().query(bottleUri, null, null, null, null);
+            Cursor cursor = null;
 
             if (cursor != null) {
                 cursor.moveToFirst();
@@ -68,8 +65,6 @@ public class BottleAddActivity extends AppCompatActivity {
 
                 cursor.close();
             }
-        } else {
-            bottleUri = BottlesContentProvider.CONTENT_URI;
         }
 
         /**
@@ -87,7 +82,7 @@ public class BottleAddActivity extends AppCompatActivity {
                 String[] projection = {
                         BottlesTable.COLUMN_ID, BottlesTable.COLUMN_TYPE
                 };
-                return getContentResolver().query(BottlesContentProvider.TYPES_URI, projection, select, selectArgs, null);
+                return null;
             }
         });
         typesAdapter.setCursorToStringConverter(new SimpleCursorAdapter.CursorToStringConverter() {
@@ -111,7 +106,7 @@ public class BottleAddActivity extends AppCompatActivity {
                 String select = BottlesTable.COLUMN_COUNTRY + " LIKE ? ";
                 String[] selectArgs = { constraint + "%" };
                 String[] projection = { BottlesTable.COLUMN_ID, BottlesTable.COLUMN_COUNTRY, CountriesTable.COLUMN_FLAG_RESOURCE_ID };
-                return getContentResolver().query(BottlesContentProvider.COUNTRIES_URI, projection, select, selectArgs, null);
+                return null;
             }
         });
         countriesAdapter.setCursorToStringConverter(new SimpleCursorAdapter.CursorToStringConverter() {
@@ -137,7 +132,7 @@ public class BottleAddActivity extends AppCompatActivity {
                 String[] projection = {
                         BottlesTable.COLUMN_ID, BottlesTable.COLUMN_MANUFACTURER
                 };
-                return getContentResolver().query(BottlesContentProvider.MANUFACTURERS_URI, projection, select, selectArgs, null);
+                return null;
             }
         });
         manufacturersAdapter.setCursorToStringConverter(new SimpleCursorAdapter.CursorToStringConverter() {
@@ -154,34 +149,6 @@ public class BottleAddActivity extends AppCompatActivity {
       */
     private void addOrUpdateBottle()
     {
-        {
-            ContentValues values = new ContentValues();
-            values.put(BottlesTable.COLUMN_TYPE, ((EditText) findViewById(R.id.editType)).getText().toString());
-            values.put(BottlesTable.COLUMN_COUNTRY, ((EditText) findViewById(R.id.editCountry)).getText().toString());
-            values.put(BottlesTable.COLUMN_MANUFACTURER, ((EditText) findViewById(R.id.editManufacturer)).getText().toString());
-            values.put(BottlesTable.COLUMN_TITLE, ((EditText) findViewById(R.id.editTitle)).getText().toString());
-            values.put(BottlesTable.COLUMN_VOLUME, ((EditText) findViewById(R.id.editVolume)).getText().toString());
-            values.put(BottlesTable.COLUMN_DEGREE, ((EditText) findViewById(R.id.editDegree)).getText().toString());
-            values.put(BottlesTable.COLUMN_PACKAGE, ((EditText) findViewById(R.id.editPackage)).getText().toString());
-            values.put(BottlesTable.COLUMN_INCOME_DATE, ((EditText) findViewById(R.id.editIncomeDate)).getText().toString());
-            values.put(BottlesTable.COLUMN_INCOME_SOURCE, ((EditText) findViewById(R.id.editIncomeSource)).getText().toString());
-            values.put(BottlesTable.COLUMN_PRICE, ((EditText) findViewById(R.id.editPrice)).getText().toString());
-            values.put(BottlesTable.COLUMN_PRICE_CURRENCY, ((EditText) findViewById(R.id.editPriceCurrency)).getText().toString());
-            values.put(BottlesTable.COLUMN_COMMENTS, ((EditText) findViewById(R.id.editComments)).getText().toString());
-
-            if (id != 0) {
-                // Update existing item
-                if (getContentResolver().update(bottleUri, values, null, null) > 0) {
-                    Toast.makeText(BottleAddActivity.this, getString(R.string.toast_bottle_updated), Toast.LENGTH_LONG).show();
-                }
-            } else {
-                // Insert new item
-                if (getContentResolver().insert(bottleUri, values) != null) {
-                    Toast.makeText(BottleAddActivity.this, getString(R.string.toast_bottle_inserted), Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-
         // return intent with form values
         HashMap<String, String> values = new HashMap<>();
         values.put(BottlesTable.COLUMN_TYPE, ((EditText) findViewById(R.id.editType)).getText().toString());

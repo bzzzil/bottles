@@ -24,7 +24,6 @@ import com.google.firebase.firestore.DocumentReference;
 
 import java.util.HashMap;
 
-import io.bzzzil.bottles.database.BottlesContentProvider;
 import io.bzzzil.bottles.database.BottlesTable;
 import io.bzzzil.bottles.database.CountriesTable;
 import io.bzzzil.bottles.imports.ImportAsyncTask;
@@ -32,8 +31,6 @@ import io.bzzzil.bottles.imports.ImportAsyncTask;
 
 public class BottleDetailsActivity extends AppCompatActivity {
     private static final String TAG = "BottleDetailsActivity";
-
-    private Uri bottleUri;
 
     private long id;
 
@@ -50,11 +47,10 @@ public class BottleDetailsActivity extends AppCompatActivity {
 
         id = callingIntent.getLongExtra("id", 0);
         Log.d(TAG, "Bottle id: " + id);
-        bottleUri = Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + id);
 
         // Fill data
-        Log.d(TAG, "Get details from uri: " + bottleUri);
-        Cursor cursor = getContentResolver().query(bottleUri, null, null, null, null);
+        // TODO: fetch data
+        Cursor cursor = null;
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -212,7 +208,7 @@ public class BottleDetailsActivity extends AppCompatActivity {
                 return true;
             case R.id.action_delete_bottle:
                 // Get bottle info
-                Cursor cursor = getContentResolver().query(bottleUri, null, null, null, null);
+                Cursor cursor = null;//getContentResolver().query(bottleUri, null, null, null, null);
                 if (cursor == null)
                 {
                     return true;
@@ -229,7 +225,7 @@ public class BottleDetailsActivity extends AppCompatActivity {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                getContentResolver().delete(bottleUri, null, null);
+                                // TODO: delete bottle
                                 Toast.makeText(BottleDetailsActivity.this, getString(R.string.toast_bottle_deleted), Toast.LENGTH_LONG).show();
                                 finish();
                             }

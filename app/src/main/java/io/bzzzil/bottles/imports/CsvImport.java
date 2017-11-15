@@ -6,7 +6,6 @@ import android.util.Log;
 
 import java.io.InputStream;
 
-import io.bzzzil.bottles.database.BottlesContentProvider;
 import io.bzzzil.bottles.database.BottlesTable;
 
 class CsvImport {
@@ -42,7 +41,7 @@ class CsvImport {
             if (currentColumn == names.length) {
                 // End of record
                 Log.d(TAG, "Scanner inserting to db:" + values);
-                contentResolver.insert(BottlesContentProvider.CONTENT_URI, values);
+                // TODO: insert
                 values.clear();
                 currentColumn = 0;
                 next = next.trim();
@@ -75,7 +74,7 @@ class CsvImport {
         if (currentColumn == names.length) {
             // End of record
             Log.d(TAG, "Scanner inserting to db:" + values);
-            contentResolver.insert(BottlesContentProvider.CONTENT_URI, values);
+            // TODO: insert into DB
             imported++;
         }
 

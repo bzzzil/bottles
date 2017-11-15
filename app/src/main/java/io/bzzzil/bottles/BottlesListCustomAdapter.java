@@ -8,33 +8,53 @@ import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SimpleCursorAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import io.bzzzil.bottles.database.BottlesTable;
 import io.bzzzil.bottles.database.CountriesTable;
 
-class BottlesListCustomAdapter extends SimpleCursorAdapter {
+class BottlesListCustomAdapter extends BaseAdapter {
 
-    private final int layout;
+
     private final LayoutInflater inflater;
+    ArrayList<String> objects;
 
-    public BottlesListCustomAdapter(Context context, int layout, String[] from, int[] to) {
-        super(context, layout, null, from, to, 0);
-        this.layout = layout;
+    public BottlesListCustomAdapter(Context context, ArrayList<String> objects) {
+        this.objects = objects;
         this.inflater = LayoutInflater.from(context);
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        //return super.newView(context, cursor, parent);
-        return  inflater.inflate(layout, null);
+    public int getCount() {
+        return objects.size();
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-        super.bindView(view, context, cursor);
+    public Object getItem(int position) {
+        return objects.get(position);
+    }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // используем созданные, но не используемые view
+        View view = convertView;
+        if (view == null) {
+            view = inflater.inflate(R.layout.bottle_row, parent, false);
+        }
+
+        ((TextView) view.findViewById(R.id.bottle_title)).setText(objects.get(position));
+        return view;
+    }
+
+/*
         TextView viewTitle = (TextView)view.findViewById(R.id.bottle_title);
         TextView viewDetails = (TextView)view.findViewById(R.id.bottle_details);
 
@@ -80,5 +100,5 @@ class BottlesListCustomAdapter extends SimpleCursorAdapter {
 
         viewTitle.setText(title);
         viewDetails.setText(details);
-    }
+    }*/
 }
