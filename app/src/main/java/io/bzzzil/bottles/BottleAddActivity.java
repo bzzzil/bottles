@@ -1,9 +1,7 @@
 package io.bzzzil.bottles;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -14,9 +12,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
-
-import java.util.HashMap;
 
 import io.bzzzil.bottles.database.Bottle;
 import io.bzzzil.bottles.database.BottleDocument;

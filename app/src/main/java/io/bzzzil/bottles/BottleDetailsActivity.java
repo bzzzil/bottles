@@ -3,38 +3,22 @@ package io.bzzzil.bottles;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
-import android.text.style.DynamicDrawableSpan;
-import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-
-import java.util.HashMap;
-
 import io.bzzzil.bottles.database.Bottle;
 import io.bzzzil.bottles.database.BottleDocument;
-import io.bzzzil.bottles.database.BottlesTable;
-import io.bzzzil.bottles.database.CountriesTable;
-import io.bzzzil.bottles.imports.ImportAsyncTask;
 
 
 public class BottleDetailsActivity extends AppCompatActivity {
     private static final String TAG = "BottleDetailsActivity";
-
-    private long id;
 
     private BottleDocument bottleDoc;
 

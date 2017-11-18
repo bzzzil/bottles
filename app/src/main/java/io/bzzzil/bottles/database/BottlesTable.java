@@ -8,7 +8,7 @@ public class BottlesTable {
     /**
      * Bottles: table name
      */
-    public static final String TABLE_BOTTLES = "bottles";
+    private static final String TABLE_BOTTLES = "bottles";
 
     /**
      * Bottles: column "id"
@@ -38,47 +38,47 @@ public class BottlesTable {
     /**
      * Bottles: column "title"
      */
-    public static final String COLUMN_TITLE = "title";
+    private static final String COLUMN_TITLE = "title";
 
     /**
      * Bottles: column "volume"
      */
-    public static final String COLUMN_VOLUME = "volume";
+    private static final String COLUMN_VOLUME = "volume";
 
     /**
      * Bottles: column "degree"
      */
-    public static final String COLUMN_DEGREE = "degree";
+    private static final String COLUMN_DEGREE = "degree";
 
     /**
      * Bottles: column "package"
      */
-    public static final String COLUMN_PACKAGE = "package";
+    private static final String COLUMN_PACKAGE = "package";
 
     /**
      * Bottles: column "income_date"
      */
-    public static final String COLUMN_INCOME_DATE = "income_date";
+    private static final String COLUMN_INCOME_DATE = "income_date";
 
     /**
      * Bottles: column "income_source"
      */
-    public static final String COLUMN_INCOME_SOURCE = "income_source";
+    private static final String COLUMN_INCOME_SOURCE = "income_source";
 
     /**
      * Bottles: column "price"
      */
-    public static final String COLUMN_PRICE = "price";
+    private static final String COLUMN_PRICE = "price";
 
     /**
      * Bottles: column "price_currency"
      */
-    public static final String COLUMN_PRICE_CURRENCY = "price_currency";
+    private static final String COLUMN_PRICE_CURRENCY = "price_currency";
 
     /**
      * Bottles: column "comments"
      */
-    public static final String COLUMN_COMMENTS = "comments";
+    private static final String COLUMN_COMMENTS = "comments";
 
     /**
      * Bottles: service column "search_words"
@@ -86,7 +86,7 @@ public class BottlesTable {
      * This column represents simplified and normalized words to use by search features
      * (all important fields, lowercase, removed diacritics, etc)
      */
-    public static final String COLUMN_INT_SEARCHWORDS = "_searchwords";
+    private static final String COLUMN_INT_SEARCHWORDS = "_searchwords";
 
     public static void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_BOTTLES + " ("
