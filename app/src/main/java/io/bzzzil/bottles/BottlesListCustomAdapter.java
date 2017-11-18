@@ -1,10 +1,7 @@
 package io.bzzzil.bottles;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.text.SpannableStringBuilder;
-import android.text.style.DynamicDrawableSpan;
-import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +12,13 @@ import java.util.ArrayList;
 
 import io.bzzzil.bottles.database.Bottle;
 import io.bzzzil.bottles.database.BottleDocument;
-import io.bzzzil.bottles.database.BottlesTable;
-import io.bzzzil.bottles.database.CountriesTable;
 
 class BottlesListCustomAdapter extends BaseAdapter {
 
 
     private final LayoutInflater inflater;
-    ArrayList<BottleDocument> objects;
-    Context context;
+    private final ArrayList<BottleDocument> objects;
+    private final Context context;
 
     public BottlesListCustomAdapter(Context context, ArrayList<BottleDocument> objects) {
         this.context = context;
@@ -60,9 +55,9 @@ class BottlesListCustomAdapter extends BaseAdapter {
 
         // Build details string
         SpannableStringBuilder details = new SpannableStringBuilder();
-        details.append(bottle.getType());
+        details.append(bottle.getType() == null ? "" : bottle.getType());
 
-        if (!bottle.getCountry().isEmpty()) {
+        if (bottle.getCountry() != null && !bottle.getCountry().isEmpty()) {
             if (details.length() > 0) {
                 details.append(", ");
             }
@@ -92,7 +87,7 @@ class BottlesListCustomAdapter extends BaseAdapter {
             details.append(context.getString(R.string.degree_measure_percent));
         }
 
-        viewTitle.setText(bottle.getTitle());
+        viewTitle.setText(bottle.getTitle() != null ? bottle.getTitle() : "");
         viewDetails.setText(details);
 
         return view;

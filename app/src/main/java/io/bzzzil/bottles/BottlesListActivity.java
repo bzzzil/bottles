@@ -1,14 +1,9 @@
 package io.bzzzil.bottles;
 
 import android.app.AlertDialog;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.Loader;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -22,31 +17,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.ArrayAdapter;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-import io.bzzzil.bottles.database.Bottle;
 import io.bzzzil.bottles.database.BottleDocument;
-import io.bzzzil.bottles.database.BottlesTable;
 import io.bzzzil.bottles.imports.ImportAsyncTask;
 
 
-public class BottlesListActivity extends AppCompatActivity {
+public class BottlesListActivity extends AppCompatActivity implements EventListener<QuerySnapshot> {
     private static final String TAG = "BottlesListActivity";
 
     /**
@@ -55,13 +43,18 @@ public class BottlesListActivity extends AppCompatActivity {
     private static final String PREFS = "bottles";
     private static final String PREFS_SEARCH = "search";
 
-
-    ArrayList<BottleDocument> list=new ArrayList<>();
-
     private EditText searchBox;
+    private ListView bottlesList;
 
-    FirebaseFirestore db  = FirebaseFirestore.getInstance();
     public static final String DB_BOTTLES = "bottles";
+    /**
+     * Remote Firebase collection reference
+     */
+    private final CollectionReference bottlesCollection = FirebaseFirestore.getInstance().collection(DB_BOTTLES);
+    /**
+     * Local storage of Firebase bottle documents
+     */
+    private final ArrayList<BottleDocument> bottlesCollectionList = new ArrayList<>();
 
     public static final int ACTIVITY_CHOOSE_FILE = 1;
     public static final int ACTIVITY_ADD_EDIT_BOTTLE = 2;
@@ -88,32 +81,21 @@ public class BottlesListActivity extends AppCompatActivity {
             }
         });
 
-        ListView bottlesList = (ListView) findViewById(R.id.listViewBottles);
-        final BottlesListCustomAdapter adapter = new BottlesListCustomAdapter(this, list);
+        bottlesList = (ListView) findViewById(R.id.listViewBottles);
+        final BottlesListCustomAdapter adapter = new BottlesListCustomAdapter(this, bottlesCollectionList);
         bottlesList.setAdapter(adapter);
         bottlesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), BottleDetailsActivity.class);
-                intent.putExtra("bottle", list.get(position));
+                intent.putExtra("bottle", bottlesCollectionList.get(position));
                 startActivityForResult(intent, ACTIVITY_BOTTLE_DETAILS);
             }
         });
         registerForContextMenu(bottlesList);
-        db.collection(DB_BOTTLES).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Log.d(TAG, "Firebird load complete!");
-                if (task.isSuccessful()) {
-                    for (DocumentSnapshot document : task.getResult()) {
-                        Bottle bottle = document.toObject(Bottle.class);
-                        list.add(new BottleDocument(document.getId(),bottle));
-                        Log.i(TAG, "Loaded bottle: " + bottle.getTitle());
-                    }
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        });
+
+        // Add Firebase sync
+        bottlesCollection.addSnapshotListener(this);
 
         // Restore shared preferences
         SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
@@ -123,6 +105,43 @@ public class BottlesListActivity extends AppCompatActivity {
             searchBox.append(searchValue);
         }
     }
+
+
+    /**
+     * Changes listener to sync Firebase <-> bottlesCollectionList <-> ListView
+     * @param documentSnapshots
+     * @param e
+     */
+    @Override
+    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+        if (e != null) {
+            Log.w(TAG, "listen:error", e);
+            return;
+        }
+
+        for (DocumentChange dc : documentSnapshots.getDocumentChanges()) {
+            switch (dc.getType()) {
+                case ADDED:
+                    Log.d(TAG, "FIREBIRD: New bottle: " + dc.getDocument().getId());
+                    bottlesCollectionList.add(new BottleDocument(dc.getDocument()));
+                    break;
+                case MODIFIED:
+                    Log.d(TAG, "FIREBIRD: Modified bottle: " + dc.getDocument().getId());
+                    BottleDocument newDoc = new BottleDocument(dc.getDocument());
+                    int pos = bottlesCollectionList.indexOf(newDoc);
+                    bottlesCollectionList.set(pos, newDoc);
+                    break;
+                case REMOVED:
+                    Log.d(TAG, "FIREBIRD: Removed bottle: " + dc.getDocument().getId());
+                    BottleDocument removedDoc = new BottleDocument(dc.getDocument());
+                    bottlesCollectionList.remove(removedDoc);
+                    break;
+            }
+            if (bottlesList != null)
+                ((BottlesListCustomAdapter)bottlesList.getAdapter()).notifyDataSetChanged();
+        }
+    }
+
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -145,7 +164,6 @@ public class BottlesListActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        refreshBottlesList();
         super.onResume();
     }
 
@@ -156,23 +174,20 @@ public class BottlesListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_edit_bottle:
                 Intent intent = new Intent(getApplicationContext(), BottleAddActivity.class);
-                intent.putExtra("id", info.id);
+                intent.putExtra("bootle", bottlesCollectionList.get(info.position));
                 startActivityForResult(intent, ACTIVITY_ADD_EDIT_BOTTLE);
                 return true;
             case R.id.action_delete_bottle:
-                // TODO: delete
-
-                String title = "";//cursor.getString(cursor.getColumnIndexOrThrow(BottlesTable.COLUMN_TITLE));
+                final BottleDocument docToDelete = bottlesCollectionList.get(info.position);
                 String text = getString(R.string.alert_delete);
-                text = String.format(text, title);
+                text = String.format(text, docToDelete.getData().getTitle());
                 new AlertDialog.Builder(this)
                         .setTitle(getString(R.string.menu_action_delete_bottle))
                         .setMessage(text)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //getContentResolver().delete(Uri.parse(BottlesContentProvider.CONTENT_URI + "/" + info.id), null, null);
-                                refreshBottlesList();
+                                bottlesCollection.document(docToDelete.getId()).delete();
                                 Toast.makeText(BottlesListActivity.this, getString(R.string.toast_bottle_deleted), Toast.LENGTH_LONG).show();
                             }
                         })
@@ -224,7 +239,6 @@ public class BottlesListActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 // TODO: delete all
                                 Toast.makeText(BottlesListActivity.this, getString(R.string.toast_all_bottles_deleted), Toast.LENGTH_LONG).show();
-                                refreshBottlesList();
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -254,9 +268,10 @@ public class BottlesListActivity extends AppCompatActivity {
             case ACTIVITY_CHOOSE_FILE:
                 if (resultCode == RESULT_OK) {
                     Log.d(TAG, "Import file selected: " + data.getData());
-                    ImportAsyncTask importTask = new ImportAsyncTask(this);
+                    ImportAsyncTask importTask = new ImportAsyncTask(this, bottlesCollection);
                     importTask.execute(data.getData());
                 }
+                break;
             case ACTIVITY_BOTTLE_DETAILS:
                 // Here we expect same results as for add/edit bottle. Fallthru
             case ACTIVITY_ADD_EDIT_BOTTLE:
@@ -264,7 +279,7 @@ public class BottlesListActivity extends AppCompatActivity {
                     BottleDocument bottleDoc = (BottleDocument) data.getSerializableExtra("bottle");
                     if (bottleDoc.getId() == null) {
                         // New bottle
-                        db.collection(DB_BOTTLES).add(bottleDoc.getData()).
+                        bottlesCollection.add(bottleDoc.getData()).
                                 addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
@@ -273,7 +288,7 @@ public class BottlesListActivity extends AppCompatActivity {
                                 });
                     } else {
                         // Existing bottle
-                        db.collection(DB_BOTTLES).document(bottleDoc.getId()).set(bottleDoc.getData()).
+                        bottlesCollection.document(bottleDoc.getId()).set(bottleDoc.getData()).
                                 addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
@@ -284,9 +299,5 @@ public class BottlesListActivity extends AppCompatActivity {
                 }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    public void refreshBottlesList() {
-
     }
 }

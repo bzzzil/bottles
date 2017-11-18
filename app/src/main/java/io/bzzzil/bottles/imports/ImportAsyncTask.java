@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.CollectionReference;
+
 import java.io.InputStream;
 
 import io.bzzzil.bottles.BottlesListActivity;
@@ -19,9 +21,12 @@ public class ImportAsyncTask extends AsyncTask<Object, Void, Object> {
 
     private final ProgressDialog dialog;
 
+    private final CollectionReference colRef;
 
-    public ImportAsyncTask(BottlesListActivity activity) {
+
+    public ImportAsyncTask(BottlesListActivity activity, CollectionReference colRef) {
         this.activity = activity;
+        this.colRef = colRef;
         this.dialog = new ProgressDialog(activity);
     }
 
@@ -37,7 +42,6 @@ public class ImportAsyncTask extends AsyncTask<Object, Void, Object> {
             this.dialog.dismiss();
         }
         Toast.makeText(this.activity, (String)message, Toast.LENGTH_LONG).show();
-        this.activity.refreshBottlesList();
     }
 
     protected Object doInBackground(Object[] params) {
@@ -46,7 +50,7 @@ public class ImportAsyncTask extends AsyncTask<Object, Void, Object> {
             InputStream stream = this.activity.getContentResolver().openInputStream((Uri) params[0]);
 
             CsvImport importer = new CsvImport();
-            int importedCount = importer.doImport(this.activity.getContentResolver(), stream);
+            int importedCount = importer.doImport(stream, colRef);
             message = this.activity.getResources().getQuantityString(R.plurals.toast_import_complete, importedCount, importedCount);
         } catch (Exception e) {
             message = e.getMessage();

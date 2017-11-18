@@ -63,16 +63,6 @@ public class Bottle implements Serializable {
      */
     public static final String COLUMN_COMMENTS = "comments";
 
-    /**
-     * Bottles: service column "search_words"
-     * <p>
-     * This column represents simplified and normalized words to use by search features
-     * (all important fields, lowercase, removed diacritics, etc)
-     * TODO: unused
-     */
-    public static final String COLUMN_INT_SEARCHWORDS = "_searchwords";
-
-
     private String type;
     private String country;
     private String manufacturer;
