@@ -40,6 +40,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import io.bzzzil.bottles.database.Bottle;
+import io.bzzzil.bottles.database.BottleDocument;
 import io.bzzzil.bottles.database.BottlesTable;
 import io.bzzzil.bottles.imports.ImportAsyncTask;
 
@@ -54,7 +56,7 @@ public class BottlesListActivity extends AppCompatActivity {
     private static final String PREFS_SEARCH = "search";
 
 
-    ArrayList<String> list=new ArrayList<>();
+    ArrayList<BottleDocument> list=new ArrayList<>();
 
     private EditText searchBox;
 
@@ -86,9 +88,6 @@ public class BottlesListActivity extends AppCompatActivity {
             }
         });
 
-        String[] from = new String[]{BottlesTable.COLUMN_TITLE, BottlesTable.COLUMN_TYPE};
-        int[] to = new int[]{R.id.bottle_title, R.id.bottle_details};
-
         ListView bottlesList = (ListView) findViewById(R.id.listViewBottles);
         final BottlesListCustomAdapter adapter = new BottlesListCustomAdapter(this, list);
         bottlesList.setAdapter(adapter);
@@ -96,7 +95,7 @@ public class BottlesListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), BottleDetailsActivity.class);
-                intent.putExtra("id", id);
+                intent.putExtra("bottle", list.get(position));
                 startActivityForResult(intent, ACTIVITY_BOTTLE_DETAILS);
             }
         });
@@ -107,8 +106,9 @@ public class BottlesListActivity extends AppCompatActivity {
                 Log.d(TAG, "Firebird load complete!");
                 if (task.isSuccessful()) {
                     for (DocumentSnapshot document : task.getResult()) {
-                        list.add(document.getString(BottlesTable.COLUMN_TITLE));
-                        Log.i(TAG, "Inserting bottle " + document.getString(BottlesTable.COLUMN_TITLE));
+                        Bottle bottle = document.toObject(Bottle.class);
+                        list.add(new BottleDocument(document.getId(),bottle));
+                        Log.i(TAG, "Loaded bottle: " + bottle.getTitle());
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -261,19 +261,26 @@ public class BottlesListActivity extends AppCompatActivity {
                 // Here we expect same results as for add/edit bottle. Fallthru
             case ACTIVITY_ADD_EDIT_BOTTLE:
                 if (resultCode == RESULT_OK && data != null) {
-                    HashMap<String, String> hashMap = (HashMap<String, String>)data.getSerializableExtra("data");
-                    db.collection(DB_BOTTLES).add(hashMap).
-                            addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Log.d(TAG, "Saved to firebird!");
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG, "Save to firebird failed: " + e);
-                                }
-                            });
+                    BottleDocument bottleDoc = (BottleDocument) data.getSerializableExtra("bottle");
+                    if (bottleDoc.getId() == null) {
+                        // New bottle
+                        db.collection(DB_BOTTLES).add(bottleDoc.getData()).
+                                addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e(TAG, "Save new bottle to firebase failed: " + e);
+                                    }
+                                });
+                    } else {
+                        // Existing bottle
+                        db.collection(DB_BOTTLES).document(bottleDoc.getId()).set(bottleDoc.getData()).
+                                addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e(TAG, "Save bottle to firebase failed: " + e);
+                                    }
+                                });
+                    }
                 }
         }
         super.onActivityResult(requestCode, resultCode, data);
