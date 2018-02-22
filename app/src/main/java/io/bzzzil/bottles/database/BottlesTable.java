@@ -4,21 +4,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class BottlesTable {
-    // Database table
-    /**
-     * Bottles: table name
-     */
-    private static final String TABLE_BOTTLES = "bottles";
-
     /**
      * Bottles: column "id"
      */
     public static final String COLUMN_ID = "_id";
-
-    /**
-     * Bottles: column "id" full specification
-     */
-    public static final String FULL_ID = TABLE_BOTTLES + "._id";
 
     /**
      * Bottles: column "type"
@@ -87,31 +76,4 @@ public class BottlesTable {
      * (all important fields, lowercase, removed diacritics, etc)
      */
     private static final String COLUMN_INT_SEARCHWORDS = "_searchwords";
-
-    public static void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_BOTTLES + " ("
-                + COLUMN_ID + " integer primary key autoincrement, "
-                + COLUMN_TYPE + " text not null, "
-                + COLUMN_COUNTRY + " text not null, "
-                + COLUMN_MANUFACTURER + " text not null, "
-                + COLUMN_TITLE + " text not null, "
-                + COLUMN_VOLUME + " integer not null, "
-                + COLUMN_DEGREE + " real not null, "
-                + COLUMN_PACKAGE + " text not null, "
-                + COLUMN_INCOME_DATE + " integer not null, "
-                + COLUMN_INCOME_SOURCE + " integer not null, "
-                + COLUMN_PRICE + " real, "
-                + COLUMN_PRICE_CURRENCY + " text not null, "
-                + COLUMN_COMMENTS + " text not null, "
-                + COLUMN_INT_SEARCHWORDS + " text not null "
-                + ")");
-    }
-
-    public static void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(BottlesTable.class.getName(),
-                "Upgrading database from version " + oldVersion + " to " + newVersion
-                        + ". ALL DATA WILL BE DESTROYED");
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOTTLES);
-        onCreate(db);
-    }
 }

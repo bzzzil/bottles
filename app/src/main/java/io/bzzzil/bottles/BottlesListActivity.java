@@ -44,7 +44,6 @@ public class BottlesListActivity extends AppCompatActivity implements EventListe
     private static final String PREFS_SEARCH = "search";
 
     private EditText searchBox;
-    private ListView bottlesList;
 
     public static final String DB_BOTTLES = "bottles";
     /**
@@ -59,6 +58,8 @@ public class BottlesListActivity extends AppCompatActivity implements EventListe
     public static final int ACTIVITY_CHOOSE_FILE = 1;
     public static final int ACTIVITY_ADD_EDIT_BOTTLE = 2;
     public static final int ACTIVITY_BOTTLE_DETAILS = 3;
+
+    private BottlesListCustomAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,18 +78,18 @@ public class BottlesListActivity extends AppCompatActivity implements EventListe
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                adapter.getFilter().filter(s);
             }
         });
 
-        bottlesList = (ListView) findViewById(R.id.listViewBottles);
-        final BottlesListCustomAdapter adapter = new BottlesListCustomAdapter(this, bottlesCollectionList);
+        ListView bottlesList = (ListView) findViewById(R.id.listViewBottles);
+        adapter = new BottlesListCustomAdapter(this, bottlesCollectionList);
         bottlesList.setAdapter(adapter);
         bottlesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), BottleDetailsActivity.class);
-                intent.putExtra("bottle", bottlesCollectionList.get(position));
+                intent.putExtra("bottle", (BottleDocument)adapter.getItem(position));
                 startActivityForResult(intent, ACTIVITY_BOTTLE_DETAILS);
             }
         });
@@ -137,8 +138,7 @@ public class BottlesListActivity extends AppCompatActivity implements EventListe
                     bottlesCollectionList.remove(removedDoc);
                     break;
             }
-            if (bottlesList != null)
-                ((BottlesListCustomAdapter)bottlesList.getAdapter()).notifyDataSetChanged();
+            adapter.getFilter().filter(searchBox.getText());
         }
     }
 
@@ -160,11 +160,6 @@ public class BottlesListActivity extends AppCompatActivity implements EventListe
         editor.putString(PREFS_SEARCH, searchBox.getText().toString());
         editor.apply();
         super.onDestroy();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override

@@ -2,32 +2,40 @@ package io.bzzzil.bottles;
 
 import android.content.Context;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.bzzzil.bottles.database.Bottle;
 import io.bzzzil.bottles.database.BottleDocument;
 
-class BottlesListCustomAdapter extends BaseAdapter {
+class BottlesListCustomAdapter extends BaseAdapter implements Filterable {
 
 
     private final LayoutInflater inflater;
-    private final ArrayList<BottleDocument> objects;
+    private ArrayList<BottleDocument> objects;
+    private final ArrayList<BottleDocument> allObjects;
     private final Context context;
 
     public BottlesListCustomAdapter(Context context, ArrayList<BottleDocument> objects) {
         this.context = context;
+        this.allObjects = objects;
         this.objects = objects;
         this.inflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
+        if (objects == null)
+            return 0;
         return objects.size();
     }
 
@@ -91,5 +99,41 @@ class BottlesListCustomAdapter extends BaseAdapter {
         viewDetails.setText(details);
 
         return view;
+    }
+
+    @Override
+    public Filter getFilter() {
+        Filter filter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence search) {
+                FilterResults filterResults = new FilterResults();
+                ArrayList<BottleDocument> filteredDocs = new ArrayList<>();
+
+                String[] searchTokens = search.toString().split("\\s+");
+
+                if (searchTokens.length == 0)
+                {
+                    filterResults.values = allObjects;
+                    filterResults.count = allObjects.size();
+                    return filterResults;
+                }
+
+                for (BottleDocument bottle:allObjects) {
+                    if (bottle.getData().match(searchTokens))
+                        filteredDocs.add(bottle);
+                }
+
+                filterResults.values = filteredDocs;
+                filterResults.count = filteredDocs.size();
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                objects = (ArrayList<BottleDocument>)results.values;
+                notifyDataSetChanged();
+            }
+        };
+        return filter;
     }
 }

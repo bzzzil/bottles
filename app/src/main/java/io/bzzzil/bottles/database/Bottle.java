@@ -1,6 +1,9 @@
 package io.bzzzil.bottles.database;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
+import io.bzzzil.helper.StringSimplifier;
 
 public class Bottle implements Serializable {
     /**
@@ -75,6 +78,7 @@ public class Bottle implements Serializable {
     private float price;
     private String priceCurrency;
     private String comments;
+    private transient String searchIndex;
 
     public Bottle() {
 
@@ -93,6 +97,8 @@ public class Bottle implements Serializable {
         this.price = price;
         this.priceCurrency = priceCurrency;
         this.comments = comments;
+
+        updateSearchIndex();
     }
 
     public String getType() {
@@ -157,5 +163,28 @@ public class Bottle implements Serializable {
 
     public String getComments() {
         return comments;
+    }
+
+    /**
+     * Matches current item to *all* provided search criteria
+     * @param search
+     * @return true if match
+     */
+    public boolean match(String[] search)
+    {
+        if (this.searchIndex == null)
+            updateSearchIndex();
+
+        for (String s:search) {
+            if (!this.searchIndex.contains(s)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void updateSearchIndex()
+    {
+        this.searchIndex = StringSimplifier.simplifiedString(type + " " + country + " " + manufacturer + " " + title).toLowerCase();
     }
 }
