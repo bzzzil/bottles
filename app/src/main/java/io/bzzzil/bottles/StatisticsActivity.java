@@ -1,15 +1,7 @@
 package io.bzzzil.bottles;
 
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.TextView;
-
-import java.util.Locale;
-
-import io.bzzzil.bottles.database.BottlesContentProvider;
 
 public class StatisticsActivity extends AppCompatActivity {
     private static final String TAG = "StatisticsActivity";
@@ -18,8 +10,8 @@ public class StatisticsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-
-        Uri statisticsUri = Uri.parse(BottlesContentProvider.STATISTICS_URI + "");
+        // TODO
+        /*Uri statisticsUri = Uri.parse(BottlesContentProvider.STATISTICS_URI + "");
 
         Log.d(TAG, "Get statistics from uri: " + statisticsUri);
         Cursor cursor = getContentResolver().query(statisticsUri, null, null, null, null);
@@ -36,6 +28,6 @@ public class StatisticsActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.statistics_total_liters_value)).setText(totalLitres);
         ((TextView)findViewById(R.id.statistics_average_degree_value)).setText(averageDegree);
 
-        cursor.close();
+        cursor.close();*/
     }
 }

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "817103577681",
+    "firebase_url": "https://bottles-firebird.firebaseio.com",
+    "project_id": "bottles-firebird",
+    "storage_bucket": "bottles-firebird.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817103577681:android:c02f582ef5194979",
+        "android_client_info": {
+          "package_name": "io.bzzzil.bottles"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817103577681-8s562fhjsq357bl6ikms76rpr3dpu44e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.bzzzil.bottles",
+            "certificate_hash": "ca774d3fcf1949d0cebf8dd21878b43a21c3cd7a"
+          }
+        },
+        {
+          "client_id": "817103577681-k8jl3ri86fmaelu3p9g1mojgkkmdvnef.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmNzcC8ReJ2ejZta6M6FxMuxiZ1MMeOjU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817103577681-k8jl3ri86fmaelu3p9g1mojgkkmdvnef.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

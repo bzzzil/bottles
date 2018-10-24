@@ -11,12 +11,12 @@ public class CountriesTable {
     /**
      * Bottles: table name
      */
-    public static final String TABLE_COUNTRIES = "countries";
+    private static final String TABLE_COUNTRIES = "countries";
 
     /**
      * Countries: column "id"
      */
-    public static final String COLUMN_ID = "_id";
+    private static final String COLUMN_ID = "_id";
 
     /**
      * Countries: column "id" full specification
@@ -26,7 +26,7 @@ public class CountriesTable {
     /**
      * Countries: column "name"
      */
-    public static final String COLUMN_NAME = "name";
+    private static final String COLUMN_NAME = "name";
 
     /**
      * Countries: column "flag_resource_id"

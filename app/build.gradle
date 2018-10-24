@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 def getGitBranch = { ->
     try {
@@ -9,7 +10,7 @@ def getGitBranch = { ->
             standardOutput = stdout
         }
         result += stdout.toString().trim() + '/'
-        stdout.reset();
+        stdout.reset()
         exec {
             commandLine 'git', 'rev-parse', '--short', 'HEAD'
             standardOutput = stdout
@@ -45,7 +46,7 @@ def getCurrentDate = { ->
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "26.0.2"
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "io.bzzzil.bottles"
@@ -91,6 +92,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:25.4.0'
     implementation 'com.android.support:design:25.4.0'
+    implementation 'com.google.firebase:firebase-firestore:11.4.2'
     androidTestImplementation 'junit:junit:4.12'
-    implementation 'com.google.firebase:firebase-appindexing:11.6.0'
 }
