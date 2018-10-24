@@ -46,7 +46,7 @@ def getCurrentDate = { ->
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "26.0.2"
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "io.bzzzil.bottles"
