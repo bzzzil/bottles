@@ -4,14 +4,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import io.bzzzil.bottles.database.Bottle;
 import io.bzzzil.bottles.database.BottleDocument;
@@ -140,7 +141,7 @@ public class BottleDetailsActivity extends AppCompatActivity {
 
         // Draw info
         setTitle(bottle.getTitle());
-        ((TextView)findViewById(R.id.bottle_details)).setText(details);
+        ((TextView)findViewById(R.id.bottle_view)).setText(details);
     }
 
 
@@ -159,43 +160,40 @@ public class BottleDetailsActivity extends AppCompatActivity {
         int menuId = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        switch (menuId) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-            case R.id.action_edit_bottle:
-                Intent intent = new Intent(getApplicationContext(), BottleAddActivity.class);
-                intent.putExtra("bottle", bottleDoc);
-                startActivityForResult(intent, BottlesListActivity.ACTIVITY_ADD_EDIT_BOTTLE);
-                return true;
-            case R.id.action_delete_bottle:
-                // Get bottle info
-                String text = getString(R.string.alert_delete);
-                text = String.format(text, bottleDoc.getData().getTitle());
+        if (menuId == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
+        } else if (menuId == R.id.action_edit_bottle) {
+            Intent intent = new Intent(getApplicationContext(), BottleAddActivity.class);
+            intent.putExtra("bottle", bottleDoc);
+            startActivityForResult(intent, BottlesListActivity.ACTIVITY_ADD_EDIT_BOTTLE);
+            return true;
+        } else if (menuId == R.id.action_delete_bottle) {// Get bottle info
+            String text = getString(R.string.alert_delete);
+            text = String.format(text, bottleDoc.getData().getTitle());
 
-                // Alert
-                new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.menu_action_delete_bottle))
-                        .setMessage(text)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // TODO: delete bottle
-                                Toast.makeText(BottleDetailsActivity.this, getString(R.string.toast_bottle_deleted), Toast.LENGTH_LONG).show();
-                                finish();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+            // Alert
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.menu_action_delete_bottle))
+                    .setMessage(text)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // TODO: delete bottle
+                            Toast.makeText(BottleDetailsActivity.this, getString(R.string.toast_bottle_deleted), Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-                return true;
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

@@ -45,13 +45,13 @@ def getCurrentDate = { ->
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "28.0.3"
+    namespace "io.bzzzil.bottles"
+    compileSdkVersion 34
 
     defaultConfig {
         applicationId "io.bzzzil.bottles"
         minSdkVersion 21
-        targetSdkVersion 25
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
     }
@@ -77,14 +77,11 @@ android {
             }
         }
     }
-    lintOptions {
-        textReport true
-        // location to write the output; can be a file or 'stdout'
-        textOutput 'stdout'
-        // if true, generate an XML report for use by for example Jenkins
-        xmlReport false
-        // if true, generate an HTML report (with issue explanations, sourcecode, etc)
+    lint {
         htmlReport false
+        textOutput file('stdout')
+        textReport true
+        xmlReport false
     }
 }
 
@@ -92,6 +89,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:25.4.0'
     implementation 'com.android.support:design:25.4.0'
-    implementation 'com.google.firebase:firebase-firestore:11.4.2'
-    androidTestImplementation 'junit:junit:4.12'
+    implementation 'com.google.firebase:firebase-firestore:24.10.0'
+    androidTestImplementation 'junit:junit:4.13.2'
 }

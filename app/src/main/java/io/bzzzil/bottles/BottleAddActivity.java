@@ -3,8 +3,6 @@ package io.bzzzil.bottles;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +10,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
 import android.widget.SimpleCursorAdapter;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import io.bzzzil.bottles.database.Bottle;
 import io.bzzzil.bottles.database.BottleDocument;
@@ -179,14 +180,13 @@ public class BottleAddActivity extends AppCompatActivity {
         int menuId = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        switch (menuId) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-            case R.id.action_save_bottle:
-                addOrUpdateBottle();
-                finish();
-                return true;
+        if (menuId == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
+        } else if (menuId == R.id.action_save_bottle) {
+            addOrUpdateBottle();
+            finish();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

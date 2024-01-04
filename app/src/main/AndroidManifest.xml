@@ -12,14 +12,15 @@
         android:label="@string/app_name"
         android:logo="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppThemeOtherPages">
+        android:theme="@style/AppThemeOtherPages"
+        android:dataExtractionRules="@xml/data_extraction_rules">
         <activity
             android:name=".BottlesListActivity"
             android:configChanges="orientation"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppThemeList"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -40,7 +41,7 @@
             android:configChanges="orientation"
             android:label="@string/title_activity_bottle_add"
             android:parentActivityName=".BottlesListActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="fullSensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".BottlesListActivity" />
@@ -50,7 +51,7 @@
             android:configChanges="orientation"
             android:label="@string/title_activity_bottle_details"
             android:parentActivityName=".BottlesListActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="fullSensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".BottlesListActivity" />
@@ -59,7 +60,7 @@
             android:name=".StatisticsActivity"
             android:label="@string/title_activity_statistics"
             android:parentActivityName=".BottlesListActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="fullSensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".BottlesListActivity" />
@@ -69,7 +70,7 @@
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"
             android:parentActivityName=".BottlesListActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="fullSensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".BottlesListActivity" />

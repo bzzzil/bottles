@@ -5,8 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,6 +17,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -146,11 +146,9 @@ public class BottlesListActivity extends AppCompatActivity implements EventListe
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        switch (v.getId()) {
-            case R.id.listViewBottles:
-                MenuInflater inflater = getMenuInflater();
-                inflater.inflate(R.menu.menu_bottle_details, menu);
-                break;
+        if (v.getId() == R.id.listViewBottles) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_bottle_details, menu);
         }
     }
 
@@ -166,38 +164,37 @@ public class BottlesListActivity extends AppCompatActivity implements EventListe
     public boolean onContextItemSelected(MenuItem item) {
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Log.d(TAG, "Context menu for item " + info.id);
-        switch (item.getItemId()) {
-            case R.id.action_edit_bottle:
-                Intent intent = new Intent(getApplicationContext(), BottleAddActivity.class);
-                intent.putExtra("bootle", bottlesCollectionList.get(info.position));
-                startActivityForResult(intent, ACTIVITY_ADD_EDIT_BOTTLE);
-                return true;
-            case R.id.action_delete_bottle:
-                final BottleDocument docToDelete = bottlesCollectionList.get(info.position);
-                String text = getString(R.string.alert_delete);
-                text = String.format(text, docToDelete.getData().getTitle());
-                new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.menu_action_delete_bottle))
-                        .setMessage(text)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                bottlesCollection.document(docToDelete.getId()).delete();
-                                Toast.makeText(BottlesListActivity.this, getString(R.string.toast_bottle_deleted), Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_edit_bottle) {
+            Intent intent = new Intent(getApplicationContext(), BottleAddActivity.class);
+            intent.putExtra("bootle", bottlesCollectionList.get(info.position));
+            startActivityForResult(intent, ACTIVITY_ADD_EDIT_BOTTLE);
+            return true;
+        } else if (itemId == R.id.action_delete_bottle) {
+            final BottleDocument docToDelete = bottlesCollectionList.get(info.position);
+            String text = getString(R.string.alert_delete);
+            text = String.format(text, docToDelete.getData().getTitle());
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.menu_action_delete_bottle))
+                    .setMessage(text)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            bottlesCollection.document(docToDelete.getId()).delete();
+                            Toast.makeText(BottlesListActivity.this, getString(R.string.toast_bottle_deleted), Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-                return true;
-            default:
-                return super.onContextItemSelected(item);
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return true;
         }
+        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -215,45 +212,43 @@ public class BottlesListActivity extends AppCompatActivity implements EventListe
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        switch (id) {
-            case R.id.action_statistics:
-                startActivity(new Intent(this, StatisticsActivity.class));
-                return true;
-            case R.id.action_about:
-                startActivity(new Intent(this, AboutActivity.class));
-                return true;
-            case R.id.action_add_bottle:
-                startActivityForResult(new Intent(this, BottleAddActivity.class), ACTIVITY_ADD_EDIT_BOTTLE);
-                return true;
-            case R.id.action_delete_all:
-                new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.menu_action_delete_all))
-                        .setMessage(getString(R.string.alert_delete_all))
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // TODO: delete all
-                                Toast.makeText(BottlesListActivity.this, getString(R.string.toast_all_bottles_deleted), Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+        if (id == R.id.action_statistics) {
+            startActivity(new Intent(this, StatisticsActivity.class));
+            return true;
+        } else if (id == R.id.action_about) {
+            startActivity(new Intent(this, AboutActivity.class));
+            return true;
+        } else if (id == R.id.action_add_bottle) {
+            startActivityForResult(new Intent(this, BottleAddActivity.class), ACTIVITY_ADD_EDIT_BOTTLE);
+            return true;
+        } else if (id == R.id.action_delete_all) {
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.menu_action_delete_all))
+                    .setMessage(getString(R.string.alert_delete_all))
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // TODO: delete all
+                            Toast.makeText(BottlesListActivity.this, getString(R.string.toast_all_bottles_deleted), Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-                return true;
-            case R.id.action_import_bottles:
-                Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
-                chooseFile.setType("*/*");
-                Intent intent = Intent.createChooser(chooseFile, "Choose a file for import");
-                startActivityForResult(intent, ACTIVITY_CHOOSE_FILE);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return true;
+        } else if (id == R.id.action_import_bottles) {
+            Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+            chooseFile.setType("*/*");
+            Intent intent = Intent.createChooser(chooseFile, "Choose a file for import");
+            startActivityForResult(intent, ACTIVITY_CHOOSE_FILE);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -277,7 +272,7 @@ public class BottlesListActivity extends AppCompatActivity implements EventListe
                         bottlesCollection.add(bottleDoc.getData()).
                                 addOnFailureListener(new OnFailureListener() {
                                     @Override
-                                    public void onFailure(@NonNull Exception e) {
+                                    public void onFailure(Exception e) {
                                         Log.e(TAG, "Save new bottle to firebase failed: " + e);
                                     }
                                 });
@@ -286,7 +281,7 @@ public class BottlesListActivity extends AppCompatActivity implements EventListe
                         bottlesCollection.document(bottleDoc.getId()).set(bottleDoc.getData()).
                                 addOnFailureListener(new OnFailureListener() {
                                     @Override
-                                    public void onFailure(@NonNull Exception e) {
+                                    public void onFailure(Exception e) {
                                         Log.e(TAG, "Save bottle to firebase failed: " + e);
                                     }
                                 });
